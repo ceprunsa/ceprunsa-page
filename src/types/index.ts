@@ -62,3 +62,11 @@ export interface NavItem {
   name: string;
   path: string;
 }
+
+export interface TeamMember {
+  name: string;
+  role: string;
+  description: string;
+  image?: string;
+  cvLink?: string;
+}

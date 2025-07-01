@@ -26,6 +26,7 @@ import type {
   Testimonial,
   Value,
   ContactInfo,
+  TeamMember,
 } from "../types";
 
 // Features data
@@ -356,21 +357,30 @@ export const processTimeline = [
 ];
 
 // Team members data for About page
-export const teamMembers = [
+export const teamMembers: TeamMember[] = [
   {
-    role: "Director Académico",
-    specialty: "Especialista en Matemática UNSA",
-    experience: "15 años",
+    name: "Mg. Arnaldo Humberto Valdivia Loaiza",
+    role: "COORDINADOR ACADÉMICO",
+    description:
+      "Docente especializado en Filosofía, con una maestría en Docencia Universitaria y Gestión Educativa. Actualmente es docente en la Universidad Nacional de San Agustín, con experiencia previa en diversas universidades peruanas desde 2003. En cuanto a su formación académica, es bachiller y licenciado en Filosofía por la Universidad Nacional de San Agustín de Arequipa, además de haber completado un diplomado en Desarrollo de Habilidades Digitales para el Aprendizaje y programas de formación docente en enseñanza e innovación.",
+    // image: "/images/team/arnaldo-valdivia.jpg", // Uncomment when image is available
+    cvLink: "https://example.com/cv/arnaldo-valdivia",
   },
   {
-    role: "Coordinadora Pedagógica",
-    specialty: "Metodología CEPRUNSA",
-    experience: "12 años",
+    name: "Dra. Maria Elena Rojas Zegarra",
+    role: "DIRECTORA",
+    description:
+      "Doctora en Psicología por la Universidad Complutense de Madrid. Actualmente, cursa el Máster en Investigación Psicológica por la Universidad Internacional de La Rioja (UNIR), España. Posee un Diplomado Internacional en el Modelo de Terapia Breve de Resolución de Problemas del Brief Therapy Center de Palo Alto, California, y es experta en Psicoterapia Breve para Niños y Adolescentes por la Universidad San Jorge, España.",
+    // image: "/images/team/maria-rojas.jpg", // Uncomment when image is available
+    cvLink: "https://example.com/cv/maria-rojas",
   },
   {
-    role: "Jefe de Talleres",
-    specialty: "Desarrollo Personal",
-    experience: "10 años",
+    name: "Mg. Jose Miguel Rojas Hualpa",
+    role: "COORDINADOR ADMINISTRATIVO",
+    description:
+      "Posee el grado en Ciencias Biológicas por la Universidad Nacional de San Agustín de Arequipa (2010) y el grado en Ingeniería Ambiental (2018). Es Magíster en Biología Funcional y Molecular por la Universidad Estadual de Campinas (2014). Fue investigador en el Laboratorio de Química de Proteínas de la Universidad Estadual de Campinas (2012 – 2014).",
+    // image: "/images/team/jose-rojas.jpg", // Uncomment when image is available
+    cvLink: "https://example.com/cv/jose-rojas",
   },
 ];
 

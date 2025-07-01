@@ -352,7 +352,7 @@ const Processes: React.FC = () => {
       {/* Comparison Section */}
       <section ref={comparisonRef} className="section-padding bg-white">
         <div className="container-custom">
-          <div className="text-center">
+          <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
               CEPRUNSA vs{" "}
               <span className="text-accent-900">Examen Ordinario</span>
@@ -505,7 +505,7 @@ const Processes: React.FC = () => {
       {/* Process Timeline */}
       <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
         <div className="container-custom">
-          <div className="text-center">
+          <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
               Cronograma <span className="text-accent-900">CEPRUNSA</span>
             </h2>

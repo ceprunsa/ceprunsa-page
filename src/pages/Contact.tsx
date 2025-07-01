@@ -440,7 +440,7 @@ const Contact: React.FC = () => {
       {/* FAQ Section */}
       <section ref={faqRef} className="section-padding bg-white">
         <div className="container-custom">
-          <div className="text-center">
+          <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
               Preguntas Frecuentes
             </h2>

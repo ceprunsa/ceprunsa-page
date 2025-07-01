@@ -4,7 +4,7 @@ import type React from "react";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Award, Target, Users } from "lucide-react";
+import { Award, Target, Users, ExternalLink } from "lucide-react";
 import { achievements, teamMembers, methodologyItems } from "../data";
 import ValuesCarousel from "../components/ValuesCarousel";
 
@@ -160,6 +160,15 @@ const About: React.FC = () => {
       <section className="section-padding bg-gradient-to-b from-gray-50 to-white relative">
         <div className="absolute inset-0 bg-pattern opacity-5"></div>
         <div className="container-custom relative">
+          <div className="text-center mb-12">
+            <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
+              Misión y <span className="text-accent-900">Visión</span>
+            </h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Los pilares fundamentales que guían nuestro compromiso educativo y
+              definen nuestro rumbo institucional.
+            </p>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="group">
               <div className="bg-white p-10 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 h-full">
@@ -230,7 +239,7 @@ const About: React.FC = () => {
           <div className="absolute bottom-10 right-10 w-40 h-40 bg-primary-400/20 rounded-full blur-xl"></div>
         </div>
         <div className="container-custom relative">
-          <div className="text-center">
+          <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6 text-white">
               Nuestros Logros
             </h2>
@@ -262,7 +271,7 @@ const About: React.FC = () => {
       {/* Methodology Section */}
       <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
         <div className="container-custom">
-          <div className="text-center">
+          <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
               Nuestra <span className="text-accent-900">Metodología</span>
             </h2>
@@ -312,35 +321,64 @@ const About: React.FC = () => {
       {/* Team Section */}
       <section className="section-padding bg-white">
         <div className="container-custom">
-          <div className="text-center">
+          <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
               Nuestro <span className="text-accent-900">Equipo</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Docentes especializados y personal administrativo comprometido con
-              tu éxito académico.
+              Profesionales altamente calificados comprometidos con la
+              excelencia académica y tu éxito educativo.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {teamMembers.map((member, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-b from-gray-50 to-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 text-center group"
+                className="bg-gradient-to-b from-gray-50 to-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 group"
               >
-                {/* Simulated Profile Image */}
-                <div className="w-24 h-24 bg-gradient-to-br from-primary-200 to-accent-200 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Users className="text-primary-600" size={36} />
+                {/* Profile Image or Icon */}
+                <div className="relative mb-6">
+                  {member.image ? (
+                    <img
+                      src={member.image || "/placeholder.svg"}
+                      alt={member.name}
+                      className="w-24 h-24 rounded-full mx-auto object-cover group-hover:scale-110 transition-transform duration-300"
+                    />
+                  ) : (
+                    <div className="w-24 h-24 bg-gradient-to-br from-primary-200 to-accent-200 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
+                      <Users className="text-primary-600" size={36} />
+                    </div>
+                  )}
                 </div>
-                <h3 className="font-heading text-xl font-bold text-primary-700 mb-2">
-                  {member.role}
-                </h3>
-                <p className="text-accent-600 font-medium mb-2">
-                  {member.specialty}
+
+                <div className="text-center mb-4">
+                  <h3 className="font-heading text-lg font-bold text-primary-700 mb-2">
+                    {member.name}
+                  </h3>
+                  <p className="text-accent-600 font-semibold text-sm uppercase tracking-wide mb-4">
+                    {member.role}
+                  </p>
+                </div>
+
+                <p className="text-gray-600 text-sm leading-relaxed text-justify mb-6">
+                  {member.description}
                 </p>
-                <p className="text-gray-600 text-sm">
-                  {member.experience} de experiencia
-                </p>
+
+                {/* CV Link */}
+                {member.cvLink && (
+                  <div className="text-center">
+                    <a
+                      href={member.cvLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-300 text-sm font-medium"
+                    >
+                      <span>Ver CV</span>
+                      <ExternalLink size={16} />
+                    </a>
+                  </div>
+                )}
               </div>
             ))}
           </div>

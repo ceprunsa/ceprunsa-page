@@ -306,7 +306,7 @@ const Home: React.FC = () => {
         className="section-padding bg-white relative"
       >
         <div className="container-custom">
-          <div className="text-center">
+          <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
               Estudiantes que ingresaron por{" "}
               <span className="text-accent-900">CEPRUNSA</span>
@@ -370,7 +370,9 @@ const Home: React.FC = () => {
             especializada y tu propio examen.
           </p>
           <Link
-            to="/contacto"
+            to="https://sisadmision.unsa.edu.pe/pregrado/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
           >
             Inscríbete al Próximo Proceso

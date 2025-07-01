@@ -252,30 +252,6 @@ const ValuesCarousel: React.FC = () => {
         </div>
       )}
 
-      {/* Progress indicator - Enhanced for mobile */}
-      <div className="mt-4 md:mt-6 bg-gray-200 rounded-full h-1 md:h-1.5 overflow-hidden shadow-inner">
-        <div
-          className="bg-gradient-to-r from-accent-500 to-accent-600 h-full transition-all duration-700 rounded-full shadow-sm"
-          style={{ width: `${((currentIndex + 1) / totalDots) * 100}%` }}
-        />
-      </div>
-
-      {/* Counter and info - Mobile optimized */}
-      <div className="flex justify-between items-center mt-4 md:mt-6">
-        <div className="text-xs md:text-sm text-gray-500">
-          <span className="font-medium text-accent-600">
-            {Math.min(
-              currentIndex * itemsPerView + itemsPerView,
-              values.length
-            )}
-          </span>{" "}
-          de <span className="font-medium">{values.length}</span> valores
-        </div>
-        <div className="hidden md:block text-sm text-gray-400">
-          {isAutoPlaying ? "Reproducción automática" : "Pausado"}
-        </div>
-      </div>
-
       {/* Mobile swipe indicator */}
       <div className="md:hidden text-center mt-3">
         <p className="text-xs text-gray-400 flex items-center justify-center space-x-2">
