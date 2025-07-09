@@ -4,7 +4,7 @@ import type React from "react";
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Award, Target, Users, ExternalLink } from "lucide-react";
+import { Award, Target, Users, ExternalLink, Zap } from "lucide-react";
 import { achievements, teamMembers, methodologyItems } from "../data";
 import ValuesCarousel from "../components/ValuesCarousel";
 
@@ -82,8 +82,55 @@ const About: React.FC = () => {
         </div>
       </section>
 
+      {/* What is CEPRUNSA Section */}
+      <section className="section-padding bg-white relative">
+        <div className="container-custom">
+          <div className="text-center">
+            <h2 className="font-heading text-4xl md:text-5xl font-bold text-primary-700 mb-6">
+              ¿Qué es <span className="text-accent-900 relative">CEPRUNSA</span>
+              ?
+            </h2>
+            <div className="max-w-4xl mx-auto">
+              <p className="text-xl text-secondary-600 leading-relaxed mb-8">
+                CEPRUNSA es una modalidad oficial de ingreso directo a la
+                Universidad Nacional de San Agustín de Arequipa. A diferencia
+                del examen ordinario, CEPRUNSA te prepara en{" "}
+                <strong className="text-accent-700">
+                  10 semanas intensivas
+                </strong>{" "}
+                en
+                <strong className="text-accent-700">
+                  {" "}
+                  15 diferentes cursos
+                </strong>{" "}
+                para rendir el examen de admisión con vacantes exclusivas.
+              </p>
+              <div className="bg-gradient-to-r from-primary-50 to-accent-50 p-8 rounded-2xl border border-primary-200 shadow-soft hover:shadow-medium transition-all duration-300">
+                <div className="flex items-center justify-center mb-4">
+                  <div className="bg-gradient-to-r from-accent-500 to-accent-600 p-3 rounded-full">
+                    <Zap className="text-white" size={28} />
+                  </div>
+                </div>
+                <h3 className="font-heading text-2xl font-bold text-primary-700 mb-4">
+                  Ventaja Clave
+                </h3>
+                <p className="text-lg text-secondary-600">
+                  El examen de conocimientos de CEPRUNSA se basa completamente
+                  en el contenido académico que se desarrolla durante las 10
+                  semanas de preparación. Esto significa que estudias
+                  exactamente lo que te van a evaluar.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* About Content */}
-      <section ref={aboutRef} className="section-padding bg-white">
+      <section
+        ref={aboutRef}
+        className="section-padding bg-gradient-to-b from-gray-50 to-white"
+      >
         <div className="container-custom">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div className="about-content">
@@ -157,7 +204,7 @@ const About: React.FC = () => {
       </section>
 
       {/* Mission & Vision */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white relative">
+      <section className="section-padding bg-white relative">
         <div className="absolute inset-0 bg-pattern opacity-5"></div>
         <div className="container-custom relative">
           <div className="text-center mb-12">
@@ -212,7 +259,10 @@ const About: React.FC = () => {
       </section>
 
       {/* Values Carousel */}
-      <section ref={valuesRef} className="section-padding bg-white">
+      <section
+        ref={valuesRef}
+        className="section-padding bg-gradient-to-b from-gray-50 to-white"
+      >
         <div className="container-custom">
           <div className="text-center mb-16">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
@@ -269,7 +319,7 @@ const About: React.FC = () => {
       </section>
 
       {/* Methodology Section */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
+      <section className="section-padding bg-white">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
@@ -319,7 +369,7 @@ const About: React.FC = () => {
       </section>
 
       {/* Team Section */}
-      <section className="section-padding bg-white">
+      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">

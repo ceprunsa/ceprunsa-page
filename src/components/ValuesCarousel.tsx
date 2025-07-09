@@ -1,232 +1,131 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { values } from "../data";
 
 const ValuesCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  const [itemsPerView, setItemsPerView] = useState(3);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
 
   // Responsive items per view
+  const getItemsPerView = () => {
+    if (typeof window !== "undefined") {
+      if (window.innerWidth >= 1024) return 3; // lg and up
+      if (window.innerWidth >= 768) return 2; // md
+      return 1; // sm and down
+    }
+    return 3;
+  };
+
+  const [itemsPerView, setItemsPerView] = useState(getItemsPerView);
+
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setItemsPerView(1);
-      } else if (window.innerWidth < 1024) {
-        setItemsPerView(2);
-      } else {
-        setItemsPerView(3);
-      }
+      setItemsPerView(getItemsPerView());
     };
 
-    handleResize();
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Auto-play functionality
-  useEffect(() => {
-    if (!isAutoPlaying || isDragging) return;
-
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => {
-        const maxIndex = Math.max(0, values.length - itemsPerView);
-        return prevIndex >= maxIndex ? 0 : prevIndex + 1;
-      });
-    }, 3000);
-
-    return () => clearInterval(interval);
-  }, [isAutoPlaying, itemsPerView, isDragging]);
-
   const maxIndex = Math.max(0, values.length - itemsPerView);
 
-  const goToPrevious = () => {
-    setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? maxIndex : prevIndex - 1
-    );
+  // Auto-play functionality
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, [isAutoPlaying, maxIndex]);
+
+  // Touch handlers
+  const minSwipeDistance = 50;
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
   };
 
-  const goToNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex >= maxIndex ? 0 : prevIndex + 1));
+  const onTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const onTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe && currentIndex < maxIndex) {
+      setCurrentIndex(currentIndex + 1);
+    }
+    if (isRightSwipe && currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
+  };
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
   const goToSlide = (index: number) => {
     setCurrentIndex(Math.min(index, maxIndex));
   };
 
-  // Touch/Mouse handlers for mobile swipe
-  const handleStart = (e: React.TouchEvent | React.MouseEvent) => {
-    setIsDragging(true);
-    setIsAutoPlaying(false);
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    setStartX(clientX);
-  };
-
-  const handleMove = (e: React.TouchEvent | React.MouseEvent) => {
-    if (!isDragging) return;
-    const maxIndex = Math.max(0, values.length - itemsPerView);
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX;
-    const diff = startX - clientX;
-    const threshold = 50; // Minimum swipe distance
-
-    if (Math.abs(diff) > threshold) {
-      if (diff > 0 && currentIndex < maxIndex) {
-        setCurrentIndex(currentIndex + 1);
-        setIsDragging(false);
-      } else if (diff < 0 && currentIndex > 0) {
-        setCurrentIndex(currentIndex - 1);
-        setIsDragging(false);
-      }
-    }
-  };
-
-  const handleEnd = () => {
-    setIsDragging(false);
-    setTimeout(() => setIsAutoPlaying(true), 1000);
-  };
-
-  // Calculate visible dots
-  const totalDots = maxIndex + 1;
-
   return (
     <div
       className="relative w-full"
       onMouseEnter={() => setIsAutoPlaying(false)}
-      onMouseLeave={() => !isDragging && setIsAutoPlaying(true)}
+      onMouseLeave={() => setIsAutoPlaying(true)}
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
     >
-      {/* Desktop Navigation arrows */}
-      <button
-        onClick={goToPrevious}
-        className="hidden md:block absolute -left-16 lg:-left-20 top-1/2 transform -translate-y-1/2 bg-white hover:bg-gray-50 p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group z-10 border border-gray-200"
-        aria-label="Valores anteriores"
-      >
-        <ChevronLeft
-          className="text-primary-600 group-hover:text-accent-600 transition-colors"
-          size={28}
-        />
-      </button>
-
-      <button
-        onClick={goToNext}
-        className="hidden md:block absolute -right-16 lg:-right-20 top-1/2 transform -translate-y-1/2 bg-white hover:bg-gray-50 p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 group z-10 border border-gray-200"
-        aria-label="Siguientes valores"
-      >
-        <ChevronRight
-          className="text-primary-600 group-hover:text-accent-600 transition-colors"
-          size={28}
-        />
-      </button>
-
-      {/* Mobile Navigation arrows */}
-      <button
-        onClick={goToPrevious}
-        className="md:hidden absolute left-2 top-1/2 transform -translate-y-1/2 bg-white/95 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 group z-10 border border-gray-200"
-        aria-label="Valor anterior"
-      >
-        <ChevronLeft
-          className="text-primary-600 group-hover:text-accent-600 transition-colors"
-          size={20}
-        />
-      </button>
-
-      <button
-        onClick={goToNext}
-        className="md:hidden absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/95 hover:bg-white p-3 rounded-full shadow-lg transition-all duration-300 group z-10 border border-gray-200"
-        aria-label="Siguiente valor"
-      >
-        <ChevronRight
-          className="text-primary-600 group-hover:text-accent-600 transition-colors"
-          size={20}
-        />
-      </button>
-
       {/* Main carousel container */}
-      <div
-        className="overflow-hidden rounded-2xl cursor-grab active:cursor-grabbing"
-        ref={carouselRef}
-        onTouchStart={handleStart}
-        onTouchMove={handleMove}
-        onTouchEnd={handleEnd}
-        onMouseDown={handleStart}
-        onMouseMove={handleMove}
-        onMouseUp={handleEnd}
-        onMouseLeave={handleEnd}
-      >
+      <div className="overflow-hidden">
         <div
-          className="flex transition-transform duration-700 ease-in-out"
+          className="flex transition-transform duration-500 ease-in-out"
           style={{
-            transform: `translateX(-${(currentIndex * 100) / itemsPerView}%)`,
+            transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
           }}
         >
           {values.map((value, index) => (
             <div
               key={index}
-              className={`flex-shrink-0 ${
-                itemsPerView === 1
-                  ? "w-full px-2"
-                  : itemsPerView === 2
-                  ? "w-1/2 px-3"
-                  : "w-1/3 px-3"
-              }`}
+              className="flex-shrink-0 px-3 lg:px-4"
+              style={{ width: `${100 / itemsPerView}%` }}
             >
-              <div
-                className={`bg-gradient-to-br from-white to-gray-50 rounded-2xl border border-gray-200 shadow-soft hover:shadow-medium transition-all duration-300 text-center h-full flex flex-col justify-between group hover:border-accent-200 ${
-                  itemsPerView === 1
-                    ? "p-8 min-h-[400px]"
-                    : "p-6 lg:p-8 min-h-[350px] lg:min-h-[400px]"
-                }`}
-              >
-                {/* Icon */}
-                <div className="flex-shrink-0 mb-6">
+              <div className="bg-white rounded-2xl lg:rounded-3xl p-6 lg:p-8 shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 h-full group">
+                {/* Icon with gradient background */}
+                <div className="relative mb-6 lg:mb-8">
                   <div
-                    className={`bg-gradient-to-br from-accent-100 to-accent-200 rounded-full flex items-center justify-center mx-auto shadow-lg group-hover:scale-110 group-hover:shadow-xl transition-all duration-300 ${
-                      itemsPerView === 1
-                        ? "w-24 h-24"
-                        : "w-16 h-16 lg:w-20 lg:h-20"
-                    }`}
+                    className={`bg-gradient-to-br ${value.color} w-16 h-16 lg:w-20 lg:h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg`}
                   >
-                    <value.icon
-                      className="text-accent-600"
-                      size={itemsPerView === 1 ? 40 : 32}
-                    />
+                    <value.icon className="text-white" size={32} />
                   </div>
+                  <div className="absolute -top-2 -right-2 w-6 h-6 bg-accent-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 </div>
 
                 {/* Content */}
-                <div className="flex-grow flex flex-col justify-center space-y-4">
-                  <h3
-                    className={`font-heading font-bold text-primary-700 group-hover:text-accent-700 transition-colors ${
-                      itemsPerView === 1
-                        ? "text-2xl lg:text-3xl mb-4"
-                        : "text-lg lg:text-xl mb-3"
-                    }`}
-                  >
+                <div className="text-center">
+                  <h3 className="font-heading text-xl lg:text-2xl font-bold text-primary-700 mb-4 lg:mb-6 group-hover:text-accent-700 transition-colors">
                     {value.title}
                   </h3>
-                  <p
-                    className={`text-gray-600 leading-relaxed ${
-                      itemsPerView === 1
-                        ? "text-lg lg:text-xl"
-                        : "text-sm lg:text-base line-clamp-4"
-                    }`}
-                  >
+                  <p className="text-secondary-600 leading-relaxed text-sm lg:text-base">
                     {value.description}
                   </p>
-                </div>
-
-                {/* Decorative element */}
-                <div className="flex-shrink-0 mt-6">
-                  <div
-                    className={`bg-gradient-to-r from-accent-400 to-primary-400 rounded-full mx-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300 ${
-                      itemsPerView === 1 ? "w-16 h-1.5" : "w-12 h-1"
-                    }`}
-                  ></div>
                 </div>
               </div>
             </div>
@@ -234,41 +133,51 @@ const ValuesCarousel: React.FC = () => {
         </div>
       </div>
 
-      {/* Dots indicator - Enhanced for mobile */}
-      {totalDots > 1 && (
-        <div className="flex justify-center mt-6 md:mt-8 space-x-2 md:space-x-3">
-          {Array.from({ length: totalDots }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => goToSlide(index)}
-              className={`transition-all duration-300 rounded-full ${
-                index === currentIndex
-                  ? "w-6 md:w-8 h-2.5 md:h-3 bg-gradient-to-r from-accent-500 to-accent-600 shadow-lg"
-                  : "w-2.5 md:w-3 h-2.5 md:h-3 bg-gray-300 hover:bg-gray-400 hover:scale-125"
-              }`}
-              aria-label={`Ir al grupo de valores ${index + 1}`}
-            />
-          ))}
-        </div>
-      )}
+      {/* Navigation arrows - Hidden on mobile */}
+      <button
+        onClick={prevSlide}
+        disabled={currentIndex === 0}
+        className="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 lg:-translate-x-6 bg-white hover:bg-gray-50 text-gray-800 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed items-center justify-center z-10"
+        aria-label="Valor anterior"
+      >
+        <ChevronLeft size={24} />
+      </button>
+
+      <button
+        onClick={nextSlide}
+        disabled={currentIndex === maxIndex}
+        className="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 lg:translate-x-6 bg-white hover:bg-gray-50 text-gray-800 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed items-center justify-center z-10"
+        aria-label="Siguiente valor"
+      >
+        <ChevronRight size={24} />
+      </button>
 
       {/* Mobile swipe indicator */}
-      <div className="md:hidden text-center mt-3">
-        <p className="text-xs text-gray-400 flex items-center justify-center space-x-2">
-          <span>←</span>
-          <span>Desliza o toca las flechas</span>
-          <span>→</span>
-        </p>
+      <div className="md:hidden absolute bottom-4 right-4 bg-black/20 backdrop-blur-sm rounded-full px-3 py-1">
+        <span className="text-white text-xs">Desliza →</span>
       </div>
 
-      {/* Mobile value counter */}
-      <div className="md:hidden text-center mt-2">
-        <div className="inline-flex items-center space-x-1 bg-gray-100 rounded-full px-3 py-1">
-          <div className="w-2 h-2 bg-accent-500 rounded-full animate-pulse"></div>
-          <span className="text-xs font-medium text-gray-600">
-            Valor {currentIndex + 1} de {values.length}
-          </span>
-        </div>
+      {/* Dots indicator */}
+      <div className="flex justify-center mt-6 lg:mt-8 space-x-2">
+        {Array.from({ length: maxIndex + 1 }).map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goToSlide(index)}
+            className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full transition-all duration-300 ${
+              index === currentIndex
+                ? "bg-primary-600 scale-110 shadow-md"
+                : "bg-gray-300 hover:bg-gray-400"
+            }`}
+            aria-label={`Ir a grupo de valores ${index + 1}`}
+          />
+        ))}
+      </div>
+
+      {/* Progress indicator */}
+      <div className="text-center mt-3 lg:mt-4">
+        <span className="text-xs lg:text-sm text-gray-500">
+          {currentIndex + 1} de {maxIndex + 1}
+        </span>
       </div>
     </div>
   );

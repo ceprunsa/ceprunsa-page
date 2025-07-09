@@ -138,7 +138,7 @@ const Processes: React.FC = () => {
                 key={index}
                 className={`program-card relative group ${
                   process.recommended
-                    ? "ring-2 ring-accent-400 shadow-glow-red"
+                    ? "ring-2 ring-accent-400 shadow-glow-red rounded-2xl hover:ring-accent-500 hover:shadow-glow-blue"
                     : ""
                 }`}
               >
@@ -147,7 +147,7 @@ const Processes: React.FC = () => {
                     <div className="bg-gradient-to-r from-accent-500 to-accent-600 text-white px-6 py-4 text-sm font-semibold text-center relative">
                       <div className="flex items-center justify-center">
                         <Star className="mr-2" size={16} />
-                        Proceso Principal - Mayor Demanda
+                        Proceso proximo a Iniciar
                       </div>
                     </div>
                   )}
@@ -157,7 +157,7 @@ const Processes: React.FC = () => {
                       <h3 className="font-heading text-2xl font-bold text-primary-700 group-hover:text-accent-700 transition-colors">
                         {process.title}
                       </h3>
-                      <span className="bg-gradient-to-r from-primary-100 to-primary-200 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold shadow-soft">
+                      <span className="text-center bg-gradient-to-r from-primary-100 to-primary-200 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold shadow-soft">
                         {process.duration}
                       </span>
                     </div>

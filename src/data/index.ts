@@ -1,73 +1,333 @@
 import {
+  BookOpen,
+  Users,
   Award,
   Target,
-  Users,
-  BookOpen,
   Clock,
-  MapPin,
-  Phone,
-  Mail,
+  CheckCircle,
+  Star,
+  TrendingUp,
   Brain,
+  Lightbulb,
   Heart,
   Shield,
-  Lightbulb,
-  CheckCircle,
-  Timer,
-  Handshake,
-  Star,
   Eye,
+  Handshake,
+  Trophy,
   Scale,
   Crown,
+  MapPin,
+  Phone,
+  Send,
+  MessageCircle,
+  Calendar,
 } from "lucide-react";
-import type {
-  Feature,
-  Stat,
-  Processes,
-  Testimonial,
-  Value,
-  ContactInfo,
-  TeamMember,
-} from "../types";
 
-// Features data
-export const features: Feature[] = [
+import type { Processes } from "../types";
+
+export const features = [
   {
-    icon: Target,
-    title: "Modalidad de Ingreso Directo",
+    icon: BookOpen,
+    title: "15 Cursos Especializados",
     description:
-      "CEPRUNSA es una modalidad oficial de ingreso a la UNSA con su propio examen y vacantes exclusivas.",
+      "Preparación integral en todas las materias del examen CEPRUNSA con contenido actualizado y metodología especializada.",
   },
   {
-    icon: Brain,
-    title: "Preparación Integral en 10 Semanas",
+    icon: Clock,
+    title: "10 Semanas Intensivas",
     description:
-      "15 cursos especializados con banco de contenido digital, prácticas semanales y seminarios de reforzamiento.",
+      "Programa de preparación concentrado y efectivo que optimiza tu tiempo de estudio para el examen de admisión.",
+  },
+  {
+    icon: Target,
+    title: "Examen Propio",
+    description:
+      "Tu examen se basa completamente en el contenido desarrollado durante las 10 semanas de preparación académica.",
+  },
+];
+
+export const stats = [
+  { number: "85%", label: "Tasa de Ingreso" },
+  { number: "24", label: "Años de Experiencia" },
+  { number: "15", label: "Cursos Especializados" },
+  { number: "10", label: "Semanas de Preparación" },
+  { number: "500+", label: "Estudiantes por Año" },
+  { number: "95%", label: "Satisfacción Estudiantil" },
+];
+
+export const testimonials = [
+  {
+    name: "María González",
+    career: "Ingeniería de Sistemas",
+    text: "CEPRUNSA me dio las herramientas necesarias para ingresar a la carrera de mis sueños. La metodología es excelente y los profesores muy preparados.",
+    rating: 5,
+  },
+  {
+    name: "Carlos Mendoza",
+    career: "Medicina Humana",
+    text: "Gracias a la preparación integral de CEPRUNSA logré ingresar a Medicina. El contenido está perfectamente alineado con el examen.",
+    rating: 5,
+  },
+  {
+    name: "Ana Quispe",
+    career: "Derecho",
+    text: "La modalidad CEPRUNSA es la mejor opción para ingresar a la UNSA. Te preparan específicamente para tu propio examen de admisión.",
+    rating: 5,
+  },
+];
+
+export const values = [
+  {
+    icon: Award,
+    title: "Excelencia Académica",
+    description:
+      "Fomentar el compromiso con la calidad en la enseñanza y el aprendizaje, promoviendo el esfuerzo y la dedicación hacia el logro de metas académicas.",
+    color: "from-yellow-400 to-orange-500",
+  },
+  {
+    icon: Shield,
+    title: "Confianza",
+    description:
+      "Promover la seguridad y la credibilidad en las relaciones interpersonales, basadas en la honestidad y el respeto mutuo.",
+    color: "from-blue-400 to-indigo-500",
+  },
+  {
+    icon: Heart,
+    title: "Empatía",
+    description:
+      "Fomentar la comprensión y la empatía hacia los demás, promoviendo un ambiente de respeto, compasión y apoyo mutuo entre los estudiantes y el personal del CEPRUNSA.",
+    color: "from-red-400 to-pink-500",
+  },
+  {
+    icon: Lightbulb,
+    title: "Innovación",
+    description:
+      "Fomentar la creatividad y el pensamiento original para generar nuevas ideas y soluciones para los desafíos presentes.",
+    color: "from-purple-400 to-violet-500",
+  },
+  {
+    icon: CheckCircle,
+    title: "Responsabilidad",
+    description:
+      "Cumplir con las obligaciones académicas y laborales con ética y eficiencia. Promover el sentido del deber en toda la comunidad.",
+    color: "from-green-400 to-emerald-500",
+  },
+  {
+    icon: Clock,
+    title: "Puntualidad",
+    description:
+      "Respetar el tiempo propio y ajeno, asegurando la puntualidad en todas las actividades. Cumplir con los compromisos a tiempo.",
+    color: "from-teal-400 to-cyan-500",
+  },
+  {
+    icon: Handshake,
+    title: "Trabajo en Equipo",
+    description:
+      "Fomentar la colaboración y cooperación entre todos los miembros. Trabajar juntos para alcanzar metas comunes.",
+    color: "from-indigo-400 to-blue-500",
+  },
+  {
+    icon: Star,
+    title: "Compromiso",
+    description:
+      "Dedicarse a los valores y objetivos de CEPRUNSA con responsabilidad. Asumir un compromiso personal y colectivo en el proceso educativo.",
+    color: "from-orange-400 to-red-500",
+  },
+  {
+    icon: Eye,
+    title: "Respeto",
+    description:
+      "Fomentar la consideración y el trato digno hacia los demás, valorando la diversidad de ideas y opiniones. Promover un ambiente de convivencia basado en el respeto mutuo.",
+    color: "from-pink-400 to-rose-500",
+  },
+  {
+    icon: Scale,
+    title: "Probidad",
+    description:
+      "Actuar con integridad y honestidad en todas las acciones y decisiones. Mantener una conducta ética que refleje los principios de transparencia y rectitud.",
+    color: "from-violet-400 to-purple-500",
+  },
+  {
+    icon: Crown,
+    title: "Lealtad",
+    description:
+      "Ser fiel a los valores y objetivos de CEPRUNSA, mostrando un compromiso constante. Apoyar con sinceridad y confianza a la institución y a sus integrantes.",
+    color: "from-amber-400 to-yellow-500",
+  },
+];
+
+export const achievements = [
+  { icon: Users, number: "2500+", label: "Estudiantes Ingresados" },
+  { icon: Trophy, number: "85%", label: "Tasa de Éxito" },
+  { icon: Award, number: "24", label: "Años de Experiencia" },
+  { icon: Star, number: "95%", label: "Satisfacción" },
+];
+
+export const teamMembers = [
+  {
+    name: "Mg. Arnaldo Humberto Valdivia Loaiza",
+    role: "COORDINADOR ACADÉMICO",
+    description:
+      "Docente especializado en Filosofía, con una maestría en Docencia Universitaria y Gestión Educativa. Actualmente es docente en la Universidad Nacional de San Agustín, con experiencia previa en diversas universidades peruanas desde 2003. En cuanto a su formación académica, es bachiller y licenciado en Filosofía por la Universidad Nacional de San Agustín de Arequipa, además de haber completado un diplomado en Desarrollo de Habilidades Digitales para el Aprendizaje y programas de formación docente en enseñanza e innovación.",
+    image: undefined, // Se puede agregar la URL de la imagen aquí
+    cvLink: "https://example.com/cv-arnaldo-valdivia", // URL del CV
+  },
+  {
+    name: "Dra. Maria Elena Rojas Zegarra",
+    role: "DIRECTORA",
+    description:
+      "Doctora en Psicología por la Universidad Complutense de Madrid. Actualmente, cursa el Máster en Investigación Psicológica por la Universidad Internacional de La Rioja (UNIR), España. Posee un Diplomado Internacional en el Modelo de Terapia Breve de Resolución de Problemas del Brief Therapy Center de Palo Alto, California, y es experta en Psicoterapia Breve para Niños y Adolescentes por la Universidad San Jorge, España.",
+    image: undefined, // Se puede agregar la URL de la imagen aquí
+    cvLink: "https://example.com/cv-maria-rojas", // URL del CV
+  },
+  {
+    name: "Mg. Jose Miguel Rojas Hualpa",
+    role: "COORDINADOR ADMINISTRATIVO",
+    description:
+      "Posee el grado en Ciencias Biológicas por la Universidad Nacional de San Agustín de Arequipa (2010) y el grado en Ingeniería Ambiental (2018). Es Magíster en Biología Funcional y Molecular por la Universidad Estadual de Campinas (2014). Fue investigador en el Laboratorio de Química de Proteínas de la Universidad Estadual de Campinas (2012 – 2014).",
+    image: undefined, // Se puede agregar la URL de la imagen aquí
+    cvLink: "https://example.com/cv-jose-rojas", // URL del CV
+  },
+];
+
+export const methodologyItems = [
+  {
+    icon: Brain,
+    title: "Aprendizaje Activo",
+    description:
+      "Metodología participativa que involucra al estudiante en su proceso de aprendizaje a través de ejercicios prácticos y resolución de problemas.",
+    bgColor: "bg-blue-50",
+    iconColor: "text-blue-600",
+    borderColor: "hover:border-blue-200",
+  },
+  {
+    icon: Target,
+    title: "Enfoque Dirigido",
+    description:
+      "Preparación específica y dirigida hacia el contenido exacto que se evaluará en el examen CEPRUNSA, optimizando el tiempo de estudio.",
+    bgColor: "bg-green-50",
+    iconColor: "text-green-600",
+    borderColor: "hover:border-green-200",
+  },
+  {
+    icon: CheckCircle,
+    title: "Evaluación Continua",
+    description:
+      "Sistema de evaluaciones periódicas que permite monitorear el progreso y identificar áreas de mejora durante todo el proceso.",
+    bgColor: "bg-purple-50",
+    iconColor: "text-purple-600",
+    borderColor: "hover:border-purple-200",
   },
   {
     icon: Users,
-    title: "Talleres de Desarrollo Personal",
+    title: "Grupos Reducidos",
     description:
-      "Técnicas de estudio, manejo del tiempo, control de emociones y orientación académica.",
+      "Clases con número limitado de estudiantes para garantizar atención personalizada y un ambiente de aprendizaje óptimo.",
+    bgColor: "bg-orange-50",
+    iconColor: "text-orange-600",
+    borderColor: "hover:border-orange-200",
+  },
+  {
+    icon: Lightbulb,
+    title: "Técnicas de Estudio",
+    description:
+      "Enseñanza de métodos y técnicas de estudio efectivas que los estudiantes podrán aplicar durante y después de CEPRUNSA.",
+    bgColor: "bg-yellow-50",
+    iconColor: "text-yellow-600",
+    borderColor: "hover:border-yellow-200",
+  },
+  {
+    icon: TrendingUp,
+    title: "Seguimiento Personalizado",
+    description:
+      "Acompañamiento individual del progreso académico de cada estudiante con retroalimentación constante y planes de mejora.",
+    bgColor: "bg-red-50",
+    iconColor: "text-red-600",
+    borderColor: "hover:border-red-200",
   },
 ];
 
-// Stats data
-export const stats: Stat[] = [
-  { number: "3", label: "Procesos Anuales" },
-  { number: "10", label: "Semanas de Preparación" },
-  { number: "15", label: "Cursos" },
+export const faqs = [
+  {
+    question: "¿Qué es CEPRUNSA?",
+    answer:
+      "CEPRUNSA es una modalidad oficial de ingreso directo a la Universidad Nacional de San Agustín de Arequipa. Te prepara en 10 semanas intensivas con 15 cursos especializados para rendir tu propio examen de admisión.",
+  },
+  {
+    question: "¿Cuánto dura la preparación?",
+    answer:
+      "La preparación tiene una duración de 10 semanas intensivas, con clases de lunes a viernes en horarios matutinos o vespertinos según el proceso elegido.",
+  },
+  {
+    question: "¿Qué cursos incluye la preparación?",
+    answer:
+      "La preparación incluye 15 cursos especializados: Matemática, Física, Química, Biología, Lenguaje, Literatura, Historia del Perú, Historia Universal, Geografía, Economía, Filosofía, Psicología, Educación Cívica, Inglés y Razonamiento Matemático.",
+  },
+  {
+    question: "¿Cuál es la diferencia con el examen ordinario?",
+    answer:
+      "A diferencia del examen ordinario, en CEPRUNSA tu examen se basa completamente en el contenido académico desarrollado durante las 10 semanas de preparación, lo que significa que estudias exactamente lo que te van a evaluar.",
+  },
+  {
+    question: "¿Cuándo son los procesos de inscripción?",
+    answer:
+      "CEPRUNSA tiene tres procesos al año: CEPRUNSA I (marzo-junio), CEPRUNSA II (julio-octubre) y CEPRUNSA III (noviembre-febrero). Las fechas exactas se publican en nuestra página web.",
+  },
+  {
+    question: "¿Qué incluye el costo de inscripción?",
+    answer:
+      "El costo incluye las 10 semanas de preparación, material de estudio, simulacros semanales, asesoría personalizada, acceso a plataforma virtual y el derecho a rendir el examen de admisión.",
+  },
 ];
 
-// Programs data
+export const processesOptions: string[] = [
+  "CEPRUNSA I Fase",
+  "CEPRUNSA Ciclo Quintos",
+  "CEPRUNSA II Fase",
+  "Proceso Extraordinario",
+];
+
+export const contactInfo = [
+  {
+    title: "Dirección",
+    details: ["Av. Independencia 200, Arequipa, Perú"],
+    icon: MapPin,
+    color: "text-blue-600",
+  },
+  {
+    title: "Teléfono",
+    details: ["(054) 123-456"],
+    icon: Phone,
+    color: "text-green-600",
+  },
+  {
+    title: "Email",
+    details: ["info@ceprunsa.edu.pe"],
+    icon: Send,
+    color: "text-accent-600",
+  },
+  {
+    title: "WhatsApp",
+    details: ["+51 954 123 456"],
+    icon: MessageCircle,
+    color: "text-green-600",
+  },
+  {
+    title: "Horario de Atención",
+    details: ["Lunes a Viernes: 8:00 AM - 6:00 PM"],
+    icon: Calendar,
+    color: "text-red-600",
+  },
+];
 export const processes: Processes[] = [
   {
     title: "CEPRUNSA I Fase",
     duration: "10 semanas",
     schedule: "Preparación integral - 15 cursos",
     description:
-      "Primer proceso anual para estudiantes de 5to de secundaria y egresados. Modalidad principal de ingreso directo a la UNSA.",
+      "Primer proceso anual para estudiantes de 5to de secundaria y egresados. Modalidad inicial de ingreso directo a la UNSA.",
     features: [
-      "15 cursos especializados del programa CEPRUNSA",
+      "15 cursos especializados",
       "Banco de contenido digital por cada curso",
       "Prácticas semanales evaluadas y calificadas",
       "Seminarios de reforzamiento de temas clave",
@@ -95,7 +355,7 @@ export const processes: Processes[] = [
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
-    recommended: true,
+    recommended: false,
   },
   {
     title: "CEPRUNSA Ciclo Quintos",
@@ -120,7 +380,7 @@ export const processes: Processes[] = [
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
-    recommended: false,
+    recommended: true,
   },
   {
     title: "CEPRUNSA II Fase",
@@ -132,7 +392,7 @@ export const processes: Processes[] = [
       "Segunda convocatoria del año académico",
       "Misma preparación integral de 10 semanas",
       "15 cursos especializados actualizados",
-      "Banco de contenido digital renovado",
+      "Banco de contenido digital",
       "Prácticas intensivas y seminarios",
       "Talleres de desarrollo personal",
       "Nuevas vacantes disponibles para UNSA",
@@ -148,178 +408,6 @@ export const processes: Processes[] = [
     recommended: false,
   },
 ];
-
-// Testimonials data
-export const testimonials: Testimonial[] = [
-  {
-    name: "María González",
-    career: "Medicina Humana - UNSA",
-    text: "Gracias al proceso CEPRUNSA I Fase logré ingresar directamente a Medicina. La preparación en 10 semanas fue intensa pero muy efectiva.",
-    rating: 5,
-  },
-  {
-    name: "Carlos Mendoza",
-    career: "Ingeniería de Sistemas - UNSA",
-    text: "El banco de contenido digital y las prácticas semanales me prepararon perfectamente para el examen CEPRUNSA.",
-    rating: 5,
-  },
-  {
-    name: "Ana Quispe",
-    career: "Derecho - UNSA",
-    text: "Los talleres de manejo de emociones y técnicas de estudio fueron clave para mi éxito en el examen CEPRUNSA.",
-    rating: 5,
-  },
-];
-
-// Values data for About page - Updated with CEPRUNSA values
-export const values: Value[] = [
-  {
-    icon: Award,
-    title: "Excelencia Académica",
-    description:
-      "Fomentar el compromiso con la calidad en la enseñanza y el aprendizaje, promoviendo el esfuerzo y la dedicación hacia el logro de metas académicas.",
-  },
-  {
-    icon: Shield,
-    title: "Confianza",
-    description:
-      "Promover la seguridad y la credibilidad en las relaciones interpersonales, basadas en la honestidad y el respeto mutuo.",
-  },
-  {
-    icon: Heart,
-    title: "Empatía",
-    description:
-      "Fomentar la comprensión y la empatía hacia los demás, promoviendo un ambiente de respeto, compasión y apoyo mutuo entre los estudiantes y el personal del CEPRUNSA.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Innovación",
-    description:
-      "Fomentar la creatividad y el pensamiento original para generar nuevas ideas y soluciones para los desafíos presentes.",
-  },
-  {
-    icon: CheckCircle,
-    title: "Responsabilidad",
-    description:
-      "Cumplir con las obligaciones académicas y laborales con ética y eficiencia. Promover el sentido del deber en toda la comunidad.",
-  },
-  {
-    icon: Timer,
-    title: "Puntualidad",
-    description:
-      "Respetar el tiempo propio y ajeno, asegurando la puntualidad en todas las actividades. Cumplir con los compromisos a tiempo.",
-  },
-  {
-    icon: Handshake,
-    title: "Trabajo en Equipo",
-    description:
-      "Fomentar la colaboración y cooperación entre todos los miembros. Trabajar juntos para alcanzar metas comunes.",
-  },
-  {
-    icon: Star,
-    title: "Compromiso",
-    description:
-      "Dedicarse a los valores y objetivos de CEPRUNSA con responsabilidad. Asumir un compromiso personal y colectivo en el proceso educativo.",
-  },
-  {
-    icon: Eye,
-    title: "Respeto",
-    description:
-      "Fomentar la consideración y el trato digno hacia los demás, valorando la diversidad de ideas y opiniones. Promover un ambiente de convivencia basado en el respeto mutuo.",
-  },
-  {
-    icon: Scale,
-    title: "Probidad",
-    description:
-      "Actuar con integridad y honestidad en todas las acciones y decisiones. Mantener una conducta ética que refleje los principios de transparencia y rectitud.",
-  },
-  {
-    icon: Crown,
-    title: "Lealtad",
-    description:
-      "Ser fiel a los valores y objetivos de CEPRUNSA, mostrando un compromiso constante. Apoyar con sinceridad y confianza a la institución y a sus integrantes.",
-  },
-];
-
-// Achievements data for About page
-export const achievements = [
-  { number: "15+", label: "Años de Experiencia", icon: Clock },
-  { number: "95%", label: "Tasa de Ingreso", icon: Target },
-  { number: "2000+", label: "Estudiantes Ingresantes", icon: Users },
-  { number: "50+", label: "Docentes Especializados", icon: BookOpen },
-];
-
-// Contact information
-export const contactInfo: ContactInfo[] = [
-  {
-    icon: MapPin,
-    title: "Dirección",
-    details: ["Av. Independencia 123", "Arequipa, Perú"],
-    color: "text-accent-600",
-  },
-  {
-    icon: Phone,
-    title: "Teléfonos",
-    details: ["(054) 123-456", "(054) 789-012"],
-    color: "text-green-600",
-  },
-  {
-    icon: Mail,
-    title: "Email",
-    details: ["info@ceprunsa.edu.pe", "admisiones@ceprunsa.edu.pe"],
-    color: "text-blue-600",
-  },
-  {
-    icon: Clock,
-    title: "Horarios",
-    details: ["Lun - Vie: 8:00 AM - 8:00 PM", "Sáb: 8:00 AM - 2:00 PM"],
-    color: "text-purple-600",
-  },
-];
-
-// Process options for contact form
-export const processesOptions: string[] = [
-  "CEPRUNSA I Fase",
-  "CEPRUNSA Ciclo Quintos",
-  "CEPRUNSA II Fase",
-  "Proceso Extraordinario",
-];
-
-// FAQ data
-export const faqs = [
-  {
-    question: "¿Cuándo inician los procesos CEPRUNSA?",
-    answer:
-      "Tenemos 3 procesos anuales: CEPRUNSA I (marzo), Ciclo Quintos (junio) y CEPRUNSA II (septiembre). También hay un proceso extraordinario para casos especiales.",
-  },
-  {
-    question: "¿Qué diferencia hay entre CEPRUNSA y el examen ordinario?",
-    answer:
-      "CEPRUNSA es una modalidad oficial de ingreso directo donde el examen se basa en el contenido desarrollado durante las 10 semanas de preparación, a diferencia del examen ordinario que tiene un temario general.",
-  },
-  {
-    question: "¿Ofrecen becas o descuentos?",
-    answer:
-      "Sí, tenemos becas por mérito académico y descuentos por pronto pago. También ofrecemos facilidades de pago para todos nuestros procesos.",
-  },
-  {
-    question: "¿Qué incluye el material de estudio?",
-    answer:
-      "Banco de contenido digital por cada uno de los 15 cursos, material impreso, acceso a plataforma virtual, simulacros semanales y talleres de desarrollo personal.",
-  },
-  {
-    question: "¿Puedo cambiar de proceso CEPRUNSA?",
-    answer:
-      "Sí, puedes cambiar entre procesos según disponibilidad de cupos y cumpliendo con los requisitos específicos de cada modalidad.",
-  },
-  {
-    question: "¿Cómo funciona el proceso extraordinario?",
-    answer:
-      "Es una modalidad especial de 3 semanas con 3 cursos para casos específicos como primeros puestos, deportistas destacados, personas con discapacidad y bachillerato internacional.",
-  },
-];
-
-// Extraordinary process data
 export const extraordinaryRequirements = [
   "Titulados o graduados de universidades públicas o privadas",
   "Primer y segundo puesto de instituciones educativas secundarias",
@@ -341,76 +429,23 @@ export const extraordinaryPreparation = [
 export const processTimeline = [
   {
     title: "CEPRUNSA I Fase",
-    period: "Marzo - Mayo",
+    period: "Abril - Julio",
     description: "Primer proceso del año - Mayor demanda",
   },
   {
-    title: "Ciclo Quintos",
-    period: "Junio - Agosto",
+    title: "CEPRUNSA Ciclo Quintos",
+    period: "Agosto - Noviembre",
     description: "Exclusivo para estudiantes de 5to",
   },
   {
     title: "CEPRUNSA II Fase",
-    period: "Septiembre - Noviembre",
+    period: "Diciembre - Febrero",
     description: "Segunda oportunidad anual",
   },
-];
-
-// Team members data for About page
-export const teamMembers: TeamMember[] = [
   {
-    name: "Mg. Arnaldo Humberto Valdivia Loaiza",
-    role: "COORDINADOR ACADÉMICO",
+    title: "Proceso Extraordinario",
+    period: "Febrero",
     description:
-      "Docente especializado en Filosofía, con una maestría en Docencia Universitaria y Gestión Educativa. Actualmente es docente en la Universidad Nacional de San Agustín, con experiencia previa en diversas universidades peruanas desde 2003. En cuanto a su formación académica, es bachiller y licenciado en Filosofía por la Universidad Nacional de San Agustín de Arequipa, además de haber completado un diplomado en Desarrollo de Habilidades Digitales para el Aprendizaje y programas de formación docente en enseñanza e innovación.",
-    // image: "/images/team/arnaldo-valdivia.jpg", // Uncomment when image is available
-    cvLink: "https://example.com/cv/arnaldo-valdivia",
-  },
-  {
-    name: "Dra. Maria Elena Rojas Zegarra",
-    role: "DIRECTORA",
-    description:
-      "Doctora en Psicología por la Universidad Complutense de Madrid. Actualmente, cursa el Máster en Investigación Psicológica por la Universidad Internacional de La Rioja (UNIR), España. Posee un Diplomado Internacional en el Modelo de Terapia Breve de Resolución de Problemas del Brief Therapy Center de Palo Alto, California, y es experta en Psicoterapia Breve para Niños y Adolescentes por la Universidad San Jorge, España.",
-    // image: "/images/team/maria-rojas.jpg", // Uncomment when image is available
-    cvLink: "https://example.com/cv/maria-rojas",
-  },
-  {
-    name: "Mg. Jose Miguel Rojas Hualpa",
-    role: "COORDINADOR ADMINISTRATIVO",
-    description:
-      "Posee el grado en Ciencias Biológicas por la Universidad Nacional de San Agustín de Arequipa (2010) y el grado en Ingeniería Ambiental (2018). Es Magíster en Biología Funcional y Molecular por la Universidad Estadual de Campinas (2014). Fue investigador en el Laboratorio de Química de Proteínas de la Universidad Estadual de Campinas (2012 – 2014).",
-    // image: "/images/team/jose-rojas.jpg", // Uncomment when image is available
-    cvLink: "https://example.com/cv/jose-rojas",
-  },
-];
-
-// Methodology data for About page
-export const methodologyItems = [
-  {
-    icon: BookOpen,
-    title: "15 Cursos Especializados",
-    description:
-      "Contenido académico específicamente diseñado para el examen CEPRUNSA, con banco de contenido digital por cada curso.",
-    bgColor: "bg-accent-100",
-    iconColor: "text-accent-600",
-    borderColor: "hover:border-accent-200",
-  },
-  {
-    icon: Target,
-    title: "Prácticas Semanales",
-    description:
-      "Evaluaciones constantes que simulan el examen real, permitiendo un seguimiento detallado del progreso académico.",
-    bgColor: "bg-primary-100",
-    iconColor: "text-primary-600",
-    borderColor: "hover:border-primary-200",
-  },
-  {
-    icon: Users,
-    title: "Talleres Integrales",
-    description:
-      "Técnicas de estudio, manejo del tiempo, control de emociones y orientación académica personalizada.",
-    bgColor: "bg-accent-100",
-    iconColor: "text-accent-600",
-    borderColor: "hover:border-accent-200",
+      "Oportunidad para Primeros Puestos, COAR, deportistas destacados, personas con discapacidad y Titulados",
   },
 ];
