@@ -38,13 +38,17 @@ const Header: React.FC = () => {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const context = gsap.context(() => {
-      gsap.from("[data-header-item]", {
-        opacity: 0,
-        y: -10,
-        duration: 0.55,
-        stagger: 0.06,
-        ease: "power2.out",
-      });
+      gsap.fromTo(
+        "[data-header-item]",
+        { opacity: 0, y: -10 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          stagger: 0.06,
+          ease: "power2.out",
+        }
+      );
     }, headerRef);
     return () => context.revert();
   }, []);
