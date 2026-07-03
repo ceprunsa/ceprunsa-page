@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  BookOpen,
   Star,
   Award,
   Target,
@@ -32,7 +31,8 @@ const carouselItems: CarouselItem[] = [
   {
     type: "image",
     title: "Preparación que se vive en equipo",
-    description: "Aprendizaje activo, acompañamiento docente y objetivos claros.",
+    description:
+      "Aprendizaje activo, acompañamiento docente y objetivos claros.",
     image: "/ceprunsa-estudiantes-demo.jpg",
   },
   {
@@ -45,13 +45,15 @@ const carouselItems: CarouselItem[] = [
   {
     type: "image",
     title: "Conoce CEPRUNSA",
-    description: "Un espacio de preparación conectado con la comunidad universitaria.",
+    description:
+      "Un espacio de preparación conectado con la comunidad universitaria.",
     image: "/ceprunsa_local.jpeg",
   },
   {
     type: "image",
     title: "Ciclo Quintos",
-    description: "Una alternativa pensada para estudiantes de quinto de secundaria.",
+    description:
+      "Una alternativa pensada para estudiantes de quinto de secundaria.",
     image: "/ceprunsa_ciclo_quintos.png",
   },
 ];
@@ -93,10 +95,7 @@ const CountdownTimer: React.FC<{
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src={
-            backgroundImage ||
-            "/ceprunsa_ciclo_quintos.png"
-          }
+          src={backgroundImage || "/ceprunsa_ciclo_quintos.png"}
           alt="Inscripciones CEPRUNSA"
           className="w-full h-full object-cover"
         />
@@ -127,7 +126,9 @@ const CountdownTimer: React.FC<{
             <div className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-none">
               {timeLeft.days}
             </div>
-            <div className="text-sm sm:text-base text-primary-100 mt-2 font-medium">Días</div>
+            <div className="text-sm sm:text-base text-primary-100 mt-2 font-medium">
+              Días
+            </div>
           </div>
           <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 sm:p-4 lg:p-6 text-center shadow-lg">
             <div className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-none">
@@ -141,13 +142,17 @@ const CountdownTimer: React.FC<{
             <div className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-none">
               {timeLeft.minutes}
             </div>
-            <div className="text-sm sm:text-base text-primary-100 mt-2 font-medium">Min</div>
+            <div className="text-sm sm:text-base text-primary-100 mt-2 font-medium">
+              Min
+            </div>
           </div>
           <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 sm:p-4 lg:p-6 text-center shadow-lg">
             <div className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-none">
               {timeLeft.seconds}
             </div>
-            <div className="text-sm sm:text-base text-primary-100 mt-2 font-medium">Seg</div>
+            <div className="text-sm sm:text-base text-primary-100 mt-2 font-medium">
+              Seg
+            </div>
           </div>
         </div>
 
@@ -209,7 +214,7 @@ const HeroCarousel: React.FC = () => {
 
   const prevSlide = () => {
     setCurrentSlide(
-      (prev) => (prev - 1 + carouselItems.length) % carouselItems.length
+      (prev) => (prev - 1 + carouselItems.length) % carouselItems.length,
     );
   };
 
@@ -230,8 +235,8 @@ const HeroCarousel: React.FC = () => {
         onTouchEnd={onTouchEnd}
       >
         {currentItem.type === "countdown" &&
-          currentItem.eventDate &&
-          currentItem.eventTitle ? (
+        currentItem.eventDate &&
+        currentItem.eventTitle ? (
           <CountdownTimer
             targetDate={currentItem.eventDate}
             eventTitle={currentItem.eventTitle}
@@ -286,10 +291,11 @@ const HeroCarousel: React.FC = () => {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+              index === currentSlide
                 ? "bg-white scale-125 shadow-md"
                 : "bg-white/50 hover:bg-white/80"
-              }`}
+            }`}
             aria-label={`Ir a slide ${index + 1}`}
           />
         ))}
@@ -311,19 +317,19 @@ const Home: React.FC = () => {
     tl.fromTo(
       ".hero-title",
       { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 1, ease: "power2.out" }
+      { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
     )
       .fromTo(
         ".hero-subtitle",
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-        "-=0.5"
+        "-=0.5",
       )
       .fromTo(
         ".hero-buttons",
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-        "-=0.3"
+        "-=0.3",
       );
 
     // Features animation
@@ -340,7 +346,7 @@ const Home: React.FC = () => {
           trigger: featuresRef.current,
           start: "top 80%",
         },
-      }
+      },
     );
 
     // Stats animation
@@ -357,7 +363,7 @@ const Home: React.FC = () => {
           trigger: statsRef.current,
           start: "top 80%",
         },
-      }
+      },
     );
 
     // Testimonials animation
@@ -374,7 +380,7 @@ const Home: React.FC = () => {
           trigger: testimonialsRef.current,
           start: "top 80%",
         },
-      }
+      },
     );
 
     return () => {
@@ -414,7 +420,9 @@ const Home: React.FC = () => {
               <span className="text-accent-900 relative">CEPRUNSA</span>
             </h1>
             <p className="hero-subtitle text-base sm:text-lg lg:text-xl text-secondary-600 leading-relaxed max-w-3xl mx-auto">
-              Modalidad oficial de ingreso directo con preparación integral en 10 semanas, 15 cursos especializados y tu propio examen de admisión.
+              Modalidad oficial de ingreso directo con preparación integral en
+              10 semanas, 15 cursos especializados y tu propio examen de
+              admisión.
             </p>
             <div className="hero-buttons flex justify-center mt-6">
               <Link
