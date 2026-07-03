@@ -16,6 +16,7 @@ const About: React.FC = () => {
   const historyRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.fromTo(
       ".about-content",
       { opacity: 0, y: 50 },
@@ -60,6 +61,8 @@ const About: React.FC = () => {
         },
       }
     );
+
+    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }, []);
 
   return (
@@ -169,21 +172,17 @@ const About: React.FC = () => {
               </div>
             </div>
             <div ref={historyRef} className="history-image relative">
-              <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl p-8 shadow-2xl border border-gray-100">
-                {/* Simulated Image */}
-                <div className="w-full h-[400px] bg-gradient-to-br from-primary-100 via-accent-50 to-primary-200 rounded-xl flex items-center justify-center relative overflow-hidden">
-                  <div className="absolute inset-0 bg-pattern opacity-10"></div>
-                  <div className="text-center z-10">
-                    <Award
-                      className="text-primary-600 mx-auto mb-4"
-                      size={64}
-                    />
-                    <h3 className="text-2xl font-bold text-primary-700 mb-2">
-                      25 Años de Historia
-                    </h3>
-                    <p className="text-primary-600">Preparando Postulantes</p>
-                  </div>
-                  {/* Timeline elements */}
+              <div className="rounded-2xl bg-white p-3 shadow-large border border-primary-100 sm:p-4">
+                <div className="relative h-[300px] overflow-hidden rounded-xl sm:h-[400px]">
+                  <img
+                    src="/ceprunsa_local.jpeg"
+                    alt="Instalaciones de CEPRUNSA en Arequipa"
+                    width="848"
+                    height="355"
+                    loading="lazy"
+                    className="h-full w-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-950/55 via-transparent to-transparent" />
                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg">
                     <div className="text-sm font-bold text-accent-600">
                       2000
@@ -192,10 +191,13 @@ const About: React.FC = () => {
                   </div>
                   <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg">
                     <div className="text-sm font-bold text-accent-600">
-                      2025
+                      Hoy
                     </div>
                     <div className="text-xs text-gray-600">Actualidad</div>
                   </div>
+                  <p className="absolute bottom-5 left-5 max-w-xs text-sm font-semibold text-white drop-shadow">
+                    Más de dos décadas acompañando a postulantes de la región.
+                  </p>
                 </div>
               </div>
             </div>
@@ -391,7 +393,7 @@ const About: React.FC = () => {
                 <div className="relative mb-6">
                   {member.image ? (
                     <img
-                      src={member.image || "/placeholder.svg"}
+                      src={member.image}
                       alt={member.name}
                       className="w-24 h-24 rounded-full mx-auto object-cover group-hover:scale-110 transition-transform duration-300"
                     />

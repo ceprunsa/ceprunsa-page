@@ -31,31 +31,29 @@ interface CarouselItem {
 
 const carouselItems: CarouselItem[] = [
   {
-    type: "countdown",
-    title: "Próxima Apertura de Inscripciones",
-    description: "CEPRUNSA I Fase 2024 - No te pierdas esta oportunidad",
-    eventDate: "2025-07-14T00:00:00",
-    eventTitle: "Inicio de Inscripciones CEPRUNSA I",
-    image: "/placeholder.svg?height=400&width=600&text=Inscripciones+CEPRUNSA",
+    type: "image",
+    title: "Preparación que se vive en equipo",
+    description: "Aprendizaje activo, acompañamiento docente y objetivos claros.",
+    image: "/ceprunsa-estudiantes-demo.jpg",
   },
   {
     type: "image",
     title: "Estudiantes CEPRUNSA",
     description:
       "Preparándose para el examen de ingreso con metodología especializada",
-    image: "/placeholder.svg?height=400&width=600&text=Estudiantes+en+Clase",
+    image: "/home_image.jpeg",
   },
   {
     type: "image",
-    title: "Laboratorios Especializados",
-    description: "Instalaciones modernas para la preparación en ciencias",
-    image: "/placeholder.svg?height=400&width=600&text=Laboratorio+de+Ciencias",
+    title: "Conoce CEPRUNSA",
+    description: "Un espacio de preparación conectado con la comunidad universitaria.",
+    image: "/ceprunsa_local.jpeg",
   },
   {
     type: "image",
-    title: "Biblioteca Digital",
-    description: "Acceso completo a banco de contenido digital por cada curso",
-    image: "/placeholder.svg?height=400&width=600&text=Biblioteca+Digital",
+    title: "Ciclo Quintos",
+    description: "Una alternativa pensada para estudiantes de quinto de secundaria.",
+    image: "/ceprunsa_ciclo_quintos.png",
   },
 ];
 
@@ -98,7 +96,7 @@ const CountdownTimer: React.FC<{
         <img
           src={
             backgroundImage ||
-            "/placeholder.svg?height=500&width=800&text=CEPRUNSA+Inscripciones"
+            "/ceprunsa_ciclo_quintos.png"
           }
           alt="Inscripciones CEPRUNSA"
           className="w-full h-full object-cover"
@@ -223,7 +221,7 @@ const HeroCarousel: React.FC = () => {
   const currentItem = carouselItems[currentSlide];
 
   return (
-    <div className="relative bg-gradient-to-br from-white to-gray-50 rounded-2xl lg:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-100 hover:shadow-3xl transition-all duration-500">
+    <div className="relative w-full max-w-full overflow-hidden bg-gradient-to-br from-white to-gray-50 rounded-2xl lg:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-100 hover:shadow-3xl transition-all duration-500">
       <div
         className="relative overflow-hidden"
         onMouseEnter={() => setIsAutoPlaying(false)}
@@ -243,8 +241,12 @@ const HeroCarousel: React.FC = () => {
         ) : (
           <div className="w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[500px] relative overflow-hidden rounded-xl lg:rounded-2xl">
             <img
-              src={currentItem.image || "/placeholder.svg?height=500&width=800"}
+              src={currentItem.image || "/home_image.jpeg"}
               alt={currentItem.title}
+              width="1536"
+              height="1024"
+              loading={currentSlide === 0 ? "eager" : "lazy"}
+              fetchPriority={currentSlide === 0 ? "high" : "auto"}
               className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
             />
 
@@ -260,7 +262,7 @@ const HeroCarousel: React.FC = () => {
             </div>
 
             {/* Content overlay for image slides */}
-            <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">
+            <div className="absolute bottom-0 left-0 right-0 hidden p-4 text-white sm:block sm:p-6">
               <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 drop-shadow-lg">
                 {currentItem.title}
               </h3>
@@ -289,9 +291,6 @@ const HeroCarousel: React.FC = () => {
         </button>
 
         {/* Mobile swipe indicator */}
-        <div className="sm:hidden absolute bottom-2 right-2 bg-black/20 backdrop-blur-sm rounded-full px-3 py-1">
-          <span className="text-white text-xs">Desliza →</span>
-        </div>
       </div>
 
       {/* Slide Description - Only for non-countdown slides on mobile */}
@@ -339,6 +338,7 @@ const Home: React.FC = () => {
   const testimonialsRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     // Hero animations
     const tl = gsap.timeline();
     tl.fromTo(
@@ -415,6 +415,11 @@ const Home: React.FC = () => {
         },
       }
     );
+
+    return () => {
+      tl.kill();
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   }, []);
 
   return (
@@ -430,8 +435,8 @@ const Home: React.FC = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-primary-100 to-transparent rounded-full blur-3xl opacity-30"></div>
 
         <div className="container-custom relative">
-          <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-16 items-center">
-            <div className="space-y-6 lg:space-y-8 lg:col-span-2 order-2 lg:order-1">
+          <div className="grid min-w-0 grid-cols-1 items-center gap-8 lg:grid-cols-5 lg:gap-16">
+            <div className="min-w-0 space-y-6 lg:col-span-2 lg:space-y-8 order-2 lg:order-1">
               <div className="space-y-4 lg:space-y-6">
                 <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 lg:px-6 lg:py-3 rounded-full shadow-soft border border-primary-200 hover:shadow-medium transition-all duration-300">
                   <Award className="text-accent-600 mr-2 lg:mr-3" size={18} />
@@ -439,12 +444,12 @@ const Home: React.FC = () => {
                     Modalidad Oficial de Ingreso UNSA
                   </span>
                 </div>
-                <h1 className="hero-title font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-primary-700 leading-tight">
+                <h1 className="hero-title font-heading font-bold text-primary-700 leading-tight">
                   Ingresa a la{" "}
                   <span className="text-accent-900 relative">UNSA</span> por{" "}
                   <span className="text-accent-900 relative">CEPRUNSA</span>
                 </h1>
-                <p className="hero-subtitle text-lg sm:text-xl md:text-2xl text-secondary-600 leading-relaxed max-w-2xl">
+                <p className="hero-subtitle text-base sm:text-lg text-secondary-600 leading-relaxed max-w-2xl">
                   Modalidad oficial de ingreso directo con preparación integral
                   en 10 semanas, 15 cursos especializados y tu propio examen de
                   admisión.
@@ -453,7 +458,7 @@ const Home: React.FC = () => {
               <div className="hero-buttons">
                 <Link
                   to="/procesos"
-                  className="btn-primary text-lg lg:text-xl group inline-flex items-center"
+                  className="btn-primary text-sm sm:text-base group inline-flex items-center"
                 >
                   Ver Procesos CEPRUNSA
                   <Target
@@ -463,7 +468,7 @@ const Home: React.FC = () => {
                 </Link>
               </div>
             </div>
-            <div className="hero-carousel relative lg:col-span-3 order-1 lg:order-2">
+            <div className="hero-carousel relative min-w-0 w-full lg:col-span-3 order-1 lg:order-2">
               <HeroCarousel />
             </div>
           </div>

@@ -1,30 +1,30 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700&display=swap");
 
 @layer base {
   :root {
     --background: 0 0% 100%;
-    --foreground: 0 0% 0%;
+    --foreground: 224 37% 15%;
     --card: 0 0% 100%;
     --card-foreground: 0 0% 0%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 0%;
-    --primary: 225 29% 19%;
+    --primary: 226 53% 22%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 62%;
+    --secondary: 204 2% 54%;
     --secondary-foreground: 0 0% 100%;
     --muted: 0 0% 96%;
     --muted-foreground: 0 0% 45%;
-    --accent: 340 67% 25%;
+    --accent: 350 65% 29%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
     --border: 0 0% 90%;
     --input: 0 0% 90%;
-    --ring: 225 29% 19%;
-    --radius: 0.75rem;
+    --ring: 226 53% 22%;
+    --radius: 0.875rem;
   }
 
   html {
@@ -36,6 +36,8 @@
     background-color: hsl(var(--background));
     color: hsl(var(--foreground));
     line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
   }
 
   h1,
@@ -47,16 +49,27 @@
     font-family: "Poppins", system-ui, sans-serif;
     font-weight: 600;
     line-height: 1.2;
+    letter-spacing: -0.025em;
   }
+
+  :focus-visible {
+    outline: 3px solid rgba(122, 26, 43, 0.35);
+    outline-offset: 3px;
+  }
+
+  main h1 { font-size: clamp(2rem, 5vw, 3.5rem) !important; }
+  main h2 { font-size: clamp(1.65rem, 3.6vw, 2.35rem) !important; }
+  main h3 { font-size: clamp(1.1rem, 2vw, 1.35rem) !important; }
+  main p.text-xl, main p.text-2xl { font-size: clamp(1rem, 1.8vw, 1.125rem) !important; }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl;
+    @apply bg-accent-700 hover:bg-accent-800 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-medium hover:shadow-large;
   }
 
   .btn-secondary {
-    @apply bg-white border-2 border-accent-500 text-accent-600 hover:bg-accent-500 hover:text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 shadow-soft hover:shadow-medium;
+    @apply bg-white border border-accent-500 text-accent-700 hover:bg-accent-50 font-semibold py-3 px-6 rounded-xl transition-all duration-300 shadow-soft hover:shadow-medium;
   }
 
   .btn-outline {
@@ -72,11 +85,15 @@
   }
 
   .section-padding {
-    @apply py-20 md:py-20 lg:py-24;
+    @apply py-14 md:py-16 lg:py-20;
   }
 
   .container-custom {
-    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-5 sm:px-6 lg:px-8;
+  }
+
+  .container-custom > .grid > * {
+    min-width: 0;
   }
 
   .card-modern {
@@ -98,7 +115,7 @@
   .bg-pattern {
     background-image: radial-gradient(
       circle at 1px 1px,
-      rgba(29, 34, 64, 0.05) 1px,
+      rgba(26, 40, 85, 0.06) 1px,
       transparent 0
     );
     background-size: 20px 20px;
@@ -163,7 +180,7 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #601020, #1d2240);
+  background: linear-gradient(to bottom, #7a1a2b, #1a2855);
   border-radius: 4px;
 }
 
@@ -173,11 +190,20 @@
 
 /* Selection styles */
 ::selection {
-  background-color: rgba(96, 16, 32, 0.2);
-  color: #601020;
+  background-color: rgba(122, 26, 43, 0.18);
+  color: #7a1a2b;
 }
 
 ::-moz-selection {
-  background-color: rgba(96, 16, 32, 0.2);
-  color: #601020;
+  background-color: rgba(122, 26, 43, 0.18);
+  color: #7a1a2b;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

@@ -33,6 +33,7 @@ const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.fromTo(
       ".contact-info",
       { opacity: 0, x: -50 },
@@ -78,6 +79,8 @@ const Contact: React.FC = () => {
         },
       }
     );
+
+    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }, []);
 
   const handleInputChange = (
@@ -171,28 +174,21 @@ const Contact: React.FC = () => {
                 ))}
               </div>
 
-              {/* Map placeholder */}
-              <div className="mt-10 bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl h-80 flex items-center justify-center relative overflow-hidden shadow-soft hover:shadow-medium transition-all duration-300">
-                <div className="absolute inset-0 bg-pattern opacity-10"></div>
-                <div className="text-center z-10">
-                  <MapPin className="text-gray-400 mx-auto mb-4" size={64} />
-                  <h3 className="text-xl font-bold text-gray-600 mb-2">
-                    Ubicación CEPRUNSA
-                  </h3>
-                  <p className="text-gray-500">Mapa interactivo próximamente</p>
+              <a
+                href="https://www.google.com/maps/search/?api=1&query=CEPRUNSA+Arequipa"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group relative mt-10 block h-72 overflow-hidden rounded-2xl shadow-soft sm:h-80"
+                aria-label="Buscar la ubicación de CEPRUNSA en Google Maps"
+              >
+                <img src="/ceprunsa_local.jpeg" alt="Sede de CEPRUNSA" width="848" height="355" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary-950/80 via-primary-900/10 to-transparent" />
+                <div className="absolute bottom-0 left-0 p-6 text-white">
+                  <MapPin className="mb-2 text-accent-300" size={25} />
+                  <h3 className="font-heading text-xl font-bold">Ubicación CEPRUNSA</h3>
+                  <p className="mt-1 text-sm text-primary-100">Abrir indicaciones en Google Maps</p>
                 </div>
-                {/* Location markers */}
-                <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg">
-                  <div className="text-sm font-bold text-accent-600">UNSA</div>
-                  <div className="text-xs text-gray-600">Universidad</div>
-                </div>
-                <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg">
-                  <div className="text-sm font-bold text-primary-600">
-                    CEPRUNSA
-                  </div>
-                  <div className="text-xs text-gray-600">Centro</div>
-                </div>
-              </div>
+              </a>
             </div>
 
             {/* Contact Form */}

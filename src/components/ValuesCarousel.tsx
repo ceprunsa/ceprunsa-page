@@ -34,6 +34,10 @@ const ValuesCarousel: React.FC = () => {
 
   const maxIndex = Math.max(0, values.length - itemsPerView);
 
+  useEffect(() => {
+    setCurrentIndex((index) => Math.min(index, maxIndex));
+  }, [maxIndex]);
+
   // Auto-play functionality
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -97,6 +101,7 @@ const ValuesCarousel: React.FC = () => {
       <div className="overflow-hidden">
         <div
           className="flex transition-transform duration-500 ease-in-out"
+          aria-live="polite"
           style={{
             transform: `translateX(-${currentIndex * (100 / itemsPerView)}%)`,
           }}
@@ -136,8 +141,7 @@ const ValuesCarousel: React.FC = () => {
       {/* Navigation arrows - Hidden on mobile */}
       <button
         onClick={prevSlide}
-        disabled={currentIndex === 0}
-        className="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 lg:-translate-x-6 bg-white hover:bg-gray-50 text-gray-800 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed items-center justify-center z-10"
+        className="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 lg:-translate-x-6 bg-white hover:bg-gray-50 text-gray-800 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 items-center justify-center z-10"
         aria-label="Valor anterior"
       >
         <ChevronLeft size={24} />
@@ -145,17 +149,14 @@ const ValuesCarousel: React.FC = () => {
 
       <button
         onClick={nextSlide}
-        disabled={currentIndex === maxIndex}
-        className="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 lg:translate-x-6 bg-white hover:bg-gray-50 text-gray-800 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed items-center justify-center z-10"
+        className="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 lg:translate-x-6 bg-white hover:bg-gray-50 text-gray-800 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 items-center justify-center z-10"
         aria-label="Siguiente valor"
       >
         <ChevronRight size={24} />
       </button>
 
       {/* Mobile swipe indicator */}
-      <div className="md:hidden absolute bottom-4 right-4 bg-black/20 backdrop-blur-sm rounded-full px-3 py-1">
-        <span className="text-white text-xs">Desliza →</span>
-      </div>
+      <p className="mt-4 text-center text-xs text-secondary-600 md:hidden">Desliza para explorar →</p>
 
       {/* Dots indicator */}
       <div className="flex justify-center mt-6 lg:mt-8 space-x-2">

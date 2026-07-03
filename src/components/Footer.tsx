@@ -1,140 +1,60 @@
 import type React from "react";
 import { Link } from "react-router-dom";
-import {
-  MapPin,
-  Phone,
-  Mail,
-  Facebook,
-  Instagram,
-  Youtube,
-} from "lucide-react";
+import { ArrowUpRight, Mail, MapPin } from "lucide-react";
 import type { NavItem } from "../types";
 
-const Footer: React.FC = () => {
-  const quickLinks: NavItem[] = [
-    { name: "Inicio", path: "/" },
-    { name: "Nosotros", path: "/nosotros" },
-    { name: "Procesos", path: "/procesos" },
-    { name: "Contacto", path: "/contacto" },
-  ];
+const quickLinks: NavItem[] = [
+  { name: "Inicio", path: "/" },
+  { name: "Nosotros", path: "/nosotros" },
+  { name: "Procesos", path: "/procesos" },
+  { name: "Contacto", path: "/contacto" },
+];
 
-  return (
-    <footer className="bg-primary-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-pattern opacity-5"></div>
-      <div className="container-custom section-padding relative">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-          {/* Logo y descripción */}
-          <div className="lg:col-span-2 space-y-6">
-            <div className="flex items-center space-x-4">
-              <div className="bg-gold-500 p-3 rounded-xl">
-                <img
-                  src="/logo-ceprunsa-white.png"
-                  alt="CEPRUNSA"
-                  className="h-12 w-auto"
-                />
-              </div>
-              <div>
-                <span className="font-heading font-bold text-2xl">
-                  CEPRUNSA
-                </span>
-                <p className="text-primary-200 text-sm">
-                  Centro Preuniversitario UNSA
-                </p>
-              </div>
-            </div>
-            <p className="text-primary-200 leading-relaxed max-w-md text-lg">
-              Centro de Estudios Preuniversitarios oficial de la Universidad
-              Nacional de San Agustín. Formamos a los futuros profesionales con
-              excelencia académica.
-            </p>
-            <div className="flex space-x-4">
-              <a
-                href="#"
-                className="bg-white/10 hover:bg-white/20 p-3 rounded-xl transition-all duration-300 hover:scale-110"
-                aria-label="Facebook"
-              >
-                <Facebook size={24} />
-              </a>
-              <a
-                href="#"
-                className="bg-white/10 hover:bg-white/20 p-3 rounded-xl transition-all duration-300 hover:scale-110"
-                aria-label="Instagram"
-              >
-                <Instagram size={24} />
-              </a>
-              <a
-                href="#"
-                className="bg-white/10 hover:bg-white/20 p-3 rounded-xl transition-all duration-300 hover:scale-110"
-                aria-label="YouTube"
-              >
-                <Youtube size={24} />
-              </a>
-            </div>
-          </div>
-
-          {/* Enlaces rápidos */}
-          <div className="space-y-6">
-            <h3 className="font-heading font-semibold text-xl mb-6 text-gold-400">
-              Enlaces Rápidos
-            </h3>
-            <ul className="space-y-4">
-              {quickLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    to={link.path}
-                    className="text-primary-200 hover:text-white transition-colors duration-300 flex items-center space-x-2 hover:translate-x-1"
-                  >
-                    <span>→</span>
-                    <span>{link.name}</span>
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Información de contacto */}
-          <div>
-            <h3 className="font-heading font-semibold text-xl mb-6 text-gold-400">
-              Contacto
-            </h3>
-            <div className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <div className="bg-white/10 hover:bg-white/20 p-2 rounded-lg">
-                  <MapPin size={20} className="text-gold-400" />
-                </div>
-                <div>
-                  <p className="text-primary-200 leading-relaxed">
-                    Av. Independencia 123
-                    <br />
-                    Arequipa, Perú
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="bg-white/10 hover:bg-white/20 p-2 rounded-lg">
-                  <Phone size={20} className="text-gold-400" />
-                </div>
-                <p className="text-primary-200">(054) 123-456</p>
-              </div>
-              <div className="flex items-center space-x-3">
-                <div className="bg-white/10 hover:bg-white/20 p-2 rounded-lg">
-                  <Mail size={20} className="text-gold-400" />
-                </div>
-                <p className="text-primary-200">info@ceprunsa.edu.pe</p>
-              </div>
-            </div>
-          </div>
+const Footer: React.FC = () => (
+  <footer className="relative overflow-hidden bg-primary-950 text-white">
+    <div className="absolute inset-0 bg-pattern opacity-10" aria-hidden="true" />
+    <div className="container-custom relative py-12 md:py-14">
+      <div className="grid gap-10 border-b border-white/10 pb-10 md:grid-cols-2 lg:grid-cols-4">
+        <div className="space-y-5 md:col-span-2">
+          <img src="/logo-ceprunsa-white.png" alt="CEPRUNSA" className="h-10 w-auto" />
+          <p className="max-w-lg text-sm leading-6 text-primary-200">
+            Centro Preuniversitario de la Universidad Nacional de San Agustín de Arequipa. Preparación académica orientada a los procesos de ingreso UNSA.
+          </p>
+          <a
+            href="https://sisadmision.unsa.edu.pe/pregrado/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-accent-300"
+          >
+            Portal de admisión <ArrowUpRight size={16} />
+          </a>
         </div>
 
-        <div className="border-t border-white/20 mt-16 pt-8 text-center">
-          <p className="text-primary-300">
-            © 2024 CEPRUNSA - Centro Preuniversitario UNSA. Todos los derechos
-            reservados.
-          </p>
+        <div>
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-accent-300">Explora</h2>
+          <ul className="space-y-3 text-sm">
+            {quickLinks.map((link) => (
+              <li key={link.path}>
+                <Link to={link.path} className="text-primary-200 transition-colors hover:text-white">{link.name}</Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-accent-300">Contacto</h2>
+          <div className="space-y-4 text-sm text-primary-200">
+            <p className="flex items-start gap-3"><MapPin className="mt-0.5 shrink-0 text-accent-300" size={17} /> Arequipa, Perú</p>
+            <Link to="/contacto" className="flex items-center gap-3 transition-colors hover:text-white"><Mail className="shrink-0 text-accent-300" size={17} /> Ver canales de atención</Link>
+          </div>
         </div>
       </div>
-    </footer>
-  );
-};
+      <div className="flex flex-col gap-2 pt-6 text-xs text-primary-300 sm:flex-row sm:items-center sm:justify-between">
+        <p>© {new Date().getFullYear()} CEPRUNSA. Todos los derechos reservados.</p>
+        <p>Universidad Nacional de San Agustín de Arequipa</p>
+      </div>
+    </div>
+  </footer>
+);
 
 export default Footer;

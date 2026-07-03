@@ -1,157 +1,142 @@
-"use client";
-
 import type React from "react";
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, GraduationCap } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { Link, NavLink, useLocation } from "react-router-dom";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 import { gsap } from "gsap";
 import type { NavItem } from "../types";
 
+const navItems: NavItem[] = [
+  { name: "Inicio", path: "/" },
+  { name: "Nosotros", path: "/nosotros" },
+  { name: "Procesos", path: "/procesos" },
+  { name: "Contacto", path: "/contacto" },
+];
+
 const Header: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-  const [isScrolled, setIsScrolled] = useState<boolean>(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = (): void => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => setIsScrolled(window.scrollY > 16);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
-    gsap.fromTo(
-      ".header-logo",
-      { opacity: 0, x: -50 },
-      { opacity: 1, x: 0, duration: 1, ease: "power2.out" }
-    );
-    gsap.fromTo(
-      ".nav-item",
-      { opacity: 0, y: -20 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        delay: 0.3,
-        ease: "power2.out",
-      }
-    );
-  }, []);
-
-  const navItems: NavItem[] = [
-    { name: "Inicio", path: "/" },
-    { name: "Nosotros", path: "/nosotros" },
-    { name: "Procesos", path: "/procesos" },
-    { name: "Contacto", path: "/contacto" },
-  ];
-
-  const handleMenuToggle = (): void => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const handleMenuClose = (): void => {
     setIsMenuOpen(false);
-  };
+  }, [location.pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isMenuOpen]);
+
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const context = gsap.context(() => {
+      gsap.from("[data-header-item]", {
+        opacity: 0,
+        y: -10,
+        duration: 0.55,
+        stagger: 0.06,
+        ease: "power2.out",
+      });
+    }, headerRef);
+    return () => context.revert();
+  }, []);
 
   return (
     <>
       <header
-        className={`fixed w-full z-50 transition-all duration-500 ${
+        ref={headerRef}
+        className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
           isScrolled
-            ? "glass-effect shadow-medium py-2"
-            : "bg-white/95 backdrop-blur-sm py-3 shadow-soft"
+            ? "border-primary-100 bg-white/95 shadow-soft backdrop-blur-xl"
+            : "border-transparent bg-white/90 backdrop-blur-md"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="flex items-center justify-between h-18">
-            {/* Logo Section - Simple and clean */}
-            <Link to="/" className="header-logo flex items-center">
-              <img
-                src="/logo-ceprunsa.png"
-                alt="CEPRUNSA"
-                className="h-10 md:h-12 w-auto"
-              />
-            </Link>
+        <div className="container-custom flex h-[72px] items-center justify-between">
+          <Link data-header-item to="/" className="flex items-center" aria-label="CEPRUNSA, inicio">
+            <img src="/logo-ceprunsa.png" alt="CEPRUNSA" className="h-9 w-auto sm:h-10" />
+          </Link>
 
-            {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center space-x-8">
-              {navItems.map((item) => (
-                <Link
-                  key={item.name}
-                  to={item.path}
-                  className={`nav-item font-medium transition-all duration-300 hover:text-accent-900 relative ${
-                    location.pathname === item.path
-                      ? "text-accent-900"
-                      : "text-primary-600 hover:text-accent-900"
-                  }`}
-                >
-                  {item.name}
-                  {location.pathname === item.path && (
-                    <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-accent-900 rounded-full"></span>
-                  )}
-                </Link>
-              ))}
-              <Link
-                to="https://sisadmision.unsa.edu.pe/pregrado/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="nav-item btn-primary text-sm px-6 py-2"
+          <nav className="hidden items-center gap-1 md:flex" aria-label="Navegación principal">
+            {navItems.map((item) => (
+              <NavLink
+                data-header-item
+                key={item.path}
+                to={item.path}
+                end={item.path === "/"}
+                className={({ isActive }) =>
+                  `rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors ${
+                    isActive
+                      ? "bg-primary-50 text-accent-700"
+                      : "text-primary-700 hover:bg-primary-50 hover:text-accent-700"
+                  }`
+                }
               >
-                <GraduationCap className="mr-2 inline-block h-4 w-4" />
-                Inscríbete
-              </Link>
-            </nav>
-
-            {/* Mobile Menu Button */}
-            <button
-              className="md:hidden p-2 text-primary-600 hover:text-primary-700 transition-colors duration-200"
-              onClick={handleMenuToggle}
-              aria-label="Toggle menu"
+                {item.name}
+              </NavLink>
+            ))}
+            <a
+              data-header-item
+              href="https://sisadmision.unsa.edu.pe/pregrado/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-3 inline-flex items-center gap-2 rounded-xl bg-accent-700 px-4 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:bg-accent-800 hover:shadow-medium"
             >
-              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
-          </div>
+              Inscríbete <ArrowUpRight size={16} aria-hidden="true" />
+            </a>
+          </nav>
 
-          {/* Mobile Navigation */}
-          {isMenuOpen && (
-            <div className="md:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1 bg-white/95 backdrop-blur-sm border-t border-gray-200 shadow-lg rounded-b-lg">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.name}
-                    to={item.path}
-                    className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-300 ${
-                      location.pathname === item.path
-                        ? "text-accent-900 bg-accent-50"
-                        : "text-primary-600 hover:text-accent-900 hover:bg-primary-50"
-                    }`}
-                    onClick={handleMenuClose}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
-                <div className="pt-2">
-                  <Link
-                    to="https://sisadmision.unsa.edu.pe/pregrado/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="block w-full text-center btn-primary py-3"
-                    onClick={handleMenuClose}
-                  >
-                    <GraduationCap className="mr-2 inline-block h-4 w-4" />
-                    Inscríbete
-                  </Link>
-                </div>
-              </div>
-            </div>
-          )}
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-primary-100 text-primary-700 transition hover:bg-primary-50 md:hidden"
+            onClick={() => setIsMenuOpen((open) => !open)}
+            aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-navigation"
+          >
+            {isMenuOpen ? <X size={22} /> : <Menu size={22} />}
+          </button>
+        </div>
+
+        <div
+          id="mobile-navigation"
+          className={`overflow-hidden border-t border-primary-100 bg-white transition-[max-height,opacity] duration-300 md:hidden ${
+            isMenuOpen ? "max-h-[420px] opacity-100" : "max-h-0 border-transparent opacity-0"
+          }`}
+        >
+          <nav className="container-custom space-y-1 py-4" aria-label="Navegación móvil">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                end={item.path === "/"}
+                className={({ isActive }) =>
+                  `block rounded-xl px-4 py-3 text-sm font-semibold ${
+                    isActive ? "bg-primary-50 text-accent-700" : "text-primary-700 hover:bg-gray-50"
+                  }`
+                }
+              >
+                {item.name}
+              </NavLink>
+            ))}
+            <a
+              href="https://sisadmision.unsa.edu.pe/pregrado/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-accent-700 px-4 py-3 text-sm font-semibold text-white"
+            >
+              Inscríbete <ArrowUpRight size={16} />
+            </a>
+          </nav>
         </div>
       </header>
-
-      {/* Standard spacer */}
-      <div className="h-18"></div>
+      <div className="h-[72px]" aria-hidden="true" />
     </>
   );
 };

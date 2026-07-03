@@ -17,52 +17,52 @@ module.exports = {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
 
-        // Colores principales basados en el logo CEPRUNSA
+        // Paleta institucional UNSA
         primary: {
-          DEFAULT: "#1D2240", // Azul marino del logo
+          DEFAULT: "#1a2855",
           foreground: "#ffffff",
-          50: "#f8f9fb",
-          100: "#f1f3f7",
-          200: "#e3e7ef",
-          300: "#d1d7e3",
-          400: "#9ca6c0",
-          500: "#1D2240", // Color principal del logo
-          600: "#1a1e39",
-          700: "#171a32",
-          800: "#14162b",
-          900: "#0f1120",
-          950: "#0a0c18",
+          50: "#f4f6fb",
+          100: "#e6eaf4",
+          200: "#c9d1e5",
+          300: "#a6b2d1",
+          400: "#7485b1",
+          500: "#3a4875",
+          600: "#263865",
+          700: "#1a2855",
+          800: "#141f43",
+          900: "#0f1733",
+          950: "#080d1f",
         },
 
         // Rojo granate del logo como color de acento
         accent: {
-          DEFAULT: "#601020", // Paleta sugerida - rojo granate
+          DEFAULT: "#7a1a2b",
           foreground: "#ffffff",
           50: "#fef2f4",
           100: "#fde2e7",
           200: "#fbc9d4",
           300: "#f7a3b4",
-          400: "#f06d8a",
-          500: "#e53e64",
-          600: "#d12651",
-          700: "#b01a42",
-          800: "#94173d",
-          900: "#601020", // Color sugerido
-          950: "#4a0c19",
+          400: "#b85f70",
+          500: "#9a3a4b",
+          600: "#8a2538",
+          700: "#7a1a2b",
+          800: "#641522",
+          900: "#4f101c",
+          950: "#310811",
         },
 
         // Grises neutros basados en la paleta sugerida
         secondary: {
-          DEFAULT: "#9F9797", // Gris de la paleta sugerida
+          DEFAULT: "#888b8d",
           foreground: "#ffffff",
           50: "#fafafa",
           100: "#f5f5f5",
           200: "#e5e5e5",
-          300: "#d4d4d4",
-          400: "#a3a3a3",
-          500: "#9F9797", // Color sugerido
-          600: "#737373",
-          700: "#525252",
+          300: "#c9cbcc",
+          400: "#a8abad",
+          500: "#888b8d",
+          600: "#64686a",
+          700: "#484c4e",
           800: "#404040",
           900: "#262626",
           950: "#171717",
@@ -86,8 +86,8 @@ module.exports = {
 
         // Colores adicionales del logo para detalles
         burgundy: {
-          DEFAULT: "#590F23", // Rojo oscuro del logo
-          light: "#731436", // Rojo medio del logo
+          DEFAULT: "#7a1a2b",
+          light: "#9a3a4b",
         },
 
         // Colores de estado manteniendo la formalidad
@@ -145,11 +145,11 @@ module.exports = {
         heading: ["Poppins", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        soft: "0 2px 15px -3px rgba(29, 34, 64, 0.07), 0 10px 20px -2px rgba(29, 34, 64, 0.04)",
+        soft: "0 8px 28px -18px rgba(26, 40, 85, 0.28)",
         medium:
-          "0 4px 25px -5px rgba(29, 34, 64, 0.1), 0 10px 10px -5px rgba(29, 34, 64, 0.04)",
+          "0 16px 36px -20px rgba(26, 40, 85, 0.32)",
         large:
-          "0 10px 40px -10px rgba(29, 34, 64, 0.15), 0 20px 25px -5px rgba(29, 34, 64, 0.1)",
+          "0 24px 56px -24px rgba(26, 40, 85, 0.38)",
         glow: "0 0 20px rgba(29, 34, 64, 0.15)",
         "glow-red": "0 0 20px rgba(96, 16, 32, 0.15)",
         "glow-accent": "0 0 20px rgba(96, 16, 32, 0.15)",

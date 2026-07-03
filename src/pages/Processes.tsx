@@ -34,6 +34,7 @@ const Processes: React.FC = () => {
   const comparisonRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.fromTo(
       ".program-card",
       { opacity: 0, y: 50 },
@@ -81,6 +82,8 @@ const Processes: React.FC = () => {
         },
       }
     );
+
+    return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   }, []);
 
   return (
@@ -93,7 +96,7 @@ const Processes: React.FC = () => {
           <div className="text-center">
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-primary-700 mb-6">
               Procesos{" "}
-              <span className="text-accent-900 relative">CEPRUNSA</span> 2024
+              <span className="text-accent-900 relative">CEPRUNSA</span>
             </h1>
             <p className="text-xl text-secondary-600 max-w-3xl mx-auto mb-8">
               Modalidad oficial de ingreso directo a la UNSA con tres procesos
@@ -515,21 +518,20 @@ const Processes: React.FC = () => {
             </p>
           </div>
 
-          {/* Simulated Timeline */}
           <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-accent-400 to-primary-400 rounded-full"></div>
+            <div className="absolute left-2 h-full w-0.5 bg-gradient-to-b from-accent-400 to-primary-400 md:left-1/2 md:-translate-x-1/2"></div>
 
             <div className="space-y-12">
               {processTimeline.map((process, index) => (
                 <div
                   key={index}
-                  className={`flex items-center ${
-                    index % 2 === 0 ? "flex-row" : "flex-row-reverse"
+                  className={`relative flex items-center ${
+                    index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
                   }`}
                 >
                   <div
-                    className={`w-1/2 ${
-                      index % 2 === 0 ? "pr-8 text-right" : "pl-8 text-left"
+                    className={`ml-8 w-[calc(100%-2rem)] md:ml-0 md:w-1/2 ${
+                      index % 2 === 0 ? "md:pr-8 md:text-right" : "md:pl-8 md:text-left"
                     }`}
                   >
                     <div className="bg-white p-6 rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100">
@@ -542,10 +544,10 @@ const Processes: React.FC = () => {
                       <p className="text-gray-600">{process.description}</p>
                     </div>
                   </div>
-                  <div className="relative z-10">
+                  <div className="absolute left-0.5 z-10 md:relative md:left-auto">
                     <div className="w-4 h-4 bg-gradient-to-r from-accent-500 to-primary-500 rounded-full border-4 border-white shadow-lg"></div>
                   </div>
-                  <div className="w-1/2"></div>
+                  <div className="hidden w-1/2 md:block"></div>
                 </div>
               ))}
             </div>

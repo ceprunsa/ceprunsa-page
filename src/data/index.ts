@@ -82,77 +82,77 @@ export const values = [
     title: "Excelencia Académica",
     description:
       "Fomentar el compromiso con la calidad en la enseñanza y el aprendizaje, promoviendo el esfuerzo y la dedicación hacia el logro de metas académicas.",
-    color: "from-yellow-400 to-orange-500",
+    color: "from-accent-500 to-accent-700",
   },
   {
     icon: Shield,
     title: "Confianza",
     description:
       "Promover la seguridad y la credibilidad en las relaciones interpersonales, basadas en la honestidad y el respeto mutuo.",
-    color: "from-blue-400 to-indigo-500",
+    color: "from-primary-500 to-primary-700",
   },
   {
     icon: Heart,
     title: "Empatía",
     description:
       "Fomentar la comprensión y la empatía hacia los demás, promoviendo un ambiente de respeto, compasión y apoyo mutuo entre los estudiantes y el personal del CEPRUNSA.",
-    color: "from-red-400 to-pink-500",
+    color: "from-accent-400 to-accent-700",
   },
   {
     icon: Lightbulb,
     title: "Innovación",
     description:
       "Fomentar la creatividad y el pensamiento original para generar nuevas ideas y soluciones para los desafíos presentes.",
-    color: "from-purple-400 to-violet-500",
+    color: "from-primary-400 to-primary-700",
   },
   {
     icon: CheckCircle,
     title: "Responsabilidad",
     description:
       "Cumplir con las obligaciones académicas y laborales con ética y eficiencia. Promover el sentido del deber en toda la comunidad.",
-    color: "from-green-400 to-emerald-500",
+    color: "from-accent-500 to-accent-800",
   },
   {
     icon: Clock,
     title: "Puntualidad",
     description:
       "Respetar el tiempo propio y ajeno, asegurando la puntualidad en todas las actividades. Cumplir con los compromisos a tiempo.",
-    color: "from-teal-400 to-cyan-500",
+    color: "from-primary-500 to-primary-800",
   },
   {
     icon: Handshake,
     title: "Trabajo en Equipo",
     description:
       "Fomentar la colaboración y cooperación entre todos los miembros. Trabajar juntos para alcanzar metas comunes.",
-    color: "from-indigo-400 to-blue-500",
+    color: "from-primary-400 to-primary-700",
   },
   {
     icon: Star,
     title: "Compromiso",
     description:
       "Dedicarse a los valores y objetivos de CEPRUNSA con responsabilidad. Asumir un compromiso personal y colectivo en el proceso educativo.",
-    color: "from-orange-400 to-red-500",
+    color: "from-accent-400 to-accent-700",
   },
   {
     icon: Eye,
     title: "Respeto",
     description:
       "Fomentar la consideración y el trato digno hacia los demás, valorando la diversidad de ideas y opiniones. Promover un ambiente de convivencia basado en el respeto mutuo.",
-    color: "from-pink-400 to-rose-500",
+    color: "from-primary-500 to-primary-700",
   },
   {
     icon: Scale,
     title: "Probidad",
     description:
       "Actuar con integridad y honestidad en todas las acciones y decisiones. Mantener una conducta ética que refleje los principios de transparencia y rectitud.",
-    color: "from-violet-400 to-purple-500",
+    color: "from-accent-500 to-accent-800",
   },
   {
     icon: Crown,
     title: "Lealtad",
     description:
       "Ser fiel a los valores y objetivos de CEPRUNSA, mostrando un compromiso constante. Apoyar con sinceridad y confianza a la institución y a sus integrantes.",
-    color: "from-amber-400 to-yellow-500",
+    color: "from-primary-400 to-primary-700",
   },
 ];
 
@@ -196,54 +196,54 @@ export const methodologyItems = [
     title: "Aprendizaje Activo",
     description:
       "Metodología participativa que involucra al estudiante en su proceso de aprendizaje a través de ejercicios prácticos y resolución de problemas.",
-    bgColor: "bg-blue-50",
-    iconColor: "text-blue-600",
-    borderColor: "hover:border-blue-200",
+    bgColor: "bg-primary-50",
+    iconColor: "text-primary-700",
+    borderColor: "hover:border-primary-200",
   },
   {
     icon: Target,
     title: "Enfoque Dirigido",
     description:
       "Preparación específica y dirigida hacia el contenido exacto que se evaluará en el examen CEPRUNSA, optimizando el tiempo de estudio.",
-    bgColor: "bg-green-50",
-    iconColor: "text-green-600",
-    borderColor: "hover:border-green-200",
+    bgColor: "bg-accent-50",
+    iconColor: "text-accent-700",
+    borderColor: "hover:border-accent-200",
   },
   {
     icon: CheckCircle,
     title: "Evaluación Continua",
     description:
       "Sistema de evaluaciones periódicas que permite monitorear el progreso y identificar áreas de mejora durante todo el proceso.",
-    bgColor: "bg-purple-50",
-    iconColor: "text-purple-600",
-    borderColor: "hover:border-purple-200",
+    bgColor: "bg-primary-50",
+    iconColor: "text-primary-700",
+    borderColor: "hover:border-primary-200",
   },
   {
     icon: Users,
     title: "Grupos Reducidos",
     description:
       "Clases con número limitado de estudiantes para garantizar atención personalizada y un ambiente de aprendizaje óptimo.",
-    bgColor: "bg-orange-50",
-    iconColor: "text-orange-600",
-    borderColor: "hover:border-orange-200",
+    bgColor: "bg-accent-50",
+    iconColor: "text-accent-700",
+    borderColor: "hover:border-accent-200",
   },
   {
     icon: Lightbulb,
     title: "Técnicas de Estudio",
     description:
       "Enseñanza de métodos y técnicas de estudio efectivas que los estudiantes podrán aplicar durante y después de CEPRUNSA.",
-    bgColor: "bg-yellow-50",
-    iconColor: "text-yellow-600",
-    borderColor: "hover:border-yellow-200",
+    bgColor: "bg-primary-50",
+    iconColor: "text-primary-700",
+    borderColor: "hover:border-primary-200",
   },
   {
     icon: TrendingUp,
     title: "Seguimiento Personalizado",
     description:
       "Acompañamiento individual del progreso académico de cada estudiante con retroalimentación constante y planes de mejora.",
-    bgColor: "bg-red-50",
-    iconColor: "text-red-600",
-    borderColor: "hover:border-red-200",
+    bgColor: "bg-accent-50",
+    iconColor: "text-accent-700",
+    borderColor: "hover:border-accent-200",
   },
 ];
 
