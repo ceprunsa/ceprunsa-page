@@ -387,7 +387,7 @@ const About: React.FC = () => {
             {teamMembers.map((member, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-b from-gray-50 to-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 group"
+                className="bg-gradient-to-b from-gray-50 to-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 group flex flex-col h-full"
               >
                 {/* Profile Image or Icon */}
                 <div className="relative mb-6">
@@ -413,13 +413,13 @@ const About: React.FC = () => {
                   </p>
                 </div>
 
-                <p className="text-gray-600 text-sm leading-relaxed text-justify mb-6">
+                <p className="text-gray-600 text-sm leading-relaxed text-justify mb-6 flex-grow">
                   {member.description}
                 </p>
 
                 {/* CV Link */}
                 {member.cvLink && (
-                  <div className="text-center">
+                  <div className="text-center mt-auto">
                     <a
                       href={member.cvLink}
                       target="_blank"

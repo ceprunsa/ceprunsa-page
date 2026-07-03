@@ -9,6 +9,7 @@ interface CarreraData {
   url: string;
   imagen: string;
   descripcion: string;
+  codigo?: string;
 }
 
 const Carreras: React.FC = () => {
@@ -29,6 +30,7 @@ const Carreras: React.FC = () => {
             url: detalles.url || "#",
             imagen: detalles.imagen || "/home_image.jpeg",
             descripcion: detalles.por_que_estudiar?.descripcion || "Carrera profesional de la UNSA.",
+            codigo: detalles.codigo,
           });
         });
       });
@@ -176,15 +178,28 @@ const Carreras: React.FC = () => {
                     {carrera.descripcion}
                   </p>
                   
-                  <a
-                    href={carrera.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center w-full bg-primary-50 text-primary-700 hover:bg-primary-600 hover:text-white font-medium py-2.5 px-4 rounded-xl transition-colors duration-300 group/btn"
-                  >
-                    Ver Detalles Oficiales
-                    <ExternalLink size={16} className="ml-2 opacity-70 group-hover/btn:opacity-100" />
-                  </a>
+                  <div className="flex flex-col gap-2">
+                    <a
+                      href={carrera.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center w-full bg-primary-50 text-primary-700 hover:bg-primary-600 hover:text-white font-medium py-2.5 px-4 rounded-xl transition-colors duration-300 group/btn"
+                    >
+                      Ver Detalles Oficiales
+                      <ExternalLink size={16} className="ml-2 opacity-70 group-hover/btn:opacity-100" />
+                    </a>
+                    {carrera.codigo && (
+                      <a
+                        href={`http://extranet.unsa.edu.pe/tmp/plan_${carrera.codigo}_2025.pdf`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center justify-center w-full bg-accent-50 text-accent-700 hover:bg-accent-600 hover:text-white font-medium py-2.5 px-4 rounded-xl transition-colors duration-300 group/btn2"
+                      >
+                        Ver Plan de Estudios
+                        <ExternalLink size={16} className="ml-2 opacity-70 group-hover/btn2:opacity-100" />
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}

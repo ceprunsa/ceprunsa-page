@@ -169,24 +169,24 @@ export const teamMembers = [
     role: "COORDINADOR ACADÉMICO",
     description:
       "Docente especializado en Filosofía, con una maestría en Docencia Universitaria y Gestión Educativa. Actualmente es docente en la Universidad Nacional de San Agustín, con experiencia previa en diversas universidades peruanas desde 2003. En cuanto a su formación académica, es bachiller y licenciado en Filosofía por la Universidad Nacional de San Agustín de Arequipa, además de haber completado un diplomado en Desarrollo de Habilidades Digitales para el Aprendizaje y programas de formación docente en enseñanza e innovación.",
-    image: undefined, // Se puede agregar la URL de la imagen aquí
-    cvLink: "https://example.com/cv-arnaldo-valdivia", // URL del CV
+    image: "/DR-ARNALDO.jpg",
+    cvLink: "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=63640",
   },
   {
     name: "Dra. Maria Elena Rojas Zegarra",
     role: "DIRECTORA",
     description:
       "Doctora en Psicología por la Universidad Complutense de Madrid. Actualmente, cursa el Máster en Investigación Psicológica por la Universidad Internacional de La Rioja (UNIR), España. Posee un Diplomado Internacional en el Modelo de Terapia Breve de Resolución de Problemas del Brief Therapy Center de Palo Alto, California, y es experta en Psicoterapia Breve para Niños y Adolescentes por la Universidad San Jorge, España.",
-    image: undefined, // Se puede agregar la URL de la imagen aquí
-    cvLink: "https://example.com/cv-maria-rojas", // URL del CV
+    image: "/DRA-MARIA-ELENA-2.jpg",
+    cvLink: "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=20316",
   },
   {
     name: "Mg. Jose Miguel Rojas Hualpa",
     role: "COORDINADOR ADMINISTRATIVO",
     description:
       "Posee el grado en Ciencias Biológicas por la Universidad Nacional de San Agustín de Arequipa (2010) y el grado en Ingeniería Ambiental (2018). Es Magíster en Biología Funcional y Molecular por la Universidad Estadual de Campinas (2014). Fue investigador en el Laboratorio de Química de Proteínas de la Universidad Estadual de Campinas (2012 – 2014).",
-    image: undefined, // Se puede agregar la URL de la imagen aquí
-    cvLink: "https://example.com/cv-jose-rojas", // URL del CV
+    image: "/DR-JOSE.jpg",
+    cvLink: "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=150092",
   },
 ];
 

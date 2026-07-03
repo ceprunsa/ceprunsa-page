@@ -2,6 +2,7 @@ export const unsaCarreras = {
   "Biomédicas": {
     "AGRONOMÍA": {
       "Ingeniería Agronómica": {
+        "codigo": "401",
         "url": "https://admision.unsa.edu.pe/escuela/agronomia-2/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/agronomia-800x260.jpg",
         "por_que_estudiar": {
@@ -43,6 +44,7 @@ export const unsaCarreras = {
     },
     "CIENCIAS BIOLÓGICAS": {
       "Biología": {
+        "codigo": "402",
         "url": "https://admision.unsa.edu.pe/escuela/biologia/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/Biología-800x260.jpg",
         "por_que_estudiar": {
@@ -74,6 +76,7 @@ export const unsaCarreras = {
         ]
       },
       "Ciencias de la Nutrición": {
+        "codigo": "403",
         "url": "https://admision.unsa.edu.pe/escuela/ciencias-de-la-nutricion/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/nutricion-800x260.jpg",
         "por_que_estudiar": {
@@ -105,6 +108,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería Pesquera": {
+        "codigo": "404",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-pesquera/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/pesq-2-800x260.jpg",
         "por_que_estudiar": {
@@ -151,6 +155,7 @@ export const unsaCarreras = {
     },
     "ENFERMERÍA": {
       "Enfermería": {
+        "codigo": "405",
         "url": "https://admision.unsa.edu.pe/escuela/enfermeria/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/ENFERMERIA-800x260.jpg",
         "por_que_estudiar": {
@@ -180,6 +185,7 @@ export const unsaCarreras = {
     },
     "MEDICINA": {
       "Medicina": {
+        "codigo": "406",
         "url": "https://admision.unsa.edu.pe/escuela/medicina/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/medicos1-800x260.jpg",
         "por_que_estudiar": {
@@ -223,6 +229,7 @@ export const unsaCarreras = {
   "Ingenierías": {
     "ARQUITECTURA Y URBANISMO": {
       "Arquitectura": {
+        "codigo": "431",
         "url": "https://admision.unsa.edu.pe/escuela/arquitectura/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/arquitectura-fotomontaje-e1491420715381-800x260.jpg",
         "por_que_estudiar": {
@@ -254,6 +261,7 @@ export const unsaCarreras = {
     },
     "CIENCIAS NATURALES": {
       "Física": {
+        "codigo": "432",
         "url": "https://admision.unsa.edu.pe/escuela/fisica/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/fisica-800x260.jpg",
         "por_que_estudiar": {
@@ -298,6 +306,7 @@ export const unsaCarreras = {
         ]
       },
       "Matemáticas": {
+        "codigo": "433",
         "url": "https://admision.unsa.edu.pe/escuela/matematicas/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/IMG_1242-800x260.jpg",
         "por_que_estudiar": {
@@ -332,6 +341,7 @@ export const unsaCarreras = {
         ]
       },
       "Química": {
+        "codigo": "434",
         "url": "https://admision.unsa.edu.pe/escuela/quimica/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/quimica-2-800x260.jpg",
         "por_que_estudiar": {
@@ -371,6 +381,7 @@ export const unsaCarreras = {
     },
     "GEOLOGÍA, GEOFÍSICA Y MINAS": {
       "Ingeniería Geofísica": {
+        "codigo": "435",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-geofisica/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/geofisico-800x260.jpg",
         "por_que_estudiar": {
@@ -408,6 +419,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería Geológica": {
+        "codigo": "436",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-geologica/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/geologia-33-800x260.jpg",
         "por_que_estudiar": {
@@ -441,6 +453,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería de Minas": {
+        "codigo": "443",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-de-minas/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/mineria-2-e1491418850816-800x260.jpg",
         "por_que_estudiar": {
@@ -483,6 +496,7 @@ export const unsaCarreras = {
     },
     "INGENIERÍA CIVIL": {
       "Ingeniería Civil": {
+        "codigo": "440",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-civil/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/civil-1-800x260.jpg",
         "por_que_estudiar": {
@@ -522,6 +536,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería Sanitaria": {
+        "codigo": "451",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-sanitaria/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/04/sanitaria-800x260.jpg",
         "por_que_estudiar": {
@@ -563,6 +578,7 @@ export const unsaCarreras = {
     },
     "INGENIERÍA DE PROCESOS": {
       "Ingeniería Metalúrgica": {
+        "codigo": "441",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-metalurgica/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/Ingenieria-Metalurgica-800x260.jpg",
         "por_que_estudiar": {
@@ -599,6 +615,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería Química": {
+        "codigo": "442",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-quimica/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/IMG_0761-e1491228964170-800x260.jpg",
         "por_que_estudiar": {
@@ -641,6 +658,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería de Industrias Alimentarias": {
+        "codigo": "444",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-de-industrias-alimentarias/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/alimentarias-800x260.jpg",
         "por_que_estudiar": {
@@ -682,6 +700,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería de Materiales": {
+        "codigo": "445",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-de-materiales/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/Laboratorio-5-800x260.jpg",
         "por_que_estudiar": {
@@ -707,6 +726,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería Ambiental": {
+        "codigo": "449",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-ambiental/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/MG_1947-800x260.jpg",
         "por_que_estudiar": {
@@ -750,6 +770,7 @@ export const unsaCarreras = {
     },
     "INGENIERÍA DE PRODUCCIÓN Y SERVICIOS": {
       "Ingeniería Electrónica": {
+        "codigo": "437",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-electronica/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/electrica-800x260.jpg",
         "por_que_estudiar": {
@@ -779,6 +800,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería Industrial": {
+        "codigo": "438",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-industrial/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/10-800x260.jpg",
         "por_que_estudiar": {
@@ -819,6 +841,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería de Sistemas": {
+        "codigo": "446",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-de-sistemas/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/internet.espacio-700x260.jpg",
         "por_que_estudiar": {
@@ -846,6 +869,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería Eléctrica": {
+        "codigo": "447",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-electrica/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/electrica-4-1-800x260.jpg",
         "por_que_estudiar": {
@@ -882,6 +906,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería Mecánica": {
+        "codigo": "448",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-mecanica/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/04/depositphotos_9214449-stock-photo-mechanical-engineering-800x260.jpg",
         "por_que_estudiar": {
@@ -912,6 +937,7 @@ export const unsaCarreras = {
         ]
       },
       "Ciencia de la Computación": {
+        "codigo": "450",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-de-la-computacion/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/sistemas-800x260.jpg",
         "por_que_estudiar": {
@@ -951,6 +977,7 @@ export const unsaCarreras = {
         ]
       },
       "Ingeniería de Telecomunicaciones": {
+        "codigo": "452",
         "url": "https://admision.unsa.edu.pe/escuela/ingenieria-de-telecomunicaciones/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/informatica-800x260.jpg",
         "por_que_estudiar": {
@@ -978,6 +1005,7 @@ export const unsaCarreras = {
   "Sociales": {
     "ADMINISTRACIÓN": {
       "Administración": {
+        "codigo": "467",
         "url": "https://admision.unsa.edu.pe/escuela/administracion/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/Administración-800x260.jpg",
         "por_que_estudiar": {
@@ -1014,6 +1042,7 @@ export const unsaCarreras = {
         ]
       },
       "Marketing": {
+        "codigo": "487",
         "url": "https://admision.unsa.edu.pe/escuela/marketing/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/IMG_6291-800x260.jpg",
         "por_que_estudiar": {
@@ -1051,6 +1080,7 @@ export const unsaCarreras = {
         ]
       },
       "Banca y Seguros": {
+        "codigo": "488",
         "url": "https://admision.unsa.edu.pe/escuela/banca-y-seguros/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/banca-800x260.jpg",
         "por_que_estudiar": {
@@ -1086,6 +1116,7 @@ export const unsaCarreras = {
         ]
       },
       "Gestión": {
+        "codigo": "489",
         "url": "https://admision.unsa.edu.pe/escuela/gestion/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/FOTO-DE-PORTADA-e1490879972454-800x260.jpg",
         "por_que_estudiar": {
@@ -1119,6 +1150,7 @@ export const unsaCarreras = {
     },
     "CIENCIAS DE LA EDUCACIÓN": {
       "Educación": {
+        "codigo": "461",
         "url": "https://admision.unsa.edu.pe/escuela/educacion/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/educacion-e1490978225145-800x260.jpg",
         "por_que_estudiar": {
@@ -1161,6 +1193,7 @@ export const unsaCarreras = {
     },
     "CIENCIAS CONTABLES Y FINANCIERAS": {
       "Contabilidad": {
+        "codigo": "468",
         "url": "https://admision.unsa.edu.pe/escuela/contabilidad/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/Portada-contabilidad-800x260.jpg",
         "por_que_estudiar": {
@@ -1200,6 +1233,7 @@ export const unsaCarreras = {
         ]
       },
       "Finanzas": {
+        "codigo": "486",
         "url": "https://admision.unsa.edu.pe/escuela/finanzas/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/historicos-sociales-12alumnos-12-800x260.jpg",
         "por_que_estudiar": {
@@ -1238,6 +1272,7 @@ export const unsaCarreras = {
     },
     "CIENCIAS HISTÓRICO SOCIALES": {
       "Historia": {
+        "codigo": "463",
         "url": "https://admision.unsa.edu.pe/escuela/historia/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/historia.jpg",
         "por_que_estudiar": {
@@ -1270,6 +1305,7 @@ export const unsaCarreras = {
         ]
       },
       "Sociología": {
+        "codigo": "464",
         "url": "https://admision.unsa.edu.pe/escuela/sociologia/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/historicos-socialesalumnos_1-800x260.jpg",
         "por_que_estudiar": {
@@ -1307,6 +1343,7 @@ export const unsaCarreras = {
         ]
       },
       "Trabajo Social": {
+        "codigo": "465",
         "url": "https://admision.unsa.edu.pe/escuela/trabajo-social/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/SAM_3217-800x260.jpg",
         "por_que_estudiar": {
@@ -1340,6 +1377,7 @@ export const unsaCarreras = {
         ]
       },
       "Antropología": {
+        "codigo": "466",
         "url": "https://admision.unsa.edu.pe/escuela/antropologia/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/P1010657-800x260.jpg",
         "por_que_estudiar": {
@@ -1376,6 +1414,7 @@ export const unsaCarreras = {
         ]
       },
       "Turismo y Hotelería": {
+        "codigo": "479",
         "url": "https://admision.unsa.edu.pe/escuela/turismo-y-hoteleria/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/festi-gastro-800x260.jpg",
         "por_que_estudiar": {
@@ -1406,6 +1445,7 @@ export const unsaCarreras = {
     },
     "DERECHO": {
       "Derecho": {
+        "codigo": "469",
         "url": "https://admision.unsa.edu.pe/escuela/134/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/FOTO-DE-PORTADA-1-e1490884493668-800x260.jpg",
         "por_que_estudiar": {
@@ -1440,6 +1480,7 @@ export const unsaCarreras = {
     },
     "ECONOMÍA": {
       "Economía": {
+        "codigo": "470",
         "url": "https://admision.unsa.edu.pe/escuela/economia/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/areas-comunes-22alumnos-22-800x260.jpg",
         "por_que_estudiar": {
@@ -1472,6 +1513,7 @@ export const unsaCarreras = {
     },
     "FILOSOFÍA Y HUMANIDADES": {
       "Artes": {
+        "codigo": "471",
         "url": "https://admision.unsa.edu.pe/escuela/artes/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/IMG_1092-e1490982474683-800x260.jpg",
         "por_que_estudiar": {
@@ -1508,6 +1550,7 @@ export const unsaCarreras = {
         ]
       },
       "Filosofía": {
+        "codigo": "472",
         "url": "https://admision.unsa.edu.pe/escuela/filosofia/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/filosofia-800x260.png",
         "por_que_estudiar": {
@@ -1532,6 +1575,7 @@ export const unsaCarreras = {
         ]
       },
       "Literatura y Lingüística": {
+        "codigo": "473",
         "url": "https://admision.unsa.edu.pe/escuela/literatura-y-linguistica/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/literatura-555-e1490978393193-800x260.jpg",
         "por_que_estudiar": {
@@ -1570,6 +1614,7 @@ export const unsaCarreras = {
     },
     "PSICOLOGÍA, RELACIONES INDUSTRIALES Y COMUNICACIÓN": {
       "Psicología": {
+        "codigo": "474",
         "url": "https://admision.unsa.edu.pe/escuela/psicologia/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/2-e1490974395794-800x260.jpg",
         "por_que_estudiar": {
@@ -1605,6 +1650,7 @@ export const unsaCarreras = {
         ]
       },
       "Relaciones Industriales": {
+        "codigo": "475",
         "url": "https://admision.unsa.edu.pe/escuela/relaciones-industriales/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2023/10/WhatsApp-Image-2023-10-08-at-14.17.01-800x260.jpeg",
         "por_que_estudiar": {
@@ -1633,6 +1679,7 @@ export const unsaCarreras = {
         ]
       },
       "Ciencias de la Comunicación": {
+        "codigo": "478",
         "url": "https://admision.unsa.edu.pe/escuela/ciencias-de-la-comunicacion/",
         "imagen": "https://admision.unsa.edu.pe/wp-content/uploads/2017/03/areas-comunes-21alumnos-21-e1490974641731-800x260.jpg",
         "por_que_estudiar": {
