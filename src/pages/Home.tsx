@@ -17,7 +17,6 @@ import {
   Clock,
 } from "lucide-react";
 import { features, stats, testimonials } from "../data";
-
 gsap.registerPlugin(ScrollTrigger);
 
 interface CarouselItem {

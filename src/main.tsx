@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import Processes from "./pages/Processes";
 import Contact from "./pages/Contact";
+import Carreras from "./pages/Carreras";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "contacto",
         element: <Contact />,
+      },
+      {
+        path: "carreras",
+        element: <Carreras />,
       },
     ],
   },
