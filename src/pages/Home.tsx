@@ -17,7 +17,6 @@ import {
   Clock,
 } from "lucide-react";
 import { features, stats, testimonials } from "../data";
-
 gsap.registerPlugin(ScrollTrigger);
 
 interface CarouselItem {
@@ -90,7 +89,7 @@ const CountdownTimer: React.FC<{
   }, [targetDate]);
 
   return (
-    <div className="w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[500px] relative overflow-hidden rounded-xl lg:rounded-2xl">
+    <div className="w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[70vh] relative overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -105,55 +104,55 @@ const CountdownTimer: React.FC<{
       </div>
 
       {/* Floating elements */}
-      <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-white/20 backdrop-blur-sm p-2 sm:p-3 rounded-full">
-        <Calendar className="text-white" size={18} />
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-white/20 backdrop-blur-sm p-3 rounded-full">
+        <Calendar className="text-white" size={24} />
       </div>
-      <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 bg-white/20 backdrop-blur-sm p-2 sm:p-3 rounded-full">
-        <Clock className="text-white" size={18} />
+      <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6 bg-white/20 backdrop-blur-sm p-3 rounded-full">
+        <Clock className="text-white" size={24} />
       </div>
 
       {/* Content */}
       <div className="relative z-10 h-full flex flex-col items-center justify-center text-white px-4 sm:px-6">
-        <div className="text-center mb-4 sm:mb-6">
-          <h3 className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold mb-2 leading-tight">
+        <div className="text-center mb-6 sm:mb-8">
+          <h3 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl font-bold mb-3 leading-tight">
             {eventTitle}
           </h3>
-          <p className="text-primary-100 text-sm sm:text-base lg:text-lg">
+          <p className="text-primary-100 text-lg sm:text-xl lg:text-2xl">
             Faltan:
           </p>
         </div>
 
-        <div className="grid grid-cols-4 gap-2 sm:gap-3 lg:gap-4 mb-4 sm:mb-6 w-full max-w-sm sm:max-w-md lg:max-w-lg">
-          <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 sm:p-3 lg:p-4 text-center">
-            <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold leading-none">
+        <div className="grid grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-6 sm:mb-8 w-full max-w-lg sm:max-w-xl lg:max-w-2xl">
+          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 sm:p-4 lg:p-6 text-center shadow-lg">
+            <div className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-none">
               {timeLeft.days}
             </div>
-            <div className="text-xs sm:text-sm text-primary-100 mt-1">Días</div>
+            <div className="text-sm sm:text-base text-primary-100 mt-2 font-medium">Días</div>
           </div>
-          <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 sm:p-3 lg:p-4 text-center">
-            <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold leading-none">
+          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 sm:p-4 lg:p-6 text-center shadow-lg">
+            <div className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-none">
               {timeLeft.hours}
             </div>
-            <div className="text-xs sm:text-sm text-primary-100 mt-1">
+            <div className="text-sm sm:text-base text-primary-100 mt-2 font-medium">
               Horas
             </div>
           </div>
-          <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 sm:p-3 lg:p-4 text-center">
-            <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold leading-none">
+          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 sm:p-4 lg:p-6 text-center shadow-lg">
+            <div className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-none">
               {timeLeft.minutes}
             </div>
-            <div className="text-xs sm:text-sm text-primary-100 mt-1">Min</div>
+            <div className="text-sm sm:text-base text-primary-100 mt-2 font-medium">Min</div>
           </div>
-          <div className="bg-white/20 backdrop-blur-sm rounded-lg p-2 sm:p-3 lg:p-4 text-center">
-            <div className="text-lg sm:text-xl lg:text-2xl xl:text-3xl font-bold leading-none">
+          <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3 sm:p-4 lg:p-6 text-center shadow-lg">
+            <div className="text-3xl sm:text-4xl lg:text-5xl font-bold leading-none">
               {timeLeft.seconds}
             </div>
-            <div className="text-xs sm:text-sm text-primary-100 mt-1">Seg</div>
+            <div className="text-sm sm:text-base text-primary-100 mt-2 font-medium">Seg</div>
           </div>
         </div>
 
         <div className="text-center">
-          <p className="text-sm sm:text-base text-primary-100 opacity-90">
+          <p className="text-base sm:text-lg lg:text-xl text-primary-100 opacity-90 font-medium">
             ¡Prepárate para asegurar tu lugar en la UNSA!
           </p>
         </div>
@@ -221,9 +220,9 @@ const HeroCarousel: React.FC = () => {
   const currentItem = carouselItems[currentSlide];
 
   return (
-    <div className="relative w-full max-w-full overflow-hidden bg-gradient-to-br from-white to-gray-50 rounded-2xl lg:rounded-3xl p-4 sm:p-6 lg:p-8 shadow-2xl border border-gray-100 hover:shadow-3xl transition-all duration-500">
+    <div className="relative w-full overflow-hidden bg-gray-900 group">
       <div
-        className="relative overflow-hidden"
+        className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[70vh] overflow-hidden"
         onMouseEnter={() => setIsAutoPlaying(false)}
         onMouseLeave={() => setIsAutoPlaying(true)}
         onTouchStart={onTouchStart}
@@ -231,42 +230,32 @@ const HeroCarousel: React.FC = () => {
         onTouchEnd={onTouchEnd}
       >
         {currentItem.type === "countdown" &&
-        currentItem.eventDate &&
-        currentItem.eventTitle ? (
+          currentItem.eventDate &&
+          currentItem.eventTitle ? (
           <CountdownTimer
             targetDate={currentItem.eventDate}
             eventTitle={currentItem.eventTitle}
             backgroundImage={currentItem.image}
           />
         ) : (
-          <div className="w-full h-[280px] sm:h-[350px] md:h-[400px] lg:h-[500px] relative overflow-hidden rounded-xl lg:rounded-2xl">
+          <div className="w-full h-full relative overflow-hidden">
             <img
               src={currentItem.image || "/home_image.jpeg"}
               alt={currentItem.title}
-              width="1536"
-              height="1024"
               loading={currentSlide === 0 ? "eager" : "lazy"}
               fetchPriority={currentSlide === 0 ? "high" : "auto"}
-              className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
             />
 
             {/* Overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent"></div>
-
-            {/* Floating elements for image slides */}
-            <div className="absolute top-3 right-3 sm:top-4 sm:right-4 bg-white/80 backdrop-blur-sm p-2 sm:p-3 rounded-full shadow-lg">
-              <BookOpen className="text-accent-600" size={18} />
-            </div>
-            <div className="absolute bottom-3 left-3 sm:bottom-4 sm:left-4 bg-white/80 backdrop-blur-sm p-2 sm:p-3 rounded-full shadow-lg">
-              <Target className="text-primary-600" size={18} />
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
 
             {/* Content overlay for image slides */}
-            <div className="absolute bottom-0 left-0 right-0 hidden p-4 text-white sm:block sm:p-6">
-              <h3 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 drop-shadow-lg">
+            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-16 text-white container-custom mx-auto">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 drop-shadow-lg">
                 {currentItem.title}
               </h3>
-              <p className="text-sm sm:text-base text-gray-200 drop-shadow-md line-clamp-2">
+              <p className="text-base sm:text-lg lg:text-xl text-gray-200 drop-shadow-md max-w-2xl">
                 {currentItem.description}
               </p>
             </div>
@@ -276,56 +265,34 @@ const HeroCarousel: React.FC = () => {
         {/* Navigation Arrows - Hidden on mobile, visible on larger screens */}
         <button
           onClick={prevSlide}
-          className="hidden sm:flex absolute left-2 lg:left-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-2 lg:p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center"
+          className="hidden md:flex absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/90 text-white hover:text-gray-900 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100"
           aria-label="Imagen anterior"
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={24} />
         </button>
 
         <button
           onClick={nextSlide}
-          className="hidden sm:flex absolute right-2 lg:right-4 top-1/2 transform -translate-y-1/2 bg-white/90 hover:bg-white text-gray-800 p-2 lg:p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center"
+          className="hidden md:flex absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/90 text-white hover:text-gray-900 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100"
           aria-label="Siguiente imagen"
         >
-          <ChevronRight size={20} />
+          <ChevronRight size={24} />
         </button>
-
-        {/* Mobile swipe indicator */}
       </div>
 
-      {/* Slide Description - Only for non-countdown slides on mobile */}
-      {currentItem.type !== "countdown" && (
-        <div className="mt-3 sm:mt-4 text-center sm:hidden">
-          <h4 className="text-base font-semibold text-primary-700 mb-1">
-            {currentItem.title}
-          </h4>
-          <p className="text-secondary-600 text-sm line-clamp-2">
-            {currentItem.description}
-          </p>
-        </div>
-      )}
-
-      {/* Dots Indicator */}
-      <div className="flex justify-center mt-4 sm:mt-6 space-x-2">
+      {/* Dots Indicator inside the carousel */}
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-3 z-20">
         {carouselItems.map((_, index) => (
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? "bg-primary-600 scale-110 shadow-md"
-                : "bg-gray-300 hover:bg-gray-400"
-            }`}
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide
+                ? "bg-white scale-125 shadow-md"
+                : "bg-white/50 hover:bg-white/80"
+              }`}
             aria-label={`Ir a slide ${index + 1}`}
           />
         ))}
-      </div>
-
-      {/* Slide counter */}
-      <div className="text-center mt-2 sm:mt-3">
-        <span className="text-xs sm:text-sm text-gray-500">
-          {currentSlide + 1} de {carouselItems.length}
-        </span>
       </div>
     </div>
   );
@@ -357,12 +324,6 @@ const Home: React.FC = () => {
         { opacity: 0, y: 30 },
         { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
         "-=0.3"
-      )
-      .fromTo(
-        ".hero-carousel",
-        { opacity: 0, scale: 0.9 },
-        { opacity: 1, scale: 1, duration: 1, ease: "power2.out" },
-        "-=0.5"
       );
 
     // Features animation
@@ -427,49 +388,45 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <section
         ref={heroRef}
-        className="section-padding bg-gradient-to-br from-primary-50 via-white to-accent-50 relative overflow-hidden"
+        className="relative bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden flex flex-col"
       >
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-pattern opacity-5"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-accent-100 to-transparent rounded-full blur-3xl opacity-30"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-primary-100 to-transparent rounded-full blur-3xl opacity-30"></div>
+        <div className="absolute inset-0 bg-pattern opacity-5 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-accent-100 to-transparent rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-primary-100 to-transparent rounded-full blur-3xl opacity-30 pointer-events-none"></div>
 
-        <div className="container-custom relative">
-          <div className="grid min-w-0 grid-cols-1 items-center gap-8 lg:grid-cols-5 lg:gap-16">
-            <div className="min-w-0 space-y-6 lg:col-span-2 lg:space-y-8 order-2 lg:order-1">
-              <div className="space-y-4 lg:space-y-6">
-                <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 lg:px-6 lg:py-3 rounded-full shadow-soft border border-primary-200 hover:shadow-medium transition-all duration-300">
-                  <Award className="text-accent-600 mr-2 lg:mr-3" size={18} />
-                  <span className="text-xs lg:text-sm font-semibold text-gray-700">
-                    Modalidad Oficial de Ingreso UNSA
-                  </span>
-                </div>
-                <h1 className="hero-title font-heading font-bold text-primary-700 leading-tight">
-                  Ingresa a la{" "}
-                  <span className="text-accent-900 relative">UNSA</span> por{" "}
-                  <span className="text-accent-900 relative">CEPRUNSA</span>
-                </h1>
-                <p className="hero-subtitle text-base sm:text-lg text-secondary-600 leading-relaxed max-w-2xl">
-                  Modalidad oficial de ingreso directo con preparación integral
-                  en 10 semanas, 15 cursos especializados y tu propio examen de
-                  admisión.
-                </p>
-              </div>
-              <div className="hero-buttons">
-                <Link
-                  to="/procesos"
-                  className="btn-primary text-sm sm:text-base group inline-flex items-center"
-                >
-                  Ver Procesos CEPRUNSA
-                  <Target
-                    className="ml-2 lg:ml-3 group-hover:translate-x-1 transition-transform"
-                    size={20}
-                  />
-                </Link>
-              </div>
+        {/* Full Width Carousel */}
+        <div className="hero-carousel w-full relative z-10 shadow-2xl order-1">
+          <HeroCarousel />
+        </div>
+
+        <div className="container-custom relative pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20 z-10 text-center order-2">
+          <div className="max-w-4xl mx-auto space-y-6 lg:space-y-8">
+            <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 lg:px-6 lg:py-3 rounded-full shadow-soft border border-primary-200 hover:shadow-medium transition-all duration-300 mx-auto">
+              <Award className="text-accent-600 mr-2 lg:mr-3" size={18} />
+              <span className="text-xs lg:text-sm font-semibold text-gray-700">
+                Modalidad Oficial de Ingreso UNSA
+              </span>
             </div>
-            <div className="hero-carousel relative min-w-0 w-full lg:col-span-3 order-1 lg:order-2">
-              <HeroCarousel />
+            <h1 className="hero-title font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-primary-700 leading-tight">
+              Ingresa a la{" "}
+              <span className="text-accent-900 relative">UNSA</span> por{" "}
+              <span className="text-accent-900 relative">CEPRUNSA</span>
+            </h1>
+            <p className="hero-subtitle text-base sm:text-lg lg:text-xl text-secondary-600 leading-relaxed max-w-3xl mx-auto">
+              Modalidad oficial de ingreso directo con preparación integral en 10 semanas, 15 cursos especializados y tu propio examen de admisión.
+            </p>
+            <div className="hero-buttons flex justify-center mt-6">
+              <Link
+                to="/procesos"
+                className="btn-primary text-sm sm:text-base group inline-flex items-center shadow-lg hover:shadow-xl transition-all"
+              >
+                Ver Procesos CEPRUNSA
+                <Target
+                  className="ml-2 lg:ml-3 group-hover:translate-x-1 transition-transform"
+                  size={20}
+                />
+              </Link>
             </div>
           </div>
         </div>

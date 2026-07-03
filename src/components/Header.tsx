@@ -9,6 +9,7 @@ const navItems: NavItem[] = [
   { name: "Inicio", path: "/" },
   { name: "Nosotros", path: "/nosotros" },
   { name: "Procesos", path: "/procesos" },
+  { name: "Carreras", path: "/carreras" },
   { name: "Contacto", path: "/contacto" },
 ];
 
@@ -37,13 +38,17 @@ const Header: React.FC = () => {
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     const context = gsap.context(() => {
-      gsap.from("[data-header-item]", {
-        opacity: 0,
-        y: -10,
-        duration: 0.55,
-        stagger: 0.06,
-        ease: "power2.out",
-      });
+      gsap.fromTo(
+        "[data-header-item]",
+        { opacity: 0, y: -10 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          stagger: 0.06,
+          ease: "power2.out",
+        }
+      );
     }, headerRef);
     return () => context.revert();
   }, []);
@@ -54,13 +59,13 @@ const Header: React.FC = () => {
         ref={headerRef}
         className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
           isScrolled
-            ? "border-primary-100 bg-white/95 shadow-soft backdrop-blur-xl"
-            : "border-transparent bg-white/90 backdrop-blur-md"
+            ? "border-accent-800 bg-accent-700/95 shadow-soft backdrop-blur-xl"
+            : "border-transparent bg-accent-700/95 backdrop-blur-md"
         }`}
       >
         <div className="container-custom flex h-[72px] items-center justify-between">
           <Link data-header-item to="/" className="flex items-center" aria-label="CEPRUNSA, inicio">
-            <img src="/logo-ceprunsa.png" alt="CEPRUNSA" className="h-9 w-auto sm:h-10" />
+            <img src="/logo-ceprunsa-white.png" alt="CEPRUNSA" className="h-9 w-auto sm:h-10" />
           </Link>
 
           <nav className="hidden items-center gap-1 md:flex" aria-label="Navegación principal">
@@ -73,8 +78,8 @@ const Header: React.FC = () => {
                 className={({ isActive }) =>
                   `rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors ${
                     isActive
-                      ? "bg-primary-50 text-accent-700"
-                      : "text-primary-700 hover:bg-primary-50 hover:text-accent-700"
+                      ? "bg-accent-800 text-white"
+                      : "text-accent-50 hover:bg-accent-600 hover:text-white"
                   }`
                 }
               >
@@ -86,7 +91,7 @@ const Header: React.FC = () => {
               href="https://sisadmision.unsa.edu.pe/pregrado/"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-3 inline-flex items-center gap-2 rounded-xl bg-accent-700 px-4 py-2.5 text-sm font-semibold text-white shadow-soft transition hover:bg-accent-800 hover:shadow-medium"
+              className="ml-3 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-accent-700 shadow-soft transition hover:bg-accent-50 hover:shadow-medium"
             >
               Inscríbete <ArrowUpRight size={16} aria-hidden="true" />
             </a>
@@ -94,7 +99,7 @@ const Header: React.FC = () => {
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-primary-100 text-primary-700 transition hover:bg-primary-50 md:hidden"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-accent-500 text-white transition hover:bg-accent-600 md:hidden"
             onClick={() => setIsMenuOpen((open) => !open)}
             aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={isMenuOpen}
@@ -106,7 +111,7 @@ const Header: React.FC = () => {
 
         <div
           id="mobile-navigation"
-          className={`overflow-hidden border-t border-primary-100 bg-white transition-[max-height,opacity] duration-300 md:hidden ${
+          className={`overflow-hidden border-t border-accent-800 bg-accent-700 transition-[max-height,opacity] duration-300 md:hidden ${
             isMenuOpen ? "max-h-[420px] opacity-100" : "max-h-0 border-transparent opacity-0"
           }`}
         >
@@ -118,7 +123,7 @@ const Header: React.FC = () => {
                 end={item.path === "/"}
                 className={({ isActive }) =>
                   `block rounded-xl px-4 py-3 text-sm font-semibold ${
-                    isActive ? "bg-primary-50 text-accent-700" : "text-primary-700 hover:bg-gray-50"
+                    isActive ? "bg-accent-800 text-white" : "text-accent-50 hover:bg-accent-600"
                   }`
                 }
               >
@@ -129,7 +134,7 @@ const Header: React.FC = () => {
               href="https://sisadmision.unsa.edu.pe/pregrado/"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-accent-700 px-4 py-3 text-sm font-semibold text-white"
+              className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-accent-700 transition hover:bg-accent-50"
             >
               Inscríbete <ArrowUpRight size={16} />
             </a>

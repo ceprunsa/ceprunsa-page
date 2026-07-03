@@ -68,10 +68,20 @@ const About: React.FC = () => {
   return (
     <div>
       {/* Hero Section */}
-      <section className="section-padding bg-gradient-to-br from-primary-50 via-white to-accent-50 relative overflow-hidden">
-        <div className="absolute inset-0 bg-pattern opacity-5"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-accent-100 to-transparent rounded-full blur-3xl opacity-30"></div>
-        <div className="container-custom relative">
+      <section className="relative bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden flex flex-col">
+        {/* Full Width Image */}
+        <div className="w-full relative z-10 shadow-2xl order-1 h-[300px] sm:h-[400px] md:h-[500px] lg:h-[60vh]">
+          <img
+            src="/ceprunsa_local.jpeg"
+            alt="CEPRUNSA Local"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
+        </div>
+
+        <div className="absolute inset-0 bg-pattern opacity-5 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-accent-100 to-transparent rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+        <div className="container-custom relative pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20 z-10 text-center order-2">
           <div className="text-center">
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-primary-700 mb-6">
               Sobre <span className="text-accent-900 relative">CEPRUNSA</span>
@@ -173,16 +183,16 @@ const About: React.FC = () => {
             </div>
             <div ref={historyRef} className="history-image relative">
               <div className="rounded-2xl bg-white p-3 shadow-large border border-primary-100 sm:p-4">
-                <div className="relative h-[300px] overflow-hidden rounded-xl sm:h-[400px]">
+                <div className="relative h-[300px] overflow-hidden rounded-xl sm:h-[400px] group">
                   <img
                     src="/ceprunsa_local.jpeg"
                     alt="Instalaciones de CEPRUNSA en Arequipa"
                     width="848"
                     height="355"
                     loading="lazy"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-950/55 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg">
                     <div className="text-sm font-bold text-accent-600">
                       2000
@@ -387,7 +397,7 @@ const About: React.FC = () => {
             {teamMembers.map((member, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-b from-gray-50 to-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 group"
+                className="bg-gradient-to-b from-gray-50 to-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 group flex flex-col h-full"
               >
                 {/* Profile Image or Icon */}
                 <div className="relative mb-6">
@@ -413,13 +423,13 @@ const About: React.FC = () => {
                   </p>
                 </div>
 
-                <p className="text-gray-600 text-sm leading-relaxed text-justify mb-6">
+                <p className="text-gray-600 text-sm leading-relaxed text-justify mb-6 flex-grow">
                   {member.description}
                 </p>
 
                 {/* CV Link */}
                 {member.cvLink && (
-                  <div className="text-center">
+                  <div className="text-center mt-auto">
                     <a
                       href={member.cvLink}
                       target="_blank"
