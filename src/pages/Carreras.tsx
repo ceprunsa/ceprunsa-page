@@ -71,17 +71,37 @@ const Carreras: React.FC = () => {
   }, [allCarreras, searchTerm, selectedArea, selectedFacultad]);
 
   return (
-    <section className="section-padding bg-gradient-to-b from-white to-gray-50 relative" id="carreras">
-      <div className="absolute inset-0 bg-pattern opacity-5"></div>
-      <div className="container-custom relative">
-        <div className="text-center mb-12">
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-primary-700 mb-6">
-            Descubre tu <span className="text-accent-900">Vocación</span>
-          </h2>
-          <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
-            Explora las diferentes carreras profesionales que la Universidad Nacional de San Agustín tiene para ofrecerte.
-          </p>
+    <div>
+      {/* Hero Section */}
+      <section className="relative bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden flex flex-col">
+        {/* Full Width Image */}
+        <div className="w-full relative z-10 shadow-2xl order-1 h-[300px] sm:h-[400px] md:h-[500px] lg:h-[60vh]">
+          <img
+            src="/home_image.jpeg"
+            alt="Carreras UNSA"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
         </div>
+
+        <div className="absolute inset-0 bg-pattern opacity-5 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-accent-100 to-transparent rounded-full blur-3xl opacity-30 pointer-events-none"></div>
+        <div className="container-custom relative pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20 z-10 text-center order-2">
+          <div className="text-center">
+            <h1 className="font-heading text-4xl md:text-5xl font-bold text-primary-700 mb-6">
+              Descubre tu <span className="text-accent-900 relative">Vocación</span>
+            </h1>
+            <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
+              Explora las diferentes carreras profesionales que la Universidad Nacional de San Agustín tiene para ofrecerte.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Buscador y Filtros */}
+      <section className="section-padding bg-gradient-to-b from-white to-gray-50 relative" id="carreras">
+        <div className="absolute inset-0 bg-pattern opacity-5"></div>
+        <div className="container-custom relative">
 
         {/* Buscador y Filtros */}
         <div className="bg-white p-6 rounded-2xl shadow-soft border border-gray-100 mb-12 max-w-5xl mx-auto">
@@ -224,7 +244,8 @@ const Carreras: React.FC = () => {
           </div>
         )}
       </div>
-    </section>
+      </section>
+    </div>
   );
 };
 

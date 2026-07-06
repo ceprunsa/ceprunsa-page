@@ -12,6 +12,7 @@ import {
   MessageCircle,
   Calendar,
   ChevronRight,
+  Facebook,
 } from "lucide-react";
 import { contactInfo, processesOptions, faqs } from "../data";
 import type { FormData } from "../types";
@@ -172,6 +173,46 @@ const Contact: React.FC = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* Redes Sociales */}
+              <div className="mt-8 bg-gradient-to-br from-primary-50 to-accent-50/30 p-6 rounded-2xl border border-primary-100/50">
+                <h3 className="font-semibold text-primary-800 mb-4 text-lg">
+                  Síguenos en nuestras redes
+                </h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <a
+                    href="https://www.facebook.com/ceprunsaoficial/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-3 bg-white p-4 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-soft transition-all duration-300 group"
+                  >
+                    <div className="text-blue-600 bg-blue-50 p-2 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
+                      <Facebook size={20} />
+                    </div>
+                    <div>
+                      <span className="block font-semibold text-sm text-gray-800 group-hover:text-blue-600 transition-colors duration-300">Facebook</span>
+                      <span className="block text-xs text-gray-500">@ceprunsaoficial</span>
+                    </div>
+                  </a>
+
+                  <a
+                    href="https://www.tiktok.com/@ceprunsa"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center space-x-3 bg-white p-4 rounded-xl border border-gray-100 hover:border-gray-300 hover:shadow-soft transition-all duration-300 group"
+                  >
+                    <div className="text-gray-950 bg-gray-50 p-2 rounded-lg group-hover:bg-gray-100 transition-colors duration-300">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+                      </svg>
+                    </div>
+                    <div>
+                      <span className="block font-semibold text-sm text-gray-800 group-hover:text-black transition-colors duration-300">TikTok</span>
+                      <span className="block text-xs text-gray-500">@ceprunsa</span>
+                    </div>
+                  </a>
+                </div>
               </div>
 
               <a
@@ -371,7 +412,7 @@ const Contact: React.FC = () => {
                   Chatea con nosotros en tiempo real
                 </p>
                 <a
-                  href="https://wa.me/51054123456"
+                  href="https://wa.me/51954123456"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 group"
@@ -497,7 +538,7 @@ const Contact: React.FC = () => {
               />
             </a>
             <a
-              href="https://wa.me/51054123456"
+              href="https://wa.me/51954123456"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
