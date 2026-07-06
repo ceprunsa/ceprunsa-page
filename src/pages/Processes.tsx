@@ -47,6 +47,15 @@ const Processes: React.FC = () => {
     }));
   };
 
+  const getCurrentTimelineStep = () => {
+    const month = new Date().getMonth() + 1; // 1-indexed (1 = Enero, 12 = Diciembre)
+    if (month >= 4 && month <= 7) return 0; // Abril - Julio
+    if (month >= 8 && month <= 11) return 1; // Agosto - Noviembre
+    if (month === 12 || month === 1) return 2; // Diciembre - Enero
+    if (month === 2) return 3; // Febrero
+    return 0; // default (Marzo / etc)
+  };
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.fromTo(
@@ -109,21 +118,65 @@ const Processes: React.FC = () => {
             <p className="text-xl text-secondary-600 max-w-3xl mx-auto mb-8">
               Modalidades de ingreso directo a la UNSA con preparación especializada y acompañamiento constante.
             </p>
-            <div className="bg-gradient-to-r from-accent-50 to-primary-50 p-8 rounded-2xl border border-accent-200 max-w-4xl mx-auto shadow-soft hover:shadow-medium transition-all duration-300">
-              <div className="flex items-center justify-center mb-6">
-                <div className="bg-gradient-to-r from-accent-500 to-accent-600 p-3 rounded-full mr-4">
-                  <Award className="text-white" size={28} />
+            {/* Cronograma Anual Horizontal */}
+            <div className="max-w-5xl mx-auto mt-12 bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-soft">
+              <h3 className="font-heading text-lg font-bold text-primary-700 mb-8 text-center uppercase tracking-wider">
+                Cronograma Anual de Procesos
+              </h3>
+              
+              <div className="relative flex flex-col md:flex-row justify-between items-center md:items-start gap-8 md:gap-4">
+                {/* Connector Line (Desktop) */}
+                <div className="absolute top-10 left-[10%] right-[10%] h-0.5 bg-gray-200 hidden md:block z-0">
+                  <div 
+                    className="h-full bg-accent-600 transition-all duration-500" 
+                    style={{ width: `${(getCurrentTimelineStep() / 3) * 100}%` }}
+                  />
                 </div>
-                <h3 className="font-heading text-xl font-bold text-accent-900">
-                  Ventaja CEPRUNSA
-                </h3>
+
+                {/* Timeline Items */}
+                {processTimeline.map((item, index) => {
+                  const isActive = index === getCurrentTimelineStep();
+                  return (
+                    <div 
+                      key={index} 
+                      className={`relative z-10 flex flex-col items-center text-center flex-1 md:px-2 transition-all duration-300 ${
+                        isActive ? "scale-105" : "opacity-70 hover:opacity-90"
+                      }`}
+                    >
+                      {/* Node Icon/Number */}
+                      <div 
+                        className={`w-20 h-20 rounded-full flex flex-col items-center justify-center border-4 transition-all duration-300 mb-4 shadow-md ${
+                          isActive 
+                            ? "bg-accent-600 border-accent-400 text-white shadow-glow-red scale-110" 
+                            : "bg-white border-gray-200 text-gray-500 hover:border-accent-300"
+                        }`}
+                      >
+                        <Calendar size={22} className={isActive ? "text-white animate-pulse" : "text-gray-400"} />
+                        <span className="text-[10px] font-bold mt-1 uppercase tracking-tight">
+                          {item.period.split(" - ")[0]}
+                        </span>
+                      </div>
+
+                      {/* Content Card */}
+                      <div className={`p-4 rounded-xl border transition-all duration-300 ${
+                        isActive 
+                          ? "bg-accent-50/50 border-accent-200 shadow-sm" 
+                          : "bg-gray-50/30 border-transparent"
+                      }`}>
+                        <h4 className={`font-heading text-sm font-bold ${isActive ? "text-accent-950" : "text-gray-800"}`}>
+                          {item.title}
+                        </h4>
+                        <p className={`text-xs font-semibold mt-1 ${isActive ? "text-accent-700" : "text-accent-600"}`}>
+                          {item.period}
+                        </p>
+                        <p className="text-[11px] text-gray-500 mt-2 leading-relaxed max-w-[200px] mx-auto">
+                          {item.description}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <p className="text-gray-700 text-lg leading-relaxed">
-                A diferencia del examen ordinario, CEPRUNSA te prepara
-                específicamente para tu propio examen de admisión. El examen se
-                basa completamente en el contenido académico desarrollado
-                durante las semanas de preparación.
-              </p>
             </div>
           </div>
         </div>
@@ -451,54 +504,7 @@ const Processes: React.FC = () => {
         </div>
       </section>
 
-      {/* Process Timeline */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
-              Cronograma <span className="text-accent-900">CEPRUNSA</span>
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Planifica tu preparación con nuestro cronograma anual de procesos CEPRUNSA.
-            </p>
-          </div>
 
-          <div className="relative">
-            <div className="absolute left-2 h-full w-0.5 bg-gradient-to-b from-accent-400 to-primary-400 md:left-1/2 md:-translate-x-1/2"></div>
-
-            <div className="space-y-12">
-              {processTimeline.map((process, index) => (
-                <div
-                  key={index}
-                  className={`relative flex items-center ${
-                    index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-                  }`}
-                >
-                  <div
-                    className={`ml-8 w-[calc(100%-2rem)] md:ml-0 md:w-1/2 ${
-                      index % 2 === 0 ? "md:pr-8 md:text-right" : "md:pl-8 md:text-left"
-                    }`}
-                  >
-                    <div className="bg-white p-6 rounded-xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100">
-                      <h3 className="font-heading text-xl font-bold text-primary-700 mb-2">
-                        {process.title}
-                      </h3>
-                      <p className="text-accent-600 font-medium mb-2">
-                        {process.period}
-                      </p>
-                      <p className="text-gray-600">{process.description}</p>
-                    </div>
-                  </div>
-                  <div className="absolute left-0.5 z-10 md:relative md:left-auto">
-                    <div className="w-4 h-4 bg-gradient-to-r from-accent-500 to-primary-500 rounded-full border-4 border-white shadow-lg"></div>
-                  </div>
-                  <div className="hidden w-1/2 md:block"></div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* CTA Section */}
       <section className="section-padding bg-gradient-to-br from-accent-600 via-accent-700 to-accent-800 text-white relative overflow-hidden">
