@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -17,12 +17,11 @@ import {
   Zap,
   TrendingUp,
   Lightbulb,
+  ChevronDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   processes,
-  extraordinaryRequirements,
-  extraordinaryPreparation,
   processTimeline,
 } from "../data";
 
@@ -30,8 +29,23 @@ gsap.registerPlugin(ScrollTrigger);
 
 const Processes: React.FC = () => {
   const programsRef = useRef<HTMLElement>(null);
-  const modalitiesRef = useRef<HTMLElement>(null);
   const comparisonRef = useRef<HTMLElement>(null);
+  const [expandedCourses, setExpandedCourses] = useState<Record<number, boolean>>({});
+  const [expandedEligibility, setExpandedEligibility] = useState<Record<number, boolean>>({});
+
+  const toggleCourses = (index: number) => {
+    setExpandedCourses((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
+
+  const toggleEligibility = (index: number) => {
+    setExpandedEligibility((prev) => ({
+      ...prev,
+      [index]: !prev[index],
+    }));
+  };
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -46,22 +60,6 @@ const Processes: React.FC = () => {
         ease: "power2.out",
         scrollTrigger: {
           trigger: programsRef.current,
-          start: "top 80%",
-        },
-      }
-    );
-
-    gsap.fromTo(
-      ".modality-card",
-      { opacity: 0, x: -50 },
-      {
-        opacity: 1,
-        x: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: modalitiesRef.current,
           start: "top 80%",
         },
       }
@@ -99,8 +97,7 @@ const Processes: React.FC = () => {
               <span className="text-accent-900 relative">CEPRUNSA</span>
             </h1>
             <p className="text-xl text-secondary-600 max-w-3xl mx-auto mb-8">
-              Modalidad oficial de ingreso directo a la UNSA con tres procesos
-              anuales y preparación especializada.
+              Modalidades de ingreso directo a la UNSA con preparación especializada y acompañamiento constante.
             </p>
             <div className="bg-gradient-to-r from-accent-50 to-primary-50 p-8 rounded-2xl border border-accent-200 max-w-4xl mx-auto shadow-soft hover:shadow-medium transition-all duration-300">
               <div className="flex items-center justify-center mb-6">
@@ -115,7 +112,7 @@ const Processes: React.FC = () => {
                 A diferencia del examen ordinario, CEPRUNSA te prepara
                 específicamente para tu propio examen de admisión. El examen se
                 basa completamente en el contenido académico desarrollado
-                durante las 10 semanas de preparación.
+                durante las semanas de preparación.
               </p>
             </div>
           </div>
@@ -127,227 +124,170 @@ const Processes: React.FC = () => {
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
-              Procesos Regulares{" "}
-              <span className="text-accent-900">CEPRUNSA</span>
+              Nuestros <span className="text-accent-900">Procesos de Admisión</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Tres oportunidades anuales con preparación integral de 10 semanas
-              y 15 cursos especializados.
+              Compara y elige el proceso que se adapta a tu perfil académico y metas de ingreso directo.
             </p>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="flex flex-col gap-8">
             {processes.map((process, index) => (
               <div
                 key={index}
-                className={`program-card relative group ${
+                className={`program-card relative group rounded-2xl transition-all duration-300 ${
                   process.recommended
-                    ? "ring-2 ring-accent-400 shadow-glow-red rounded-2xl hover:ring-accent-500 hover:shadow-glow-blue"
+                    ? "ring-2 ring-accent-400 shadow-glow-red hover:ring-accent-500 hover:shadow-glow"
                     : ""
                 }`}
               >
-                <div className="bg-white rounded-2xl shadow-soft hover:shadow-large transition-all duration-500 border border-gray-100 hover:border-accent-200 h-full overflow-hidden">
-                  {process.recommended && (
-                    <div className="bg-gradient-to-r from-accent-500 to-accent-600 text-white px-6 py-4 text-sm font-semibold text-center relative">
-                      <div className="flex items-center justify-center">
-                        <Star className="mr-2" size={16} />
-                        Proceso proximo a Iniciar
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="p-8">
-                    <div className="flex items-center justify-between mb-6">
-                      <h3 className="font-heading text-2xl font-bold text-primary-700 group-hover:text-accent-700 transition-colors">
+                <div className="flex flex-col lg:flex-row bg-white rounded-2xl shadow-soft hover:shadow-large border border-gray-100 hover:border-accent-200 transition-all duration-300 overflow-hidden h-full">
+                  {/* Columna Izquierda - Metadatos */}
+                  <div className="lg:w-1/4 p-6 lg:p-8 bg-gradient-to-br from-primary-50 to-accent-50/30 border-b lg:border-b-0 lg:border-r border-gray-100 flex flex-col justify-between">
+                    <div>
+                      {process.recommended && (
+                        <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent-600 text-white mb-4 animate-pulse-slow">
+                          <Star size={12} fill="currentColor" /> Próximo a Iniciar
+                        </span>
+                      )}
+                      <h3 className="font-heading text-2xl font-bold text-primary-700 mb-2 group-hover:text-accent-700 transition-colors">
                         {process.title}
                       </h3>
-                      <span className="text-center bg-gradient-to-r from-primary-100 to-primary-200 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold shadow-soft">
-                        {process.duration}
-                      </span>
+                      <p className="text-sm text-secondary-600 leading-relaxed">
+                        {process.description}
+                      </p>
                     </div>
 
-                    <div className="flex items-center text-gray-600 mb-6 bg-gray-50 p-4 rounded-xl">
-                      <Calendar size={20} className="mr-3 text-accent-500" />
-                      <span className="text-sm font-medium">
-                        {process.schedule}
-                      </span>
+                    <div className="mt-6 pt-4 border-t border-gray-200/50">
+                      <div className="flex items-center gap-2 text-primary-700">
+                        <Clock size={16} className="text-accent-500" />
+                        <span className="text-sm font-semibold">{process.duration}</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-secondary-600 mt-1">
+                        <Calendar size={16} className="text-primary-500" />
+                        <span className="text-xs font-medium">{process.schedule}</span>
+                      </div>
                     </div>
+                  </div>
 
-                    <p className="text-secondary-600 mb-8 leading-relaxed text-lg">
-                      {process.description}
-                    </p>
-
-                    <div className="mb-8">
-                      <h4 className="font-semibold text-gray-900 mb-4 text-lg flex items-center">
-                        <Zap className="mr-2 text-accent-500" size={20} />
-                        Incluye:
+                  {/* Sección Central - Información Homogénea */}
+                  <div className="flex-1 p-6 lg:p-8 grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                    {/* Cursos */}
+                    <div className="space-y-3">
+                      <h4 className="font-heading text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 pb-2">
+                        <BookOpen size={16} className="text-primary-600" /> Cursos
                       </h4>
-                      <ul className="space-y-3">
-                        {process.features
-                          .slice(0, 4)
-                          .map((feature, featureIndex) => (
-                            <li
-                              key={featureIndex}
-                              className="flex items-start space-x-3"
-                            >
-                              <CheckCircle
-                                className="text-success-500 flex-shrink-0 mt-1"
-                                size={18}
-                              />
-                              <span className="text-gray-700 text-sm">
-                                {feature}
-                              </span>
-                            </li>
-                          ))}
+                      <div className="space-y-2">
+                        <p className="text-sm text-gray-700">
+                          Prepárate con <strong className="font-bold text-primary-700">{process.courses.length} cursos especializados</strong>.
+                        </p>
+                        <button
+                          onClick={() => toggleCourses(index)}
+                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent-700 hover:text-accent-800 transition-colors focus:outline-none focus:ring-1 focus:ring-accent-500 rounded px-1.5 py-0.5"
+                          aria-expanded={expandedCourses[index]}
+                        >
+                          {expandedCourses[index] ? "Ocultar cursos" : "Ver cursos"}
+                          <ChevronDown size={14} className={`transform transition-transform duration-200 ${expandedCourses[index] ? "rotate-180" : ""}`} />
+                        </button>
+                        
+                        {/* Lista de cursos desplegable */}
+                        <div className={`transition-all duration-300 overflow-hidden ${expandedCourses[index] ? "max-h-60 mt-2 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}>
+                          <ul className="space-y-1.5 pl-1 max-h-48 overflow-y-auto custom-scrollbar pr-1">
+                            {process.courses.map((course, i) => (
+                              <li key={i} className="text-xs text-gray-600 flex items-center gap-1.5 py-0.5">
+                                <div className="w-1.5 h-1.5 rounded-full bg-accent-500 flex-shrink-0" />
+                                <span>{course}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Beneficios */}
+                    <div className="space-y-3">
+                      <h4 className="font-heading text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 pb-2">
+                        <Award size={16} className="text-accent-600" /> Beneficios
+                      </h4>
+                      <ul className="space-y-2">
+                        {process.benefits.map((benefit, i) => (
+                          <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                            <CheckCircle size={14} className="text-success-500 mt-0.5 flex-shrink-0" />
+                            <span>{benefit}</span>
+                          </li>
+                        ))}
                       </ul>
                     </div>
 
-                    <div className="border-t border-gray-100 pt-8">
-                      <div className="text-center mb-6">
-                        <div className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent mb-2">
-                          {process.price}
+                    {/* Público Apto */}
+                    <div className="space-y-3">
+                      <h4 className="font-heading text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 pb-2">
+                        <Users size={16} className="text-primary-600" /> Público Apto
+                      </h4>
+                      <div className="space-y-2">
+                        <div className="space-y-2">
+                          {process.eligibility.map((item, i) => (
+                            <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                              <ChevronRight size={14} className="text-accent-500 mt-0.5 flex-shrink-0" />
+                              <span>{item}</span>
+                            </div>
+                          ))}
                         </div>
-                        <div className="text-sm text-gray-500 bg-gray-50 px-3 py-1 rounded-full inline-block">
-                          {process.installments}
-                        </div>
+
+                        {process.additionalEligibility && (
+                          <div className="space-y-2">
+                            <button
+                              onClick={() => toggleEligibility(index)}
+                              className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent-700 hover:text-accent-800 transition-colors focus:outline-none focus:ring-1 focus:ring-accent-500 rounded px-1.5 py-0.5 mt-1"
+                              aria-expanded={expandedEligibility[index]}
+                            >
+                              {expandedEligibility[index] ? "Ocultar" : "Ver todos"}
+                              <ChevronDown size={14} className={`transform transition-transform duration-200 ${expandedEligibility[index] ? "rotate-180" : ""}`} />
+                            </button>
+
+                            <div className={`transition-all duration-300 overflow-hidden ${expandedEligibility[index] ? "max-h-60 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}>
+                              <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar pr-1 pt-1">
+                                {process.additionalEligibility.map((item, i) => (
+                                  <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                                    <ChevronRight size={14} className="text-accent-500 mt-0.5 flex-shrink-0" />
+                                    <span>{item}</span>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      <Link
-                        to="/contacto"
-                        className={`w-full block text-center py-4 px-6 rounded-xl font-semibold transition-all duration-300 group ${
-                          process.recommended
-                            ? "bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white shadow-lg hover:shadow-xl transform hover:scale-105"
-                            : "bg-gradient-to-r from-gray-100 to-gray-200 hover:from-gray-200 hover:to-gray-300 text-gray-800 shadow-soft hover:shadow-medium"
-                        }`}
-                      >
-                        {process.recommended
-                          ? "Inscríbete Ahora"
-                          : "Más Información"}
-                        <ChevronRight
-                          className="inline ml-2 group-hover:translate-x-1 transition-transform"
-                          size={16}
-                        />
-                      </Link>
                     </div>
+                  </div>
+
+                  {/* Columna Derecha - Precio y CTA */}
+                  <div className="lg:w-1/5 p-6 lg:p-8 border-t lg:border-t-0 lg:border-l border-gray-100 bg-gray-50/50 flex flex-col justify-center items-center text-center">
+                    <div className="mb-4">
+                      <div className="text-3xl font-bold bg-gradient-to-r from-primary-600 to-accent-600 bg-clip-text text-transparent mb-1">
+                        {process.price}
+                      </div>
+                      <div className="text-xs text-gray-500 bg-white px-3 py-1 rounded-full inline-block border border-gray-200/50">
+                        {process.installments}
+                      </div>
+                    </div>
+                    <Link
+                      to="/contacto"
+                      className={`w-full block text-center py-3 px-4 rounded-xl font-semibold text-sm transition-all duration-300 ${
+                        process.recommended
+                          ? "bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white shadow-md hover:shadow-lg transform hover:scale-[1.02]"
+                          : "bg-white border border-gray-200 hover:border-accent-200 text-gray-800 hover:text-accent-700 shadow-soft"
+                      }`}
+                    >
+                      {process.recommended ? "Inscríbete Ahora" : "Más Información"}
+                      <ChevronRight
+                        className="inline ml-1.5 group-hover:translate-x-0.5 transition-transform"
+                        size={14}
+                      />
+                    </Link>
                   </div>
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Extraordinary Process Section */}
-      <section
-        ref={modalitiesRef}
-        className="section-padding bg-gradient-to-br from-primary-50 to-accent-50 relative"
-      >
-        <div className="absolute inset-0 bg-pattern opacity-5"></div>
-        <div className="container-custom relative">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
-              Proceso <span className="text-accent-900">Extraordinario</span>
-            </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto mb-8">
-              Modalidad especial con preparación intensiva de 3 semanas y 3
-              cursos para casos específicos con requisitos especiales.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-            {/* Requirements */}
-            <div className="modality-card">
-              <div className="bg-white p-10 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 h-full">
-                <div className="flex items-center mb-8">
-                  <div className="bg-gradient-to-br from-accent-100 to-accent-200 p-4 rounded-2xl mr-4">
-                    <Users className="text-accent-600" size={32} />
-                  </div>
-                  <h3 className="font-heading text-2xl font-bold text-primary-700">
-                    Requisitos para Postular
-                  </h3>
-                </div>
-                <ul className="space-y-4">
-                  {extraordinaryRequirements.map((requirement, index) => (
-                    <li key={index} className="flex items-start space-x-3">
-                      <CheckCircle
-                        className="text-accent-600 flex-shrink-0 mt-1"
-                        size={18}
-                      />
-                      <span className="text-gray-700">{requirement}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Preparation */}
-            <div className="modality-card">
-              <div className="bg-white p-10 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-primary-200 h-full">
-                <div className="flex items-center mb-8">
-                  <div className="bg-gradient-to-br from-primary-100 to-primary-200 p-4 rounded-2xl mr-4">
-                    <BookOpen className="text-primary-600" size={32} />
-                  </div>
-                  <h3 className="font-heading text-2xl font-bold text-primary-700">
-                    Preparación CEPRUNSA
-                  </h3>
-                </div>
-
-                <div className="mb-8">
-                  <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                    <TrendingUp className="mr-2 text-primary-500" size={20} />
-                    Modalidad Intensiva:
-                  </h4>
-                  <div className="space-y-4">
-                    <div className="bg-gradient-to-r from-accent-50 to-accent-100 p-4 rounded-xl border border-accent-200">
-                      <div className="flex items-center space-x-3 mb-2">
-                        <Clock className="text-accent-600" size={20} />
-                        <span className="font-semibold text-gray-900">
-                          3 semanas de preparación
-                        </span>
-                      </div>
-                    </div>
-                    <div className="bg-gradient-to-r from-primary-50 to-primary-100 p-4 rounded-xl border border-primary-200">
-                      <div className="flex items-center space-x-3">
-                        <Target className="text-primary-600" size={20} />
-                        <span className="font-semibold text-gray-900">
-                          3 cursos especializados
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <h4 className="font-semibold text-gray-900 mb-4 flex items-center">
-                  <Users className="mr-2 text-accent-500" size={20} />
-                  Quiénes reciben preparación:
-                </h4>
-                <ul className="space-y-3">
-                  {extraordinaryPreparation.map((item, index) => (
-                    <li key={index} className="flex items-start space-x-3">
-                      <Star
-                        className="text-accent-500 flex-shrink-0 mt-1"
-                        size={16}
-                      />
-                      <span className="text-gray-700 text-sm">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div className="text-center mt-12">
-            <div className="bg-white p-10 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 max-w-3xl mx-auto border border-gray-100">
-              <div className="bg-gradient-to-r from-accent-500 to-accent-600 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Target className="text-white" size={32} />
-              </div>
-              <h3 className="font-heading text-2xl font-bold text-primary-700 mb-4">
-                Ventaja del Proceso Extraordinario
-              </h3>
-              <p className="text-gray-700 leading-relaxed text-lg">
-                Al igual que los procesos regulares, el examen del proceso
-                extraordinario se basa completamente en el contenido académico
-                desarrollado durante las 3 semanas de preparación intensiva.
-              </p>
-            </div>
           </div>
         </div>
       </section>
@@ -361,8 +301,7 @@ const Processes: React.FC = () => {
               <span className="text-accent-900">Examen Ordinario</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Conoce las ventajas de la modalidad CEPRUNSA frente al examen
-              ordinario de admisión.
+              Conoce las ventajas de la modalidad CEPRUNSA frente al examen ordinario de admisión.
             </p>
           </div>
 
@@ -495,10 +434,7 @@ const Processes: React.FC = () => {
                 Diferencia Clave
               </h3>
               <p className="text-gray-700 leading-relaxed text-lg">
-                CEPRUNSA es una modalidad oficial que te garantiza estudiar
-                exactamente lo que te van a evaluar, mientras que el examen
-                ordinario requiere preparación general sin certeza del contenido
-                específico.
+                CEPRUNSA es una modalidad oficial que te garantiza estudiar exactamente lo que te van a evaluar, mientras que el examen ordinario requiere preparación general sin certeza del contenido específico.
               </p>
             </div>
           </div>
@@ -513,8 +449,7 @@ const Processes: React.FC = () => {
               Cronograma <span className="text-accent-900">CEPRUNSA</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Planifica tu preparación con nuestro cronograma anual de procesos
-              CEPRUNSA.
+              Planifica tu preparación con nuestro cronograma anual de procesos CEPRUNSA.
             </p>
           </div>
 
@@ -565,8 +500,7 @@ const Processes: React.FC = () => {
             ¿Listo para el próximo proceso CEPRUNSA?
           </h2>
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            No pierdas la oportunidad de ingresar a la UNSA a través de esta
-            modalidad oficial con preparación especializada.
+            No pierdas la oportunidad de ingresar a la UNSA a través de esta modalidad oficial con preparación especializada.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link
@@ -593,3 +527,4 @@ const Processes: React.FC = () => {
 };
 
 export default Processes;
+

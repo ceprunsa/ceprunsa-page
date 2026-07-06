@@ -319,39 +319,40 @@ export const contactInfo = [
     color: "text-red-600",
   },
 ];
+
 export const processes: Processes[] = [
   {
     title: "CEPRUNSA I Fase",
     duration: "10 semanas",
-    schedule: "Preparación integral - 15 cursos",
+    schedule: "Primera oportunidad anual",
     description:
       "Primer proceso anual para estudiantes de 5to de secundaria y egresados. Modalidad inicial de ingreso directo a la UNSA.",
-    features: [
-      "15 cursos especializados",
-      "Banco de contenido digital por cada curso",
-      "Prácticas semanales evaluadas y calificadas",
-      "Seminarios de reforzamiento de temas clave",
-      "Talleres de técnicas de estudio efectivas",
-      "Manejo del tiempo y control de emociones",
-      "Orientación académica personalizada",
-      "Examen basado en el avance académico realizado",
-    ],
-    subjects: [
+    courses: [
       "Matemática",
-      "Comunicación",
+      "Física",
+      "Química",
+      "Biología",
+      "Comunicación (Lenguaje y Literatura)",
       "Historia del Perú",
+      "Historia Universal",
       "Geografía",
       "Economía",
       "Filosofía",
       "Psicología",
-      "Física",
-      "Química",
-      "Biología",
-      "Razonamiento Verbal",
-      "Razonamiento Matemático",
-      "Cultura General",
-      "Actualidad",
+      "Educación Cívica",
       "Inglés",
+      "Razonamiento Verbal",
+      "Razonamiento Matemático"
+    ],
+    benefits: [
+      "Exámenes simulacro",
+      "Talleres de lectura",
+      "Talleres psicológicos",
+      "Seminarios"
+    ],
+    eligibility: [
+      "Público en general",
+      "Estudiantes de 5to de secundaria (Quintos)"
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
@@ -362,21 +363,32 @@ export const processes: Processes[] = [
     duration: "10 semanas",
     schedule: "Exclusivo para estudiantes de 5to año",
     description:
-      "Proceso especial diseñado únicamente para estudiantes que están cursando 5to año de secundaria.",
-    features: [
-      "Exclusivo para estudiantes de 5to de secundaria",
-      "Horarios compatibles con estudios escolares",
-      "Metodología adaptada al nivel académico",
-      "Preparacion en 15 cursos",
-      "Seguimiento académico personalizado",
-      "Apoyo continuo durante el proceso",
-      "Prácticas y seminarios especializados",
-      "Examen de ingreso directo a la UNSA",
+      "Proceso especial diseñado únicamente para estudiantes que están cursando el 5to año de secundaria.",
+    courses: [
+      "Matemática",
+      "Física",
+      "Química",
+      "Biología",
+      "Comunicación (Lenguaje y Literatura)",
+      "Historia del Perú",
+      "Historia Universal",
+      "Geografía",
+      "Economía",
+      "Filosofía",
+      "Psicología",
+      "Educación Cívica",
+      "Inglés",
+      "Razonamiento Verbal",
+      "Razonamiento Matemático"
     ],
-    subjects: [
-      "Programa completo de 15 cursos CEPRUNSA",
-      "Contenido adaptado para estudiantes de 5to año",
-      "Reforzamiento en áreas clave",
+    benefits: [
+      "Exámenes simulacro",
+      "Talleres de lectura",
+      "Talleres psicológicos",
+      "Seminarios"
+    ],
+    eligibility: [
+      "Solo estudiantes de 5to de secundaria (Quintos)"
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
@@ -388,41 +400,71 @@ export const processes: Processes[] = [
     schedule: "Segunda oportunidad anual",
     description:
       "Segundo proceso anual para estudiantes de 5to de secundaria y egresados. Nueva oportunidad de ingreso directo.",
-    features: [
-      "Segunda convocatoria del año académico",
-      "Misma preparación integral de 10 semanas",
-      "15 cursos especializados actualizados",
-      "Banco de contenido digital",
-      "Prácticas intensivas y seminarios",
-      "Talleres de desarrollo personal",
-      "Nuevas vacantes disponibles para UNSA",
-      "Examen basado en avance académico",
+    courses: [
+      "Matemática",
+      "Física",
+      "Química",
+      "Biología",
+      "Comunicación (Lenguaje y Literatura)",
+      "Historia del Perú",
+      "Historia Universal",
+      "Geografía",
+      "Economía",
+      "Filosofía",
+      "Psicología",
+      "Educación Cívica",
+      "Inglés",
+      "Razonamiento Verbal",
+      "Razonamiento Matemático"
     ],
-    subjects: [
-      "Programa completo de 15 cursos",
-      "Contenido actualizado y reforzado",
-      "Material de estudio renovado",
+    benefits: [
+      "Exámenes simulacro",
+      "Talleres de lectura",
+      "Talleres psicológicos",
+      "Seminarios"
+    ],
+    eligibility: [
+      "Público en general",
+      "Estudiantes de 5to de secundaria (Quintos)"
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
     recommended: false,
   },
-];
-export const extraordinaryRequirements = [
-  "Titulados o graduados de universidades públicas o privadas",
-  "Primer y segundo puesto de instituciones educativas secundarias",
-  "Deportistas destacados acreditados por el IPD",
-  "Personas con discapacidad acreditadas por CONADIS",
-  "Traslados externos e internos de universidades nacionales o extranjeras",
-  "Bachillerato Internacional y egresados de COAR",
-  "Convenio Andrés Bello",
-];
-
-export const extraordinaryPreparation = [
-  "Primer y segundo puesto de instituciones educativas secundarias",
-  "Deportistas destacados acreditados por el IPD",
-  "Personas con discapacidad acreditadas por CONADIS",
-  "Bachillerato Internacional y egresados de COAR",
+  {
+    title: "Proceso Extraordinario",
+    duration: "3 semanas",
+    schedule: "Modalidad Intensiva",
+    description:
+      "Proceso de admisión dirigido a postulantes con aptitudes y condiciones especiales, egresados excelentes, profesionales, deportistas, entre otros.",
+    courses: [
+      "Razonamiento Verbal",
+      "Razonamiento Matemático",
+      "Realidad Nacional / Cultura General"
+    ],
+    benefits: [
+      "Talleres de lectura",
+      "Talleres psicológicos",
+      "Seminarios"
+    ],
+    eligibility: [
+      "Primeros puestos de secundaria de cada región.",
+      "Personas con discapacidad acreditadas por CONADIS.",
+      "Egresados de Bachillerato Internacional y COAR."
+    ],
+    additionalEligibility: [
+      "Deportistas destacados acreditados por el IPD.",
+      "Postulantes por traslados externos o internos.",
+      "Titulados o graduados de universidades e instituciones de educación superior.",
+      "Víctimas del terrorismo o de la violencia ocurrida entre 1980 y 2000.",
+      "Postulantes del Convenio Andrés Bello.",
+      "Egresados y bachilleres de universidades con licencia denegada por SUNEDU.",
+      "Otros casos autorizados por el Consejo Universitario."
+    ],
+    price: "Consultar",
+    installments: "Facilidades de pago disponibles",
+    recommended: false,
+  },
 ];
 
 // Timeline data for processes page

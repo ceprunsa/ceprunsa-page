@@ -188,6 +188,25 @@
   background: linear-gradient(to bottom, #731436, #171a32);
 }
 
+/* Thinner custom scrollbar for cards */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(122, 26, 43, 0.3);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(122, 26, 43, 0.6);
+}
+
+
 /* Selection styles */
 ::selection {
   background-color: rgba(122, 26, 43, 0.18);

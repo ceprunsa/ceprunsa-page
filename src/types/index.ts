@@ -5,8 +5,10 @@ export interface Processes {
   duration: string;
   schedule: string;
   description: string;
-  features: string[];
-  subjects: string[];
+  courses: string[];
+  benefits: string[];
+  eligibility: string[];
+  additionalEligibility?: string[];
   price: string;
   installments: string;
   recommended: boolean;
