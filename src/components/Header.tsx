@@ -91,7 +91,7 @@ const Header: React.FC = () => {
               href="https://sisadmision.unsa.edu.pe/pregrado/"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-3 inline-flex items-center gap-2 rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-accent-700 shadow-soft transition hover:bg-accent-50 hover:shadow-medium"
+              className="ml-3 inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm btn-header-inscription btn-header-glow"
             >
               Inscríbete <ArrowUpRight size={16} aria-hidden="true" />
             </a>
@@ -134,7 +134,7 @@ const Header: React.FC = () => {
               href="https://sisadmision.unsa.edu.pe/pregrado/"
               target="_blank"
               rel="noopener noreferrer"
-              className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-white px-4 py-3 text-sm font-semibold text-accent-700 transition hover:bg-accent-50"
+              className="mt-3 flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm btn-header-inscription btn-header-glow"
             >
               Inscríbete <ArrowUpRight size={16} />
             </a>
