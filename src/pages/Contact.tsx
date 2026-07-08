@@ -14,7 +14,7 @@ import {
   ChevronRight,
   Facebook,
 } from "lucide-react";
-import { contactInfo, processesOptions, faqs } from "../data";
+import { processesOptions, faqs } from "../data";
 import type { FormData } from "../types";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -148,86 +148,142 @@ const Contact: React.FC = () => {
                 necesitas.
               </p>
 
-              <div className="space-y-6">
-                {contactInfo.map((info, index) => (
-                  <div key={index} className="group">
-                    <div className="flex items-start space-x-4 bg-gray-50 p-6 rounded-2xl hover:bg-gray-100 transition-all duration-300 border border-gray-100 hover:border-accent-200">
-                      <div
-                        className={`${info.color} bg-white p-4 rounded-xl shadow-soft group-hover:shadow-medium transition-all duration-300`}
-                      >
-                        <info.icon size={28} />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-primary-700 mb-3 text-lg">
-                          {info.title}
-                        </h3>
-                        {info.details.map((detail, detailIndex) => (
-                          <p
-                            key={detailIndex}
-                            className="text-gray-600 leading-relaxed"
-                          >
-                            {detail}
-                          </p>
-                        ))}
-                      </div>
-                    </div>
+              {/* Contact info grid — uniform clickable cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+                {/* Dirección */}
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=Av.+Independencia+200+Arequipa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 bg-gray-50 hover:bg-primary-50 border border-gray-100 hover:border-primary-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <MapPin className="text-white" size={22} />
                   </div>
-                ))}
+                  <div className="min-w-0">
+                    <p className="font-semibold text-primary-700 text-sm mb-0.5">Dirección</p>
+                    <p className="text-gray-600 text-sm leading-snug">Av. Independencia 200, Arequipa, Perú</p>
+                  </div>
+                </a>
+
+                {/* Teléfono */}
+                <a
+                  href="tel:+51054123456"
+                  className="group flex items-center gap-4 bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <Phone className="text-white" size={22} />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-primary-700 text-sm mb-0.5">Teléfono</p>
+                    <p className="text-gray-600 text-sm">(054) 123-456</p>
+                  </div>
+                </a>
+
+                {/* Email */}
+                <a
+                  href="mailto:info@ceprunsa.edu.pe"
+                  className="group flex items-center gap-4 bg-gray-50 hover:bg-accent-50 border border-gray-100 hover:border-accent-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <Send className="text-white" size={22} />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-primary-700 text-sm mb-0.5">Email</p>
+                    <p className="text-gray-600 text-sm truncate">info@ceprunsa.edu.pe</p>
+                  </div>
+                </a>
+
+                {/* WhatsApp */}
+                <a
+                  href="https://wa.me/51954123456"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex items-center gap-4 bg-gray-50 hover:bg-green-50 border border-gray-100 hover:border-green-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
+                >
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-green-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <MessageCircle className="text-white" size={22} />
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-semibold text-primary-700 text-sm mb-0.5">WhatsApp</p>
+                    <p className="text-gray-600 text-sm">+51 954 123 456</p>
+                  </div>
+                </a>
+
+                {/* Horario — spans full width */}
+                <div className="sm:col-span-2 group flex items-center gap-4 bg-gray-50 hover:bg-primary-50 border border-gray-100 hover:border-primary-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                    <Calendar className="text-white" size={22} />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-primary-700 text-sm mb-0.5">Horario de Atención</p>
+                    <p className="text-gray-600 text-sm">Lunes a Viernes: 8:00 AM – 6:00 PM</p>
+                  </div>
+                </div>
               </div>
 
-              {/* Redes Sociales */}
-              <div className="mt-8 bg-gradient-to-br from-primary-50 to-accent-50/30 p-6 rounded-2xl border border-primary-100/50">
-                <h3 className="font-semibold text-primary-800 mb-4 text-lg">
-                  Síguenos en nuestras redes
-                </h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Social networks */}
+              <div className="mt-6 bg-gradient-to-br from-primary-50 to-accent-50/40 p-5 rounded-2xl border border-primary-100/60">
+                <h3 className="font-semibold text-primary-800 mb-4 text-base">Síguenos en nuestras redes</h3>
+                <div className="grid grid-cols-2 gap-3">
+                  {/* Facebook */}
                   <a
                     href="https://www.facebook.com/ceprunsaoficial/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-3 bg-white p-4 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-soft transition-all duration-300 group"
+                    className="group flex items-center gap-3 bg-white hover:bg-blue-50 border border-gray-100 hover:border-blue-200 p-4 rounded-xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
                   >
-                    <div className="text-blue-600 bg-blue-50 p-2 rounded-lg group-hover:bg-blue-100 transition-colors duration-300">
-                      <Facebook size={20} />
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                      <Facebook className="text-white" size={22} />
                     </div>
                     <div>
-                      <span className="block font-semibold text-sm text-gray-800 group-hover:text-blue-600 transition-colors duration-300">Facebook</span>
+                      <span className="block font-semibold text-sm text-gray-800 group-hover:text-blue-700 transition-colors">Facebook</span>
                       <span className="block text-xs text-gray-500">@ceprunsaoficial</span>
                     </div>
                   </a>
 
+                  {/* TikTok */}
                   <a
                     href="https://www.tiktok.com/@ceprunsa"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center space-x-3 bg-white p-4 rounded-xl border border-gray-100 hover:border-gray-300 hover:shadow-soft transition-all duration-300 group"
+                    className="group flex items-center gap-3 bg-white hover:bg-gray-50 border border-gray-100 hover:border-gray-300 p-4 rounded-xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
                   >
-                    <div className="text-gray-950 bg-gray-50 p-2 rounded-lg group-hover:bg-gray-100 transition-colors duration-300">
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
-                        <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/>
+                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
+                      <svg className="w-[22px] h-[22px] text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.16 8.16 0 0 0 4.78 1.52V6.79a4.85 4.85 0 0 1-1.01-.1z"/>
                       </svg>
                     </div>
                     <div>
-                      <span className="block font-semibold text-sm text-gray-800 group-hover:text-black transition-colors duration-300">TikTok</span>
+                      <span className="block font-semibold text-sm text-gray-800 group-hover:text-black transition-colors">TikTok</span>
                       <span className="block text-xs text-gray-500">@ceprunsa</span>
                     </div>
                   </a>
                 </div>
               </div>
 
+              {/* Map */}
               <a
                 href="https://www.google.com/maps/search/?api=1&query=CEPRUNSA+Arequipa"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group relative mt-10 block h-72 overflow-hidden rounded-2xl shadow-soft sm:h-80"
+                className="group relative mt-6 block h-64 overflow-hidden rounded-2xl shadow-soft sm:h-72"
                 aria-label="Buscar la ubicación de CEPRUNSA en Google Maps"
               >
                 <img src="/ceprunsa_local.jpeg" alt="Sede de CEPRUNSA" width="848" height="355" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary-950/80 via-primary-900/10 to-transparent" />
-                <div className="absolute bottom-0 left-0 p-6 text-white">
-                  <MapPin className="mb-2 text-accent-300" size={25} />
-                  <h3 className="font-heading text-xl font-bold">Ubicación CEPRUNSA</h3>
-                  <p className="mt-1 text-sm text-primary-100">Abrir indicaciones en Google Maps</p>
+                <div className="absolute bottom-0 left-0 p-5 text-white flex items-end gap-3 w-full">
+                  <div className="flex-shrink-0 w-12 h-12 rounded-full bg-accent-600/80 backdrop-blur-sm flex items-center justify-center shadow-lg">
+                    <MapPin className="text-white" size={22} />
+                  </div>
+                  <div>
+                    <h3 className="font-heading text-base font-bold leading-tight">Sede de CEPRUNSA</h3>
+                    <p className="text-xs text-primary-100 flex items-center gap-1 mt-0.5">
+                      Abrir indicaciones en Google Maps
+                      <ChevronRight size={13} className="group-hover:translate-x-1 transition-transform" />
+                    </p>
+                  </div>
                 </div>
               </a>
             </div>
@@ -386,93 +442,7 @@ const Contact: React.FC = () => {
         </div>
       </section>
 
-      {/* Quick Contact Options */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
-              Contacto <span className="text-accent-900">Rápido</span>
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              ¿Necesitas información inmediata? Contáctanos por estos medios
-              directos.
-            </p>
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="group">
-              <div className="bg-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-green-200 text-center">
-                <div className="bg-gradient-to-br from-green-100 to-green-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <MessageCircle className="text-green-600" size={28} />
-                </div>
-                <h3 className="font-heading text-xl font-bold text-primary-700 mb-4">
-                  WhatsApp
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Chatea con nosotros en tiempo real
-                </p>
-                <a
-                  href="https://wa.me/51954123456"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center bg-green-500 hover:bg-green-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 group"
-                >
-                  WhatsApp
-                  <ChevronRight
-                    className="ml-2 group-hover:translate-x-1 transition-transform"
-                    size={16}
-                  />
-                </a>
-              </div>
-            </div>
-
-            <div className="group">
-              <div className="bg-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-blue-200 text-center">
-                <div className="bg-gradient-to-br from-blue-100 to-blue-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Phone className="text-blue-600" size={28} />
-                </div>
-                <h3 className="font-heading text-xl font-bold text-primary-700 mb-4">
-                  Llamada Directa
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Habla con nuestros asesores
-                </p>
-                <a
-                  href="tel:+51054123456"
-                  className="inline-flex items-center bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 group"
-                >
-                  Llamar Ahora
-                  <ChevronRight
-                    className="ml-2 group-hover:translate-x-1 transition-transform"
-                    size={16}
-                  />
-                </a>
-              </div>
-            </div>
-
-            <div className="group">
-              <div className="bg-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 text-center">
-                <div className="bg-gradient-to-br from-accent-100 to-accent-200 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300">
-                  <Calendar className="text-accent-600" size={28} />
-                </div>
-                <h3 className="font-heading text-xl font-bold text-primary-700 mb-4">
-                  Cita Presencial
-                </h3>
-                <p className="text-gray-600 mb-6">
-                  Visítanos en nuestras instalaciones
-                </p>
-                <button className="inline-flex items-center bg-accent-500 hover:bg-accent-600 text-white font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform hover:scale-105 group">
-                  Agendar Cita
-                  <ChevronRight
-                    className="ml-2 group-hover:translate-x-1 transition-transform"
-                    size={16}
-                  />
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* FAQ Section */}
       <section ref={faqRef} className="section-padding bg-white">
