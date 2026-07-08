@@ -2,6 +2,7 @@
 
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -19,10 +20,19 @@ import type { FormData } from "../types";
 
 gsap.registerPlugin(ScrollTrigger);
 
+// ── EmailJS credentials ──────────────────────────────────────────────────────
+// Obtén estos valores en https://dashboard.emailjs.com/
+const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  ?? "YOUR_SERVICE_ID";
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? "YOUR_TEMPLATE_ID";
+const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  ?? "YOUR_PUBLIC_KEY";
+// ─────────────────────────────────────────────────────────────────────────────
+
 const Contact: React.FC = () => {
   const contactRef = useRef<HTMLDivElement>(null);
-  const formRef = useRef<HTMLDivElement>(null);
-  const faqRef = useRef<HTMLDivElement>(null);
+  const formRef    = useRef<HTMLDivElement>(null);
+  const faqRef     = useRef<HTMLDivElement>(null);
+  const formElement = useRef<HTMLFormElement>(null);
+
   const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
@@ -30,8 +40,9 @@ const Contact: React.FC = () => {
     process: "",
     message: "",
   });
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted]   = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
+  const [submitError, setSubmitError]   = useState<string | null>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -95,21 +106,28 @@ const Contact: React.FC = () => {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>): void => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault();
+    if (!formElement.current) return;
+
     setIsSubmitting(true);
-    // Simulate form submission
-    setTimeout(() => {
+    setSubmitError(null);
+
+    try {
+      await emailjs.sendForm(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        formElement.current,
+        { publicKey: EMAILJS_PUBLIC_KEY }
+      );
       setIsSubmitted(true);
+      setFormData({ name: "", email: "", phone: "", process: "", message: "" });
+    } catch (error) {
+      console.error("EmailJS error:", error);
+      setSubmitError("Ocurrió un error al enviar el mensaje. Por favor intenta de nuevo o contáctanos directamente por WhatsApp.");
+    } finally {
       setIsSubmitting(false);
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        process: "",
-        message: "",
-      });
-    }, 2000);
+    }
   };
 
   return (
@@ -316,7 +334,7 @@ const Contact: React.FC = () => {
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} className="space-y-6">
+                  <form ref={formElement} onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label
@@ -384,7 +402,7 @@ const Contact: React.FC = () => {
                         </label>
                         <select
                           id="program"
-                          name="program"
+                          name="process"
                           value={formData.process}
                           onChange={handleInputChange}
                           className="w-full px-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-accent-500 focus:border-accent-500 transition-all duration-300 bg-white hover:border-accent-300"
@@ -434,6 +452,14 @@ const Contact: React.FC = () => {
                         </>
                       )}
                     </button>
+
+                    {/* Error message */}
+                    {submitError && (
+                      <div className="flex items-start gap-3 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm">
+                        <span className="mt-0.5 flex-shrink-0">⚠️</span>
+                        <p>{submitError}</p>
+                      </div>
+                    )}
                   </form>
                 )}
               </div>
