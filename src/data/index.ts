@@ -170,7 +170,8 @@ export const teamMembers = [
     description:
       "Docente especializado en Filosofía, con una maestría en Docencia Universitaria y Gestión Educativa. Actualmente es docente en la Universidad Nacional de San Agustín, con experiencia previa en diversas universidades peruanas desde 2003. En cuanto a su formación académica, es bachiller y licenciado en Filosofía por la Universidad Nacional de San Agustín de Arequipa, además de haber completado un diplomado en Desarrollo de Habilidades Digitales para el Aprendizaje y programas de formación docente en enseñanza e innovación.",
     image: "/DR-ARNALDO.jpg",
-    cvLink: "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=63640",
+    cvLink:
+      "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=63640",
   },
   {
     name: "Dra. Maria Elena Rojas Zegarra",
@@ -178,7 +179,8 @@ export const teamMembers = [
     description:
       "Doctora en Psicología por la Universidad Complutense de Madrid. Actualmente, cursa el Máster en Investigación Psicológica por la Universidad Internacional de La Rioja (UNIR), España. Posee un Diplomado Internacional en el Modelo de Terapia Breve de Resolución de Problemas del Brief Therapy Center de Palo Alto, California, y es experta en Psicoterapia Breve para Niños y Adolescentes por la Universidad San Jorge, España.",
     image: "/DRA-MARIA-ELENA-2.jpg",
-    cvLink: "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=20316",
+    cvLink:
+      "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=20316",
   },
   {
     name: "Mg. Jose Miguel Rojas Hualpa",
@@ -186,7 +188,8 @@ export const teamMembers = [
     description:
       "Posee el grado en Ciencias Biológicas por la Universidad Nacional de San Agustín de Arequipa (2010) y el grado en Ingeniería Ambiental (2018). Es Magíster en Biología Funcional y Molecular por la Universidad Estadual de Campinas (2014). Fue investigador en el Laboratorio de Química de Proteínas de la Universidad Estadual de Campinas (2012 – 2014).",
     image: "/DR-JOSE.jpg",
-    cvLink: "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=150092",
+    cvLink:
+      "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=150092",
   },
 ];
 
@@ -342,17 +345,17 @@ export const processes: Processes[] = [
       "Educación Cívica",
       "Inglés",
       "Razonamiento Verbal",
-      "Razonamiento Matemático"
+      "Razonamiento Matemático",
     ],
     benefits: [
       "Exámenes simulacro",
       "Talleres de lectura",
       "Talleres psicológicos",
-      "Seminarios"
+      "Seminarios",
     ],
     eligibility: [
       "Público en general",
-      "Estudiantes de 5to de secundaria (Quintos)"
+      "Estudiantes de 5to de secundaria (Quintos)",
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
@@ -379,17 +382,15 @@ export const processes: Processes[] = [
       "Educación Cívica",
       "Inglés",
       "Razonamiento Verbal",
-      "Razonamiento Matemático"
+      "Razonamiento Matemático",
     ],
     benefits: [
       "Exámenes simulacro",
       "Talleres de lectura",
       "Talleres psicológicos",
-      "Seminarios"
+      "Seminarios",
     ],
-    eligibility: [
-      "Solo estudiantes de 5to de secundaria (Quintos)"
-    ],
+    eligibility: ["Solo estudiantes de 5to de secundaria (Quintos)"],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
     recommended: true,
@@ -415,17 +416,17 @@ export const processes: Processes[] = [
       "Educación Cívica",
       "Inglés",
       "Razonamiento Verbal",
-      "Razonamiento Matemático"
+      "Razonamiento Matemático",
     ],
     benefits: [
       "Exámenes simulacro",
       "Talleres de lectura",
       "Talleres psicológicos",
-      "Seminarios"
+      "Seminarios",
     ],
     eligibility: [
       "Público en general",
-      "Estudiantes de 5to de secundaria (Quintos)"
+      "Estudiantes de 5to de secundaria (Quintos)",
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
@@ -440,17 +441,13 @@ export const processes: Processes[] = [
     courses: [
       "Razonamiento Verbal",
       "Razonamiento Matemático",
-      "Realidad Nacional / Cultura General"
+      "Realidad Lógico",
     ],
-    benefits: [
-      "Talleres de lectura",
-      "Talleres psicológicos",
-      "Seminarios"
-    ],
+    benefits: ["Talleres de lectura", "Talleres psicológicos", "Seminarios"],
     eligibility: [
       "Primeros puestos de secundaria de cada región.",
       "Personas con discapacidad acreditadas por CONADIS.",
-      "Egresados de Bachillerato Internacional y COAR."
+      "Egresados de Bachillerato Internacional y COAR.",
     ],
     additionalEligibility: [
       "Deportistas destacados acreditados por el IPD.",
@@ -459,7 +456,7 @@ export const processes: Processes[] = [
       "Víctimas del terrorismo o de la violencia ocurrida entre 1980 y 2000.",
       "Postulantes del Convenio Andrés Bello.",
       "Egresados y bachilleres de universidades con licencia denegada por SUNEDU.",
-      "Otros casos autorizados por el Consejo Universitario."
+      "Otros casos autorizados por el Consejo Universitario.",
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",

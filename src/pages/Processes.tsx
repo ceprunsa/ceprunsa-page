@@ -9,29 +9,27 @@ import {
   Clock,
   Users,
   BookOpen,
-  Target,
   Calendar,
   Award,
   Star,
   ChevronRight,
-  Zap,
-  TrendingUp,
   Lightbulb,
   ChevronDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import {
-  processes,
-  processTimeline,
-} from "../data";
+import { processes, processTimeline } from "../data";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Processes: React.FC = () => {
   const programsRef = useRef<HTMLElement>(null);
   const comparisonRef = useRef<HTMLElement>(null);
-  const [expandedCourses, setExpandedCourses] = useState<Record<number, boolean>>({});
-  const [expandedEligibility, setExpandedEligibility] = useState<Record<number, boolean>>({});
+  const [expandedCourses, setExpandedCourses] = useState<
+    Record<number, boolean>
+  >({});
+  const [expandedEligibility, setExpandedEligibility] = useState<
+    Record<number, boolean>
+  >({});
 
   const toggleCourses = (index: number) => {
     setExpandedCourses((prev) => ({
@@ -71,7 +69,7 @@ const Processes: React.FC = () => {
           trigger: programsRef.current,
           start: "top 80%",
         },
-      }
+      },
     );
 
     gsap.fromTo(
@@ -87,7 +85,7 @@ const Processes: React.FC = () => {
           trigger: comparisonRef.current,
           start: "top 80%",
         },
-      }
+      },
     );
 
     return () => ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
@@ -116,20 +114,23 @@ const Processes: React.FC = () => {
               <span className="text-accent-900 relative">CEPRUNSA</span>
             </h1>
             <p className="text-xl text-secondary-600 max-w-3xl mx-auto mb-8">
-              Modalidades de ingreso directo a la UNSA con preparación especializada y acompañamiento constante.
+              Modalidades de ingreso directo a la UNSA con preparación
+              especializada y acompañamiento constante.
             </p>
             {/* Cronograma Anual Horizontal */}
             <div className="max-w-5xl mx-auto mt-12 bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-soft">
               <h3 className="font-heading text-lg font-bold text-primary-700 mb-8 text-center uppercase tracking-wider">
                 Cronograma Anual de Procesos
               </h3>
-              
+
               <div className="relative flex flex-col md:flex-row justify-between items-center md:items-start gap-8 md:gap-4">
                 {/* Connector Line (Desktop) */}
                 <div className="absolute top-10 left-[10%] right-[10%] h-0.5 bg-gray-200 hidden md:block z-0">
-                  <div 
-                    className="h-full bg-accent-600 transition-all duration-500" 
-                    style={{ width: `${(getCurrentTimelineStep() / 3) * 100}%` }}
+                  <div
+                    className="h-full bg-accent-600 transition-all duration-500"
+                    style={{
+                      width: `${(getCurrentTimelineStep() / 3) * 100}%`,
+                    }}
                   />
                 </div>
 
@@ -137,36 +138,49 @@ const Processes: React.FC = () => {
                 {processTimeline.map((item, index) => {
                   const isActive = index === getCurrentTimelineStep();
                   return (
-                    <div 
-                      key={index} 
+                    <div
+                      key={index}
                       className={`relative z-10 flex flex-col items-center text-center flex-1 md:px-2 transition-all duration-300 ${
                         isActive ? "scale-105" : "opacity-70 hover:opacity-90"
                       }`}
                     >
                       {/* Node Icon/Number */}
-                      <div 
+                      <div
                         className={`w-20 h-20 rounded-full flex flex-col items-center justify-center border-4 transition-all duration-300 mb-4 shadow-md ${
-                          isActive 
-                            ? "bg-accent-600 border-accent-400 text-white shadow-glow-red scale-110" 
+                          isActive
+                            ? "bg-accent-600 border-accent-400 text-white shadow-glow-red scale-110"
                             : "bg-white border-gray-200 text-gray-500 hover:border-accent-300"
                         }`}
                       >
-                        <Calendar size={22} className={isActive ? "text-white animate-pulse" : "text-gray-400"} />
+                        <Calendar
+                          size={22}
+                          className={
+                            isActive
+                              ? "text-white animate-pulse"
+                              : "text-gray-400"
+                          }
+                        />
                         <span className="text-[10px] font-bold mt-1 uppercase tracking-tight">
                           {item.period.split(" - ")[0]}
                         </span>
                       </div>
 
                       {/* Content Card */}
-                      <div className={`p-4 rounded-xl border transition-all duration-300 ${
-                        isActive 
-                          ? "bg-accent-50/50 border-accent-200 shadow-sm" 
-                          : "bg-gray-50/30 border-transparent"
-                      }`}>
-                        <h4 className={`font-heading text-sm font-bold ${isActive ? "text-accent-950" : "text-gray-800"}`}>
+                      <div
+                        className={`p-4 rounded-xl border transition-all duration-300 ${
+                          isActive
+                            ? "bg-accent-50/50 border-accent-200 shadow-sm"
+                            : "bg-gray-50/30 border-transparent"
+                        }`}
+                      >
+                        <h4
+                          className={`font-heading text-sm font-bold ${isActive ? "text-accent-950" : "text-gray-800"}`}
+                        >
                           {item.title}
                         </h4>
-                        <p className={`text-xs font-semibold mt-1 ${isActive ? "text-accent-700" : "text-accent-600"}`}>
+                        <p
+                          className={`text-xs font-semibold mt-1 ${isActive ? "text-accent-700" : "text-accent-600"}`}
+                        >
                           {item.period}
                         </p>
                         <p className="text-[11px] text-gray-500 mt-2 leading-relaxed max-w-[200px] mx-auto">
@@ -187,10 +201,12 @@ const Processes: React.FC = () => {
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
-              Nuestros <span className="text-accent-900">Procesos de Admisión</span>
+              Nuestros{" "}
+              <span className="text-accent-900">Procesos de Admisión</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Compara y elige el proceso que se adapta a tu perfil académico y metas de ingreso directo.
+              Compara y elige el proceso que se adapta a tu perfil académico y
+              metas de ingreso directo.
             </p>
           </div>
           <div className="flex flex-col gap-8">
@@ -209,7 +225,8 @@ const Processes: React.FC = () => {
                     <div>
                       {process.recommended && (
                         <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-accent-600 text-white mb-4 animate-pulse-slow">
-                          <Star size={12} fill="currentColor" /> Próximo a Iniciar
+                          <Star size={12} fill="currentColor" /> Próximo a
+                          Iniciar
                         </span>
                       )}
                       <h3 className="font-heading text-2xl font-bold text-primary-700 mb-2 group-hover:text-accent-700 transition-colors">
@@ -223,11 +240,15 @@ const Processes: React.FC = () => {
                     <div className="mt-6 pt-4 border-t border-gray-200/50">
                       <div className="flex items-center gap-2 text-primary-700">
                         <Clock size={16} className="text-accent-500" />
-                        <span className="text-sm font-semibold">{process.duration}</span>
+                        <span className="text-sm font-semibold">
+                          {process.duration}
+                        </span>
                       </div>
                       <div className="flex items-center gap-2 text-secondary-600 mt-1">
                         <Calendar size={16} className="text-primary-500" />
-                        <span className="text-xs font-medium">{process.schedule}</span>
+                        <span className="text-xs font-medium">
+                          {process.schedule}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -237,26 +258,41 @@ const Processes: React.FC = () => {
                     {/* Cursos */}
                     <div className="space-y-3">
                       <h4 className="font-heading text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 pb-2">
-                        <BookOpen size={16} className="text-primary-600" /> Cursos
+                        <BookOpen size={16} className="text-primary-600" />{" "}
+                        Cursos
                       </h4>
                       <div className="space-y-2">
                         <p className="text-sm text-gray-700">
-                          Prepárate con <strong className="font-bold text-primary-700">{process.courses.length} cursos especializados</strong>.
+                          Prepárate con{" "}
+                          <strong className="font-bold text-primary-700">
+                            {process.courses.length} cursos especializados
+                          </strong>
+                          .
                         </p>
                         <button
                           onClick={() => toggleCourses(index)}
                           className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent-700 hover:text-accent-800 transition-colors focus:outline-none focus:ring-1 focus:ring-accent-500 rounded px-1.5 py-0.5"
                           aria-expanded={expandedCourses[index]}
                         >
-                          {expandedCourses[index] ? "Ocultar cursos" : "Ver cursos"}
-                          <ChevronDown size={14} className={`transform transition-transform duration-200 ${expandedCourses[index] ? "rotate-180" : ""}`} />
+                          {expandedCourses[index]
+                            ? "Ocultar cursos"
+                            : "Ver cursos"}
+                          <ChevronDown
+                            size={14}
+                            className={`transform transition-transform duration-200 ${expandedCourses[index] ? "rotate-180" : ""}`}
+                          />
                         </button>
-                        
+
                         {/* Lista de cursos desplegable */}
-                        <div className={`transition-all duration-300 overflow-hidden ${expandedCourses[index] ? "max-h-60 mt-2 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}>
+                        <div
+                          className={`transition-all duration-300 overflow-hidden ${expandedCourses[index] ? "max-h-60 mt-2 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}
+                        >
                           <ul className="space-y-1.5 pl-1 max-h-48 overflow-y-auto custom-scrollbar pr-1">
                             {process.courses.map((course, i) => (
-                              <li key={i} className="text-xs text-gray-600 flex items-center gap-1.5 py-0.5">
+                              <li
+                                key={i}
+                                className="text-xs text-gray-600 flex items-center gap-1.5 py-0.5"
+                              >
                                 <div className="w-1.5 h-1.5 rounded-full bg-accent-500 flex-shrink-0" />
                                 <span>{course}</span>
                               </li>
@@ -269,12 +305,19 @@ const Processes: React.FC = () => {
                     {/* Beneficios */}
                     <div className="space-y-3">
                       <h4 className="font-heading text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 pb-2">
-                        <Award size={16} className="text-accent-600" /> Beneficios
+                        <Award size={16} className="text-accent-600" />{" "}
+                        Beneficios
                       </h4>
                       <ul className="space-y-2">
                         {process.benefits.map((benefit, i) => (
-                          <li key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                            <CheckCircle size={14} className="text-success-500 mt-0.5 flex-shrink-0" />
+                          <li
+                            key={i}
+                            className="flex items-start gap-2 text-sm text-gray-700"
+                          >
+                            <CheckCircle
+                              size={14}
+                              className="text-success-500 mt-0.5 flex-shrink-0"
+                            />
                             <span>{benefit}</span>
                           </li>
                         ))}
@@ -284,13 +327,20 @@ const Processes: React.FC = () => {
                     {/* Público Apto */}
                     <div className="space-y-3">
                       <h4 className="font-heading text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-2 border-b border-gray-100 pb-2">
-                        <Users size={16} className="text-primary-600" /> Público Apto
+                        <Users size={16} className="text-primary-600" /> Público
+                        Apto
                       </h4>
                       <div className="space-y-2">
                         <div className="space-y-2">
                           {process.eligibility.map((item, i) => (
-                            <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                              <ChevronRight size={14} className="text-accent-500 mt-0.5 flex-shrink-0" />
+                            <div
+                              key={i}
+                              className="flex items-start gap-2 text-sm text-gray-700"
+                            >
+                              <ChevronRight
+                                size={14}
+                                className="text-accent-500 mt-0.5 flex-shrink-0"
+                              />
                               <span>{item}</span>
                             </div>
                           ))}
@@ -303,18 +353,33 @@ const Processes: React.FC = () => {
                               className="inline-flex items-center gap-1.5 text-xs font-semibold text-accent-700 hover:text-accent-800 transition-colors focus:outline-none focus:ring-1 focus:ring-accent-500 rounded px-1.5 py-0.5 mt-1"
                               aria-expanded={expandedEligibility[index]}
                             >
-                              {expandedEligibility[index] ? "Ocultar" : "Ver todos"}
-                              <ChevronDown size={14} className={`transform transition-transform duration-200 ${expandedEligibility[index] ? "rotate-180" : ""}`} />
+                              {expandedEligibility[index]
+                                ? "Ocultar"
+                                : "Ver todos"}
+                              <ChevronDown
+                                size={14}
+                                className={`transform transition-transform duration-200 ${expandedEligibility[index] ? "rotate-180" : ""}`}
+                              />
                             </button>
 
-                            <div className={`transition-all duration-300 overflow-hidden ${expandedEligibility[index] ? "max-h-60 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}>
+                            <div
+                              className={`transition-all duration-300 overflow-hidden ${expandedEligibility[index] ? "max-h-60 opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}
+                            >
                               <div className="space-y-2 max-h-48 overflow-y-auto custom-scrollbar pr-1 pt-1">
-                                {process.additionalEligibility.map((item, i) => (
-                                  <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
-                                    <ChevronRight size={14} className="text-accent-500 mt-0.5 flex-shrink-0" />
-                                    <span>{item}</span>
-                                  </div>
-                                ))}
+                                {process.additionalEligibility.map(
+                                  (item, i) => (
+                                    <div
+                                      key={i}
+                                      className="flex items-start gap-2 text-sm text-gray-700"
+                                    >
+                                      <ChevronRight
+                                        size={14}
+                                        className="text-accent-500 mt-0.5 flex-shrink-0"
+                                      />
+                                      <span>{item}</span>
+                                    </div>
+                                  ),
+                                )}
                               </div>
                             </div>
                           </div>
@@ -341,7 +406,9 @@ const Processes: React.FC = () => {
                           : "bg-white border border-gray-200 hover:border-accent-200 text-gray-800 hover:text-accent-700 shadow-soft"
                       }`}
                     >
-                      {process.recommended ? "Inscríbete Ahora" : "Más Información"}
+                      {process.recommended
+                        ? "Inscríbete Ahora"
+                        : "Más Información"}
                       <ChevronRight
                         className="inline ml-1.5 group-hover:translate-x-0.5 transition-transform"
                         size={14}
@@ -364,7 +431,8 @@ const Processes: React.FC = () => {
               <span className="text-accent-900">Examen Ordinario</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Conoce las ventajas de la modalidad CEPRUNSA frente al examen ordinario de admisión.
+              Conoce las ventajas de la modalidad CEPRUNSA frente al examen
+              ordinario de admisión.
             </p>
           </div>
 
@@ -497,14 +565,15 @@ const Processes: React.FC = () => {
                 Diferencia Clave
               </h3>
               <p className="text-gray-700 leading-relaxed text-lg">
-                CEPRUNSA es una modalidad oficial que te garantiza estudiar exactamente lo que te van a evaluar, mientras que el examen ordinario requiere preparación general sin certeza del contenido específico.
+                CEPRUNSA es una modalidad oficial que te garantiza estudiar
+                exactamente lo que te van a evaluar, mientras que el examen
+                ordinario requiere preparación general sin certeza del contenido
+                específico.
               </p>
             </div>
           </div>
         </div>
       </section>
-
-
 
       {/* CTA Section */}
       <section className="section-padding bg-gradient-to-br from-accent-600 via-accent-700 to-accent-800 text-white relative overflow-hidden">
@@ -516,7 +585,8 @@ const Processes: React.FC = () => {
             ¿Listo para el próximo proceso CEPRUNSA?
           </h2>
           <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
-            No pierdas la oportunidad de ingresar a la UNSA a través de esta modalidad oficial con preparación especializada.
+            No pierdas la oportunidad de ingresar a la UNSA a través de esta
+            modalidad oficial con preparación especializada.
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <Link
@@ -543,4 +613,3 @@ const Processes: React.FC = () => {
 };
 
 export default Processes;
-
