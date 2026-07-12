@@ -18,6 +18,19 @@ interface CarreraData {
   codigo?: string;
 }
 
+interface CarreraDetalle {
+  url?: string;
+  imagen?: string;
+  por_que_estudiar?: {
+    descripcion?: string;
+  };
+  codigo?: string;
+}
+
+type CarrerasPorFacultad = Record<string, CarreraDetalle>;
+type FacultadesPorArea = Record<string, CarrerasPorFacultad>;
+type UnsaCarrerasData = Record<string, FacultadesPorArea>;
+
 const Carreras: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedArea, setSelectedArea] = useState<string>("Todas");
@@ -26,10 +39,10 @@ const Carreras: React.FC = () => {
   // Aplanar los datos
   const allCarreras = useMemo(() => {
     const arr: CarreraData[] = [];
-    Object.entries(unsaCarreras).forEach(([area, facultades]) => {
-      Object.entries(facultades as any).forEach(([facultad, carreras]) => {
-        Object.entries(carreras as any).forEach(
-          ([nombre, detalles]: [string, any]) => {
+    Object.entries(unsaCarreras as UnsaCarrerasData).forEach(
+      ([area, facultades]) => {
+        Object.entries(facultades).forEach(([facultad, carreras]) => {
+          Object.entries(carreras).forEach(([nombre, detalles]) => {
             arr.push({
               nombre,
               area,
@@ -41,10 +54,10 @@ const Carreras: React.FC = () => {
                 "Carrera profesional de la UNSA.",
               codigo: detalles.codigo,
             });
-          },
-        );
-      });
-    });
+          });
+        });
+      },
+    );
     // Ordenar alfabéticamente
     return arr.sort((a, b) => a.nombre.localeCompare(b.nombre));
   }, []);
