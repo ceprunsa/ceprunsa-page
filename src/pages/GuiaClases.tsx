@@ -3,7 +3,7 @@
 import type React from "react";
 import { Link } from "react-router-dom";
 import {
-  PlayCircle,
+  BookOpen,
   ChevronLeft,
   CheckCircle,
   Monitor,
@@ -15,27 +15,21 @@ import {
 const steps = [
   {
     step: "01",
-    title: "Accede al enlace de tu clase",
+    title: "Accede con tu cuenta CEPRUNSA",
     description:
-      "Ingresa al correo con el que te inscribiste. Busca el mensaje enviado por CEPRUNSA con el enlace de acceso a tu plataforma virtual o sala de videoconferencia.",
+      "Accede con la cuenta CEPRUNSA que recibiste al momento de tu inscripción.",
   },
   {
     step: "02",
-    title: "Inicia sesión con tus credenciales",
+    title: "Ingresa a Google Classroom",
     description:
-      "Usa el usuario y contraseña que te fueron asignados al momento de completar tu inscripción. Si olvidaste tu contraseña, comunícate con administración.",
+      "Ingresa a la plataforma Google Classroom utilizando dicha cuenta.",
   },
   {
     step: "03",
-    title: "Únete a la sala de clases",
+    title: "Únete a Google Meet",
     description:
-      "Haz clic en el botón 'Unirse' o 'Entrar a la clase'. Asegúrate de tener tu micrófono y cámara configurados correctamente antes de ingresar.",
-  },
-  {
-    step: "04",
-    title: "Participa y sigue la clase",
-    description:
-      "Una vez dentro, podrás ver al docente, escuchar la clase y participar usando el chat o levantando la mano. Mantén tu micrófono en silencio cuando no estés hablando.",
+      "Desde Classroom, selecciona tu salón y haz clic en el enlace de Google Meet correspondiente para unirte a la sesión.",
   },
 ];
 
@@ -63,7 +57,7 @@ const GuiaClases: React.FC = () => {
 
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-primary-100 text-primary-700 px-3 py-1.5 rounded-full text-xs font-semibold mb-5">
-              <PlayCircle size={14} /> Video Tutorial
+              <BookOpen size={14} /> Guía de Acceso
             </div>
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-primary-700 mb-6 leading-tight">
               Cómo acceder a{" "}
@@ -74,32 +68,6 @@ const GuiaClases: React.FC = () => {
               plataforma virtual de CEPRUNSA y no perderte ninguna clase.
             </p>
           </div>
-        </div>
-      </section>
-
-      {/* Video tutorial */}
-      <section className="py-14 bg-white">
-        <div className="container-custom">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-primary-700 mb-8 text-center">
-            Video tutorial: <span className="text-accent-900">Ingreso a clases</span>
-          </h2>
-
-          {/* Video embed — placeholder iframe (replace src with real YouTube embed URL) */}
-          <div className="max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-large border border-gray-100">
-            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="Tutorial: Cómo acceder a tus clases en CEPRUNSA"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
-
-          <p className="text-center text-sm text-gray-400 mt-4">
-            ¿No puedes ver el video? Asegúrate de tener conexión a internet activa.
-          </p>
         </div>
       </section>
 

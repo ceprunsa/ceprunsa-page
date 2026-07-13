@@ -2,7 +2,6 @@
 
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
-import emailjs from "@emailjs/browser";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
@@ -20,17 +19,12 @@ import type { FormData } from "../types";
 
 gsap.registerPlugin(ScrollTrigger);
 
-// ── EmailJS credentials ──────────────────────────────────────────────────────
-// Obtén estos valores en https://dashboard.emailjs.com/
-const EMAILJS_SERVICE_ID  = import.meta.env.VITE_EMAILJS_SERVICE_ID  ?? "YOUR_SERVICE_ID";
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID ?? "YOUR_TEMPLATE_ID";
-const EMAILJS_PUBLIC_KEY  = import.meta.env.VITE_EMAILJS_PUBLIC_KEY  ?? "YOUR_PUBLIC_KEY";
-// ─────────────────────────────────────────────────────────────────────────────
+const APPS_SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL ?? "";
 
 const Contact: React.FC = () => {
   const contactRef = useRef<HTMLDivElement>(null);
-  const formRef    = useRef<HTMLDivElement>(null);
-  const faqRef     = useRef<HTMLDivElement>(null);
+  const formRef = useRef<HTMLDivElement>(null);
+  const faqRef = useRef<HTMLDivElement>(null);
   const formElement = useRef<HTMLFormElement>(null);
 
   const [formData, setFormData] = useState<FormData>({
@@ -40,9 +34,9 @@ const Contact: React.FC = () => {
     process: "",
     message: "",
   });
-  const [isSubmitted, setIsSubmitted]   = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-  const [submitError, setSubmitError]   = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -114,16 +108,33 @@ const Contact: React.FC = () => {
     setSubmitError(null);
 
     try {
-      await emailjs.sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        formElement.current,
-        { publicKey: EMAILJS_PUBLIC_KEY }
-      );
-      setIsSubmitted(true);
-      setFormData({ name: "", email: "", phone: "", process: "", message: "" });
+      const response = await fetch(APPS_SCRIPT_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "text/plain;charset=utf-8",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      let result;
+      try {
+        result = await response.json();
+      } catch (err) {
+        if (response.ok) {
+          result = { status: "success" };
+        } else {
+          throw new Error("Respuesta no válida del servidor");
+        }
+      }
+
+      if (result && result.status === "success") {
+        setIsSubmitted(true);
+        setFormData({ name: "", email: "", phone: "", process: "", message: "" });
+      } else {
+        throw new Error(result?.message || "Error al enviar el formulario");
+      }
     } catch (error) {
-      console.error("EmailJS error:", error);
+      console.error("Apps Script Submit Error:", error);
       setSubmitError("Ocurrió un error al enviar el mensaje. Por favor intenta de nuevo o contáctanos directamente por WhatsApp.");
     } finally {
       setIsSubmitting(false);
@@ -270,7 +281,7 @@ const Contact: React.FC = () => {
                   >
                     <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-gray-800 to-black flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
                       <svg className="w-[22px] h-[22px] text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.16 8.16 0 0 0 4.78 1.52V6.79a4.85 4.85 0 0 1-1.01-.1z"/>
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.32 6.32 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.16 8.16 0 0 0 4.78 1.52V6.79a4.85 4.85 0 0 1-1.01-.1z" />
                       </svg>
                     </div>
                     <div>

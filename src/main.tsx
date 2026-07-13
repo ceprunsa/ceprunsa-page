@@ -38,6 +38,10 @@ const router = createBrowserRouter([
         element: <Carreras />,
       },
       {
+        path: "zona-postulante",
+        element: <ZonaPostulante />,
+      },
+      {
         path: "zona-postulante/clases",
         element: <GuiaClases />,
       },

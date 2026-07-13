@@ -3,62 +3,49 @@
 import type React from "react";
 import { Link } from "react-router-dom";
 import {
-  CreditCard,
   ChevronLeft,
-  CheckCircle,
   AlertTriangle,
   ArrowRight,
   FileText,
-  DollarSign,
-  ShieldCheck,
+  Smartphone,
+  Laptop,
+  Store,
+  QrCode,
+  Building,
 } from "lucide-react";
 
 const steps = [
   {
     step: "01",
-    title: "Ingresa al portal UNSApay",
+    title: "Dirígete a Pagar Servicios",
     description:
-      'Abre tu navegador y visita el portal oficial de pagos de la UNSA en unsapay.unsa.edu.pe o busca "UNSApay UNSA" en Google. Asegúrate de acceder al sitio oficial.',
+      "Ingresa a cualquier canal del BCP (Banca Móvil, Banca por Internet, Agente o Yape) y selecciona la opción “Pagar servicios”.",
   },
   {
     step: "02",
-    title: "Selecciona 'Pago de servicios académicos'",
+    title: "Busca la Entidad",
     description:
-      "En el menú principal, elige la opción correspondiente a tu tipo de pago: Inscripción a CEPRUNSA, cuota académica u otro servicio requerido.",
+      "Busca y selecciona la entidad “Universidad Nacional de San Agustín”.",
   },
   {
     step: "03",
-    title: "Ingresa tu código de estudiante o DNI",
+    title: "Selecciona el Servicio",
     description:
-      "Escribe tu número de DNI o código de postulante para que el sistema identifique tu cuenta y muestre los conceptos de pago pendientes.",
+      "Selecciona la opción de pago “UNSA-VIRTUAL” para proceder con las cuotas del CEPRUNSA.",
   },
   {
     step: "04",
-    title: "Selecciona el concepto a pagar",
+    title: "Ingresa tu Código Web",
     description:
-      "Elige el concepto de pago que corresponde a tu proceso (ej. Inscripción CEPRUNSA I Fase). Verifica el monto y los datos antes de continuar.",
-  },
-  {
-    step: "05",
-    title: "Elige tu método de pago",
-    description:
-      "UNSApay acepta: tarjeta de crédito/débito Visa o Mastercard, transferencia bancaria y pago en agentes autorizados. Selecciona el que prefieras.",
-  },
-  {
-    step: "06",
-    title: "Confirma y guarda el comprobante",
-    description:
-      "Tras completar el pago, descarga o imprime el comprobante. Guárdalo en un lugar seguro y envíalo al correo de CEPRUNSA si se te solicita para validar tu inscripción.",
+      "Ingresa el código web que se te asignó en el sistema SISADMISION al momento de tu inscripción.",
   },
 ];
 
-const normativa = [
-  "Los pagos deben realizarse dentro del plazo establecido en el cronograma oficial de cada proceso.",
-  "No se aceptan pagos en efectivo directamente en las instalaciones de CEPRUNSA.",
-  "El comprobante de pago es el único documento válido para confirmar tu inscripción.",
-  "En caso de error en el pago, comunícate con Tesorería de la UNSA presentando el comprobante.",
-  "Los pagos realizados fuera de fecha no garantizan la inclusión en el proceso vigente.",
-  "Las devoluciones de pago están sujetas a evaluación y se rigen por el reglamento de la UNSA.",
+const channels = [
+  { icon: Store, label: "Agentes BCP", sub: "Red de agentes autorizados" },
+  { icon: Smartphone, label: "Banca Móvil", sub: "App BCP en tu celular" },
+  { icon: Laptop, label: "Banca por Internet", sub: "Vía web oficial de BCP" },
+  { icon: QrCode, label: "Yape", sub: "Pago rápido desde tu app" },
 ];
 
 const GuiaPago: React.FC = () => {
@@ -79,59 +66,27 @@ const GuiaPago: React.FC = () => {
 
           <div className="max-w-3xl">
             <div className="inline-flex items-center gap-2 bg-accent-100 text-accent-700 px-3 py-1.5 rounded-full text-xs font-semibold mb-5">
-              <CreditCard size={14} /> Video + Normativa
+              <Building size={14} /> Pago mediante BCP
             </div>
             <h1 className="font-heading text-4xl md:text-5xl font-bold text-primary-700 mb-6 leading-tight">
-              Cómo pagar con{" "}
-              <span className="text-accent-900">UNSApay</span>
+              Cómo realizar el pago de <span className="text-accent-900">tus cuotas</span>
             </h1>
             <p className="text-xl text-secondary-600 leading-relaxed">
-              Guía completa para realizar tu pago de inscripción a CEPRUNSA de forma
-              segura a través de la plataforma oficial UNSApay de la UNSA.
+              El pago de las cuotas del CEPRUNSA se realiza utilizando el código web asignado en el sistema SISADMISION al momento de tu inscripción.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Video tutorial */}
-      <section className="py-14 bg-white">
-        <div className="container-custom">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-primary-700 mb-8 text-center">
-            Video tutorial: <span className="text-accent-900">Pago en UNSApay</span>
-          </h2>
-
-          {/* Video embed — replace src with the real YouTube embed URL */}
-          <div className="max-w-3xl mx-auto rounded-2xl overflow-hidden shadow-large border border-gray-100">
-            <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
-              <iframe
-                className="absolute inset-0 w-full h-full"
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                title="Tutorial: Cómo pagar con UNSApay en CEPRUNSA"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
-          </div>
-
-          <p className="text-center text-sm text-gray-400 mt-4">
-            ¿No puedes ver el video? Asegúrate de tener conexión a internet activa.
-          </p>
-        </div>
-      </section>
-
-      {/* Métodos de pago */}
+      {/* Canales de pago */}
       <section className="py-12 bg-gradient-to-b from-gray-50 to-white">
         <div className="container-custom">
           <h2 className="font-heading text-2xl font-bold text-primary-700 mb-8 text-center">
-            Métodos de pago aceptados
+            Canales de pago disponibles (BCP)
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-            {[
-              { icon: CreditCard, label: "Tarjeta Visa / Mastercard", sub: "Crédito o débito" },
-              { icon: DollarSign, label: "Transferencia bancaria", sub: "BCP, Interbank, Scotiabank" },
-              { icon: ShieldCheck, label: "Agentes autorizados", sub: "BBVA, Kasnet, Western Union" },
-            ].map(({ icon: Icon, label, sub }) => (
-              <div key={label} className="flex flex-col items-center text-center gap-3 bg-white border border-gray-100 rounded-2xl p-6 shadow-soft">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+            {channels.map(({ icon: Icon, label, sub }) => (
+              <div key={label} className="flex flex-col items-center text-center gap-3 bg-white border border-gray-100 rounded-2xl p-6 shadow-soft hover:shadow-medium transition-all duration-300">
                 <div className="w-12 h-12 rounded-full bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center shadow-md">
                   <Icon className="text-white" size={22} />
                 </div>
@@ -178,26 +133,38 @@ const GuiaPago: React.FC = () => {
         <div className="container-custom max-w-3xl">
           <h2 className="font-heading text-2xl md:text-3xl font-bold text-primary-700 mb-10 text-center flex items-center justify-center gap-3">
             <FileText size={28} className="text-accent-600" />
-            Normativa de pagos
+            Retiros y Exoneración de Cuotas
           </h2>
 
-          <div className="bg-white border border-gray-200 rounded-2xl shadow-soft overflow-hidden">
-            {normativa.map((item, i) => (
-              <div
-                key={i}
-                className={`flex items-start gap-4 p-5 ${i < normativa.length - 1 ? "border-b border-gray-100" : ""} hover:bg-gray-50 transition-colors`}
-              >
-                <CheckCircle size={18} className="text-accent-500 flex-shrink-0 mt-0.5" />
-                <p className="text-sm text-gray-700 leading-relaxed">{item}</p>
-              </div>
-            ))}
+          <div className="bg-white border border-red-100 rounded-2xl shadow-medium p-6 md:p-8">
+            <h3 className="font-heading text-lg font-bold text-red-700 mb-4">
+              ¿Puedo retirarme o solicitar la exoneración de cuotas del CEPRUNSA?
+            </h3>
+            <p className="text-sm text-secondary-600 mb-6 leading-relaxed">
+              Según el <strong>Reglamento de Admisión</strong>, aprobado con <strong>Resolución de Consejo Universitario N° 219-2024</strong>, de fecha 21 de mayo del 2024, se establece:
+            </p>
+            <div className="bg-red-50/50 border-l-4 border-red-500 p-5 rounded-r-xl space-y-4">
+              <h4 className="font-bold text-primary-800 text-sm">
+                Artículo 64°: El postulante no puede solicitar, bajo ningún concepto:
+              </h4>
+              <ul className="space-y-3 text-sm text-secondary-700">
+                <li className="flex items-start gap-2.5">
+                  <span className="bg-red-100 text-red-700 font-semibold px-2 py-0.5 rounded text-xs mt-0.5">64.1</span>
+                  <span>Devolución y/o reembolso del monto abonado.</span>
+                </li>
+                <li className="flex items-start gap-2.5">
+                  <span className="bg-red-100 text-red-700 font-semibold px-2 py-0.5 rounded text-xs mt-0.5">64.2</span>
+                  <span>Exoneración de deuda.</span>
+                </li>
+              </ul>
+            </div>
           </div>
 
           {/* Warning */}
           <div className="mt-6 flex items-start gap-3 bg-yellow-50 border border-yellow-200 rounded-2xl p-5">
             <AlertTriangle size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" />
             <p className="text-sm text-yellow-800">
-              <strong>Importante:</strong> Verifica siempre que estás en el sitio oficial de la UNSA antes de ingresar tus datos bancarios. Nunca compartas tu contraseña con terceros.
+              <strong>Importante:</strong> Recuerda verificar que el nombre del titular coincida antes de confirmar la transacción de pago en el BCP.
             </p>
           </div>
         </div>

@@ -21,7 +21,7 @@ const zonaSubItems = [
     desc: "Cómo ingresar a tu clase virtual",
   },
   {
-    name: "Pago con UNSApay",
+    name: "Pago de Cuotas",
     path: "/zona-postulante/pago",
     icon: CreditCard,
     desc: "Guía de pago y normativa",

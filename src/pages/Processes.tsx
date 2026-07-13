@@ -9,13 +9,10 @@ import {
   Clock,
   Users,
   BookOpen,
-  Target,
   Calendar,
   Award,
   Star,
   ChevronRight,
-  Zap,
-  TrendingUp,
   Lightbulb,
   ChevronDown,
 } from "lucide-react";

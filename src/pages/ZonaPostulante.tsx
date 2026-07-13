@@ -18,14 +18,14 @@ const guides = [
   },
   {
     icon: CreditCard,
-    title: "Pago con UNSApay",
+    title: "Pago de Cuotas",
     description:
-      "Guía completa para realizar tu pago de inscripción o mensualidad usando UNSApay, incluyendo normativa y pasos detallados.",
+      "Guía completa para realizar tu pago de cuotas en el BCP con tu código web, incluyendo canales disponibles y la normativa vigente.",
     to: "/zona-postulante/pago",
     color: "from-accent-500 to-accent-700",
     bg: "hover:bg-accent-50",
     border: "hover:border-accent-300",
-    tag: "Video + Normativa",
+    tag: "Pasos + Reglamento",
   },
 ];
 
