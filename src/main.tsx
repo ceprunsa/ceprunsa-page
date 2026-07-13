@@ -8,6 +8,9 @@ import About from "./pages/About";
 import Processes from "./pages/Processes";
 import Contact from "./pages/Contact";
 import Carreras from "./pages/Carreras";
+import ZonaPostulante from "./pages/ZonaPostulante";
+import GuiaClases from "./pages/GuiaClases";
+import GuiaPago from "./pages/GuiaPago";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +36,18 @@ const router = createBrowserRouter([
       {
         path: "carreras",
         element: <Carreras />,
+      },
+      {
+        path: "zona-postulante",
+        element: <ZonaPostulante />,
+      },
+      {
+        path: "zona-postulante/clases",
+        element: <GuiaClases />,
+      },
+      {
+        path: "zona-postulante/pago",
+        element: <GuiaPago />,
       },
     ],
   },

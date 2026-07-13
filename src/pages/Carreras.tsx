@@ -253,7 +253,11 @@ const Carreras: React.FC = () => {
                       </a>
                       {carrera.codigo && (
                         <a
-                          href={`http://extranet.unsa.edu.pe/tmp/plan_${carrera.codigo}_2025.pdf`}
+                          href={
+                            carrera.codigo === "406"
+                              ? "http://extranet.unsa.edu.pe/tmp/plan_406_2017.pdf"
+                              : `http://extranet.unsa.edu.pe/tmp/plan_${carrera.codigo}_2025.pdf`
+                          }
                           target="_blank"
                           rel="noopener noreferrer"
                           className="inline-flex items-center justify-center w-full bg-accent-50 text-accent-700 hover:bg-accent-600 hover:text-white font-medium py-2.5 px-4 rounded-xl transition-colors duration-300 group/btn2"

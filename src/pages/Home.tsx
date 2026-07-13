@@ -14,6 +14,13 @@ import {
   ChevronRight,
   Calendar,
   Clock,
+  ArrowRight,
+  BookOpen,
+  Users,
+  MessageCircle,
+  ExternalLink,
+  ChevronDown,
+  CheckCircle,
 } from "lucide-react";
 import { features, stats, testimonials } from "../data";
 gsap.registerPlugin(ScrollTrigger);
@@ -57,6 +64,44 @@ const carouselItems: CarouselItem[] = [
     image: "/ceprunsa_ciclo_quintos.png",
   },
 ];
+
+// Animated counter hook
+const useCountUp = (end: number, duration: number = 2000, start: boolean = false) => {
+  const [count, setCount] = useState(0);
+  useEffect(() => {
+    if (!start) return;
+    let startTime: number | null = null;
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const progress = Math.min((timestamp - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setCount(Math.floor(eased * end));
+      if (progress < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  }, [end, duration, start]);
+  return count;
+};
+
+// Single stat with animated counter
+const AnimatedStat: React.FC<{ stat: { number: string; label: string }; shouldAnimate: boolean }> = ({
+  stat,
+  shouldAnimate,
+}) => {
+  const numericPart = parseInt(stat.number.replace(/[^0-9]/g, ""), 10) || 0;
+  const suffix = stat.number.replace(/[0-9]/g, "");
+  const count = useCountUp(numericPart, 2000, shouldAnimate);
+  return (
+    <div className="stat-item text-center group">
+      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 group-hover:bg-white/20 group-hover:scale-105 transition-all duration-300 border border-white/10 hover:border-white/30 cursor-default">
+        <div className="text-4xl md:text-5xl font-bold text-accent-300 mb-3 group-hover:text-accent-200 transition-colors tabular-nums">
+          {shouldAnimate ? `${count}${suffix}` : stat.number}
+        </div>
+        <div className="text-primary-100 font-medium text-lg">{stat.label}</div>
+      </div>
+    </div>
+  );
+};
 
 const CountdownTimer: React.FC<{
   targetDate: string;
@@ -203,7 +248,7 @@ const HeroCarousel: React.FC = () => {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselItems.length);
-    }, 6000); // Increased to 6 seconds for better UX
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
@@ -304,11 +349,109 @@ const HeroCarousel: React.FC = () => {
   );
 };
 
+// Quick links section
+const quickLinks = [
+  {
+    icon: BookOpen,
+    label: "Procesos",
+    description: "Ver todos los procesos disponibles",
+    to: "/procesos",
+    color: "from-primary-600 to-primary-800",
+    hoverBorder: "hover:border-primary-300",
+  },
+  {
+    icon: Users,
+    label: "Nosotros",
+    description: "Conoce al equipo CEPRUNSA",
+    to: "/nosotros",
+    color: "from-accent-600 to-accent-800",
+    hoverBorder: "hover:border-accent-300",
+  },
+  {
+    icon: GraduationCap,
+    label: "Carreras",
+    description: "Explora las carreras disponibles",
+    to: "/carreras",
+    color: "from-primary-500 to-primary-700",
+    hoverBorder: "hover:border-primary-200",
+  },
+  {
+    icon: MessageCircle,
+    label: "Contacto",
+    description: "Comunícate con nosotros",
+    to: "/contacto",
+    color: "from-accent-500 to-accent-700",
+    hoverBorder: "hover:border-accent-200",
+  },
+];
+
+// Expandable testimonial card
+const TestimonialCard: React.FC<{
+  testimonial: { name: string; career: string; text: string; rating: number };
+  index: number;
+}> = ({ testimonial }) => {
+  const [expanded, setExpanded] = useState(false);
+  const isLong = testimonial.text.length > 100;
+  return (
+    <div className="testimonial-card group h-full">
+      <div
+        className="bg-gradient-to-br from-primary-50 to-accent-50 p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-primary-100 hover:border-accent-200 h-full flex flex-col cursor-pointer"
+        onClick={() => isLong && setExpanded((e) => !e)}
+        title={isLong ? (expanded ? "Mostrar menos" : "Leer más") : undefined}
+      >
+        <div className="flex items-center mb-4">
+          {[...Array(testimonial.rating)].map((_, i) => (
+            <Star
+              key={i}
+              className="text-accent-500 fill-current group-hover:text-accent-600 transition-colors"
+              size={20}
+            />
+          ))}
+        </div>
+        <p
+          className={`text-gray-700 mb-6 italic text-lg leading-relaxed flex-1 transition-all duration-300 ${!expanded && isLong ? "line-clamp-4" : ""}`}
+        >
+          "{testimonial.text}"
+        </p>
+        {isLong && (
+          <button
+            className="text-accent-700 text-sm font-semibold flex items-center gap-1 mb-4 hover:text-accent-900 transition-colors w-fit"
+            onClick={(e) => { e.stopPropagation(); setExpanded((ex) => !ex); }}
+            aria-label={expanded ? "Mostrar menos" : "Leer más"}
+          >
+            {expanded ? "Mostrar menos" : "Leer más"}
+            <ChevronDown
+              size={16}
+              className={`transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
+            />
+          </button>
+        )}
+        <div className="flex items-center space-x-4 mt-auto">
+          <div className="bg-gradient-to-br from-primary-600 to-primary-700 w-12 h-12 rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
+            <span className="text-white font-bold text-lg">
+              {testimonial.name.charAt(0)}
+            </span>
+          </div>
+          <div>
+            <div className="font-semibold text-gray-900">
+              {testimonial.name}
+            </div>
+            <div className="text-accent-600 text-sm font-medium">
+              {testimonial.career}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const Home: React.FC = () => {
   const heroRef = useRef<HTMLElement>(null);
   const featuresRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
   const testimonialsRef = useRef<HTMLElement>(null);
+  const [statsVisible, setStatsVisible] = useState(false);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -332,6 +475,23 @@ const Home: React.FC = () => {
         "-=0.3",
       );
 
+    // Quick links animation
+    gsap.fromTo(
+      ".quick-link-card",
+      { opacity: 0, y: 30 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.6,
+        stagger: 0.1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: ".quick-links-section",
+          start: "top 85%",
+        },
+      }
+    );
+
     // Features animation
     gsap.fromTo(
       ".feature-card",
@@ -349,7 +509,7 @@ const Home: React.FC = () => {
       },
     );
 
-    // Stats animation
+    // Stats animation + count-up trigger
     gsap.fromTo(
       ".stat-item",
       { opacity: 0, scale: 0.8 },
@@ -362,6 +522,7 @@ const Home: React.FC = () => {
         scrollTrigger: {
           trigger: statsRef.current,
           start: "top 80%",
+          onEnter: () => setStatsVisible(true),
         },
       },
     );
@@ -408,7 +569,7 @@ const Home: React.FC = () => {
 
         <div className="container-custom relative pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20 z-10 text-center order-2">
           <div className="max-w-4xl mx-auto space-y-6 lg:space-y-8">
-            <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 lg:px-6 lg:py-3 rounded-full shadow-soft border border-primary-200 hover:shadow-medium transition-all duration-300 mx-auto">
+            <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 lg:px-6 lg:py-3 rounded-full shadow-soft border border-primary-200 hover:shadow-medium hover:border-primary-300 transition-all duration-300 mx-auto cursor-default">
               <Award className="text-accent-600 mr-2 lg:mr-3" size={18} />
               <span className="text-xs lg:text-sm font-semibold text-gray-700">
                 Modalidad Oficial de Ingreso UNSA
@@ -424,10 +585,12 @@ const Home: React.FC = () => {
               10 semanas, 15 cursos especializados y tu propio examen de
               admisión.
             </p>
-            <div className="hero-buttons flex justify-center mt-6">
+
+            {/* Dual CTA Buttons */}
+            <div className="hero-buttons flex flex-col sm:flex-row justify-center gap-4 mt-6">
               <Link
                 to="/procesos"
-                className="btn-primary text-sm sm:text-base group inline-flex items-center shadow-lg hover:shadow-xl transition-all"
+                className="btn-primary text-sm sm:text-base group inline-flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-105"
               >
                 Ver Procesos CEPRUNSA
                 <Target
@@ -435,7 +598,56 @@ const Home: React.FC = () => {
                   size={20}
                 />
               </Link>
+              <Link
+                to="/contacto"
+                className="btn-secondary text-sm sm:text-base group inline-flex items-center justify-center"
+              >
+                Inscríbete Ahora
+                <ArrowRight
+                  className="ml-2 group-hover:translate-x-1 transition-transform"
+                  size={20}
+                />
+              </Link>
             </div>
+
+            {/* Trust indicators */}
+            <div className="flex flex-wrap justify-center gap-4 mt-2">
+              {[
+                "85% de ingresantes",
+                "24 años de experiencia",
+                "500+ estudiantes/año",
+              ].map((item) => (
+                <div
+                  key={item}
+                  className="flex items-center gap-1.5 text-sm text-secondary-600 font-medium"
+                >
+                  <CheckCircle size={15} className="text-accent-600 flex-shrink-0" />
+                  {item}
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Links Section */}
+      <section className="quick-links-section py-10 bg-white border-b border-gray-100 relative z-10 shadow-sm">
+        <div className="container-custom">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+            {quickLinks.map((ql) => (
+              <Link
+                key={ql.label}
+                to={ql.to}
+                className={`quick-link-card group flex flex-col items-center text-center p-5 rounded-2xl border border-gray-100 bg-white hover:bg-gradient-to-br hover:from-primary-50 hover:to-accent-50 ${ql.hoverBorder} shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1`}
+              >
+                <div className={`bg-gradient-to-br ${ql.color} w-12 h-12 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-md`}>
+                  <ql.icon className="text-white" size={22} />
+                </div>
+                <span className="font-semibold text-primary-700 group-hover:text-accent-800 text-sm transition-colors">{ql.label}</span>
+                <span className="text-xs text-secondary-500 mt-1 hidden sm:block">{ql.description}</span>
+                <ExternalLink size={13} className="mt-2 text-accent-500 opacity-0 group-hover:opacity-100 transition-opacity" />
+              </Link>
+            ))}
           </div>
         </div>
       </section>
@@ -458,8 +670,13 @@ const Home: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {features.map((feature, index) => (
-              <div key={index} className="feature-card group relative">
-                <div className="bg-white p-10 rounded-2xl shadow-soft hover:shadow-large transition-all duration-500 border border-gray-100 hover:border-accent-200 text-center h-full">
+              <Link
+                key={index}
+                to="/procesos"
+                className="feature-card group relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-2xl"
+                aria-label={`Más sobre ${feature.title}`}
+              >
+                <div className="bg-white p-10 rounded-2xl shadow-soft hover:shadow-large transition-all duration-500 border border-gray-100 hover:border-accent-200 text-center h-full hover:-translate-y-2">
                   <div className="relative mb-8">
                     <div className="bg-gradient-to-br from-primary-500 to-primary-700 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
                       <feature.icon className="text-white" size={36} />
@@ -472,8 +689,11 @@ const Home: React.FC = () => {
                   <p className="text-secondary-600 leading-relaxed text-lg">
                     {feature.description}
                   </p>
+                  <div className="mt-6 flex items-center justify-center gap-1.5 text-accent-700 font-semibold text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
+                    Ver más <ArrowRight size={15} />
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -486,8 +706,8 @@ const Home: React.FC = () => {
       >
         <div className="absolute inset-0 bg-pattern opacity-10"></div>
         <div className="absolute top-0 left-0 w-full h-full">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-accent-400/20 rounded-full blur-xl"></div>
-          <div className="absolute bottom-10 right-10 w-40 h-40 bg-primary-400/20 rounded-full blur-xl"></div>
+          <div className="absolute top-10 left-10 w-32 h-32 bg-accent-400/20 rounded-full blur-xl animate-pulse-slow"></div>
+          <div className="absolute bottom-10 right-10 w-40 h-40 bg-primary-400/20 rounded-full blur-xl animate-pulse-slow"></div>
         </div>
         <div className="container-custom relative">
           <div className="text-center mb-16">
@@ -501,16 +721,7 @@ const Home: React.FC = () => {
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="stat-item text-center group">
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 group-hover:bg-white/20 group-hover:scale-105 transition-all duration-300 border border-white/10 hover:border-white/30">
-                  <div className="text-4xl md:text-5xl font-bold text-accent-300 mb-3 group-hover:text-accent-200 transition-colors">
-                    {stat.number}
-                  </div>
-                  <div className="text-primary-100 font-medium text-lg">
-                    {stat.label}
-                  </div>
-                </div>
-              </div>
+              <AnimatedStat key={index} stat={stat} shouldAnimate={statsVisible} />
             ))}
           </div>
         </div>
@@ -534,37 +745,7 @@ const Home: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {testimonials.map((testimonial, index) => (
-              <div key={index} className="testimonial-card group">
-                <div className="bg-gradient-to-br from-primary-50 to-accent-50 p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-primary-100 hover:border-accent-200 h-full">
-                  <div className="flex items-center mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="text-accent-500 fill-current group-hover:text-accent-600 transition-colors"
-                        size={20}
-                      />
-                    ))}
-                  </div>
-                  <p className="text-gray-700 mb-6 italic text-lg leading-relaxed">
-                    "{testimonial.text}"
-                  </p>
-                  <div className="flex items-center space-x-4">
-                    <div className="bg-gradient-to-br from-primary-600 to-primary-700 w-12 h-12 rounded-full flex items-center justify-center shadow-lg">
-                      <span className="text-white font-bold text-lg">
-                        {testimonial.name.charAt(0)}
-                      </span>
-                    </div>
-                    <div>
-                      <div className="font-semibold text-gray-900">
-                        {testimonial.name}
-                      </div>
-                      <div className="text-accent-600 text-sm font-medium">
-                        {testimonial.career}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <TestimonialCard key={index} testimonial={testimonial} index={index} />
             ))}
           </div>
         </div>
@@ -581,20 +762,32 @@ const Home: React.FC = () => {
             <span className="text-accent-300">UNSA</span> por{" "}
             <span className="text-accent-300">CEPRUNSA</span>?
           </h2>
-          <p className="text-xl mb-8 opacity-90 max-w-2xl mx-auto">
+          <p className="text-xl mb-10 opacity-90 max-w-2xl mx-auto">
             Aprovecha esta modalidad oficial de ingreso directo con preparación
             especializada y tu propio examen.
           </p>
-          <Link
-            to="/contacto"
-            className="inline-flex items-center bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
-          >
-            Inscríbete al Próximo Proceso
-            <GraduationCap
-              className="ml-2 group-hover:translate-x-1 transition-transform"
-              size={20}
-            />
-          </Link>
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link
+              to="/contacto"
+              className="inline-flex items-center justify-center bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
+            >
+              Inscríbete al Próximo Proceso
+              <GraduationCap
+                className="ml-2 group-hover:translate-x-1 transition-transform"
+                size={20}
+              />
+            </Link>
+            <Link
+              to="/procesos"
+              className="inline-flex items-center justify-center bg-white/15 hover:bg-white/25 border border-white/30 hover:border-white/50 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 backdrop-blur-sm group"
+            >
+              Ver Procesos
+              <ArrowRight
+                className="ml-2 group-hover:translate-x-1 transition-transform"
+                size={20}
+              />
+            </Link>
+          </div>
         </div>
       </section>
     </div>
