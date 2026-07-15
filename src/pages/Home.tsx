@@ -8,17 +8,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
   Star,
   Award,
-  Target,
   GraduationCap,
   ChevronLeft,
   ChevronRight,
   Calendar,
   Clock,
   ArrowRight,
-  BookOpen,
-  Users,
-  MessageCircle,
-  ExternalLink,
   ChevronDown,
   CheckCircle,
 } from "lucide-react";
@@ -93,11 +88,11 @@ const AnimatedStat: React.FC<{ stat: { number: string; label: string }; shouldAn
   const count = useCountUp(numericPart, 2000, shouldAnimate);
   return (
     <div className="stat-item text-center group">
-      <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 group-hover:bg-white/20 group-hover:scale-105 transition-all duration-300 border border-white/10 hover:border-white/30 cursor-default">
-        <div className="text-4xl md:text-5xl font-bold text-accent-300 mb-3 group-hover:text-accent-200 transition-colors tabular-nums">
+      <div className="bg-white rounded-2xl p-8 group-hover:scale-105 transition-all duration-300 border border-gray-100 shadow-md cursor-default">
+        <div className="text-4xl md:text-5xl font-bold text-accent-700 mb-3 transition-colors tabular-nums">
           {shouldAnimate ? `${count}${suffix}` : stat.number}
         </div>
-        <div className="text-primary-100 font-medium text-lg">{stat.label}</div>
+        <div className="text-primary-700 font-semibold text-lg">{stat.label}</div>
       </div>
     </div>
   );
@@ -355,41 +350,6 @@ const HeroCarousel: React.FC = () => {
   );
 };
 
-// Quick links section
-const quickLinks = [
-  {
-    icon: BookOpen,
-    label: "Procesos",
-    description: "Ver todos los procesos disponibles",
-    to: "/procesos",
-    color: "from-primary-600 to-primary-800",
-    hoverBorder: "hover:border-primary-300",
-  },
-  {
-    icon: Users,
-    label: "Nosotros",
-    description: "Conoce al equipo CEPRUNSA",
-    to: "/nosotros",
-    color: "from-accent-600 to-accent-800",
-    hoverBorder: "hover:border-accent-300",
-  },
-  {
-    icon: GraduationCap,
-    label: "Carreras",
-    description: "Explora las carreras disponibles",
-    to: "/carreras",
-    color: "from-primary-500 to-primary-700",
-    hoverBorder: "hover:border-primary-200",
-  },
-  {
-    icon: MessageCircle,
-    label: "Contacto",
-    description: "Comunícate con nosotros",
-    to: "/contacto",
-    color: "from-accent-500 to-accent-700",
-    hoverBorder: "hover:border-accent-200",
-  },
-];
 
 // Expandable testimonial card
 const TestimonialCard: React.FC<{
@@ -594,16 +554,7 @@ const Home: React.FC = () => {
 
             {/* Dual CTA Buttons */}
             <div className="hero-buttons flex flex-col sm:flex-row justify-center gap-4 mt-6">
-              <Link
-                to="/procesos"
-                className="btn-primary text-sm sm:text-base group inline-flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-105"
-              >
-                Ver Procesos CEPRUNSA
-                <Target
-                  className="ml-2 lg:ml-3 group-hover:translate-x-1 transition-transform"
-                  size={20}
-                />
-              </Link>
+
               <Link
                 to="/contacto"
                 className="btn-secondary text-sm sm:text-base group inline-flex items-center justify-center"
@@ -636,27 +587,6 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-      {/* Quick Links Section */}
-      <section className="quick-links-section py-10 bg-white border-b border-gray-100 relative z-10 shadow-sm">
-        <div className="container-custom">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {quickLinks.map((ql) => (
-              <Link
-                key={ql.label}
-                to={ql.to}
-                className={`quick-link-card group flex flex-col items-center text-center p-5 rounded-2xl border border-gray-100 bg-white hover:bg-gradient-to-br hover:from-primary-50 hover:to-accent-50 ${ql.hoverBorder} shadow-soft hover:shadow-medium transition-all duration-300 hover:-translate-y-1`}
-              >
-                <div className={`bg-gradient-to-br ${ql.color} w-12 h-12 rounded-xl flex items-center justify-center mb-3 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 shadow-md`}>
-                  <ql.icon className="text-white" size={22} />
-                </div>
-                <span className="font-semibold text-primary-700 group-hover:text-accent-800 text-sm transition-colors">{ql.label}</span>
-                <span className="text-xs text-secondary-500 mt-1 hidden sm:block">{ql.description}</span>
-                <ExternalLink size={13} className="mt-2 text-accent-500 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Features Section */}
       <section
@@ -676,18 +606,15 @@ const Home: React.FC = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
             {features.map((feature, index) => (
-              <Link
+              <div
                 key={index}
-                to="/procesos"
-                className="feature-card group relative block focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-400 rounded-2xl"
-                aria-label={`Más sobre ${feature.title}`}
+                className="feature-card group relative block rounded-2xl cursor-default"
               >
                 <div className="bg-white p-10 rounded-2xl shadow-soft hover:shadow-large transition-all duration-500 border border-gray-100 hover:border-accent-200 text-center h-full hover:-translate-y-2">
                   <div className="relative mb-8">
                     <div className="bg-gradient-to-br from-primary-500 to-primary-700 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
                       <feature.icon className="text-white" size={36} />
                     </div>
-                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-accent-400 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </div>
                   <h3 className="font-heading text-2xl font-semibold text-primary-700 mb-6 group-hover:text-accent-700 transition-colors">
                     {feature.title}
@@ -695,11 +622,8 @@ const Home: React.FC = () => {
                   <p className="text-secondary-600 leading-relaxed text-lg">
                     {feature.description}
                   </p>
-                  <div className="mt-6 flex items-center justify-center gap-1.5 text-accent-700 font-semibold text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0">
-                    Ver más <ArrowRight size={15} />
-                  </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         </div>
@@ -718,7 +642,7 @@ const Home: React.FC = () => {
         <div className="container-custom relative">
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6 text-white">
-              CEPRUNSA en <span className="text-accent-300">números</span>
+              CEPRUNSA en <span className="bg-accent-700 text-white px-2 py-0.5 rounded-lg shadow-sm">números</span>
             </h2>
             <p className="text-xl text-primary-100 max-w-2xl mx-auto">
               La modalidad de ingreso más efectiva para acceder a la Universidad
@@ -765,8 +689,8 @@ const Home: React.FC = () => {
         <div className="container-custom text-center relative">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4 text-white">
             ¿Listo para ingresar a la{" "}
-            <span className="text-accent-300">UNSA</span> por{" "}
-            <span className="text-accent-300">CEPRUNSA</span>?
+            <span className="bg-accent-700 text-white px-2.5 py-0.5 rounded-lg shadow-sm">UNSA</span> por{" "}
+            <span className="bg-accent-700 text-white px-2.5 py-0.5 rounded-lg shadow-sm">CEPRUNSA</span>?
           </h2>
           <p className="text-xl mb-10 opacity-90 max-w-2xl mx-auto">
             Aprovecha esta modalidad oficial de ingreso directo con preparación

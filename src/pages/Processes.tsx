@@ -17,7 +17,7 @@ import {
   ChevronDown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
-import { processes, processTimeline } from "../data";
+import { processes } from "../data";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -45,14 +45,6 @@ const Processes: React.FC = () => {
     }));
   };
 
-  const getCurrentTimelineStep = () => {
-    const month = new Date().getMonth() + 1; // 1-indexed (1 = Enero, 12 = Diciembre)
-    if (month >= 4 && month <= 7) return 0; // Abril - Julio
-    if (month >= 8 && month <= 11) return 1; // Agosto - Noviembre
-    if (month === 12 || month === 1) return 2; // Diciembre - Enero
-    if (month === 2) return 3; // Febrero
-    return 0; // default (Marzo / etc)
-  };
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -114,84 +106,10 @@ const Processes: React.FC = () => {
               <span className="text-accent-900 relative">CEPRUNSA</span>
             </h1>
             <p className="text-xl text-secondary-600 max-w-3xl mx-auto mb-8">
-              Modalidades de ingreso directo a la UNSA con preparación
-              especializada y acompañamiento constante.
+              Compara y elige el proceso que se adapta a tu perfil académico y
+              metas de ingreso directo.
             </p>
-            {/* Cronograma Anual Horizontal */}
-            <div className="max-w-5xl mx-auto mt-12 bg-white p-6 md:p-8 rounded-2xl border border-gray-100 shadow-soft">
-              <h3 className="font-heading text-lg font-bold text-primary-700 mb-8 text-center uppercase tracking-wider">
-                Cronograma Anual de Procesos
-              </h3>
 
-              <div className="relative flex flex-col md:flex-row justify-between items-center md:items-start gap-8 md:gap-4">
-                {/* Connector Line (Desktop) */}
-                <div className="absolute top-10 left-[10%] right-[10%] h-0.5 bg-gray-200 hidden md:block z-0">
-                  <div
-                    className="h-full bg-accent-600 transition-all duration-500"
-                    style={{
-                      width: `${(getCurrentTimelineStep() / 3) * 100}%`,
-                    }}
-                  />
-                </div>
-
-                {/* Timeline Items */}
-                {processTimeline.map((item, index) => {
-                  const isActive = index === getCurrentTimelineStep();
-                  return (
-                    <div
-                      key={index}
-                      className={`relative z-10 flex flex-col items-center text-center flex-1 md:px-2 transition-all duration-300 ${
-                        isActive ? "scale-105" : "opacity-70 hover:opacity-90"
-                      }`}
-                    >
-                      {/* Node Icon/Number */}
-                      <div
-                        className={`w-20 h-20 rounded-full flex flex-col items-center justify-center border-4 transition-all duration-300 mb-4 shadow-md ${
-                          isActive
-                            ? "bg-accent-600 border-accent-400 text-white shadow-glow-red scale-110"
-                            : "bg-white border-gray-200 text-gray-500 hover:border-accent-300"
-                        }`}
-                      >
-                        <Calendar
-                          size={22}
-                          className={
-                            isActive
-                              ? "text-white animate-pulse"
-                              : "text-gray-400"
-                          }
-                        />
-                        <span className="text-[10px] font-bold mt-1 uppercase tracking-tight">
-                          {item.period.split(" - ")[0]}
-                        </span>
-                      </div>
-
-                      {/* Content Card */}
-                      <div
-                        className={`p-4 rounded-xl border transition-all duration-300 ${
-                          isActive
-                            ? "bg-accent-50/50 border-accent-200 shadow-sm"
-                            : "bg-gray-50/30 border-transparent"
-                        }`}
-                      >
-                        <h4
-                          className={`font-heading text-sm font-bold ${isActive ? "text-accent-950" : "text-gray-800"}`}
-                        >
-                          {item.title}
-                        </h4>
-                        <p
-                          className={`text-xs font-semibold mt-1 ${isActive ? "text-accent-700" : "text-accent-600"}`}
-                        >
-                          {item.period}
-                        </p>
-                        <p className="text-[11px] text-gray-500 mt-2 leading-relaxed max-w-[200px] mx-auto">
-                          {item.description}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -199,16 +117,7 @@ const Processes: React.FC = () => {
       {/* Programs Section */}
       <section ref={programsRef} className="section-padding bg-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
-              Nuestros{" "}
-              <span className="text-accent-900">Procesos de Admisión</span>
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Compara y elige el proceso que se adapta a tu perfil académico y
-              metas de ingreso directo.
-            </p>
-          </div>
+
           <div className="flex flex-col gap-8">
             {processes.map((process, index) => (
               <div

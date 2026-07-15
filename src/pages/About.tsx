@@ -267,14 +267,14 @@ const About: React.FC = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {achievements.map((achievement, index) => (
               <div key={index} className="text-center group">
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 group-hover:bg-white/20 group-hover:scale-105 transition-all duration-300 border border-white/10 hover:border-white/30">
-                  <div className="bg-accent-400/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-accent-400/30 transition-colors">
-                    <achievement.icon className="text-accent-300" size={28} />
+                <div className="bg-white rounded-2xl p-8 hover:scale-105 transition-all duration-300 border border-gray-100 shadow-md">
+                  <div className="bg-accent-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <achievement.icon className="text-accent-700" size={28} />
                   </div>
-                  <div className="text-4xl md:text-5xl font-bold text-accent-300 mb-3 group-hover:text-accent-200 transition-colors">
+                  <div className="text-4xl md:text-5xl font-bold text-accent-700 mb-3">
                     {achievement.number}
                   </div>
-                  <div className="text-primary-100 font-medium text-lg">
+                  <div className="text-primary-700 font-semibold text-lg">
                     {achievement.label}
                   </div>
                 </div>
