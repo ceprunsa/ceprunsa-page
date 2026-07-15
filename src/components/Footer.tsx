@@ -24,14 +24,14 @@ const Footer: React.FC = () => (
             href="https://sisadmision.unsa.edu.pe/pregrado/"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-accent-300"
+            className="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-accent-400"
           >
             Portal de admisión <ArrowUpRight size={16} />
           </a>
         </div>
 
         <div>
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-accent-300">Explora</h2>
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-accent-400">Explora</h2>
           <ul className="space-y-3 text-sm">
             {quickLinks.map((link) => (
               <li key={link.path}>
@@ -42,10 +42,10 @@ const Footer: React.FC = () => (
         </div>
 
         <div>
-          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-accent-300">Contacto</h2>
+          <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-accent-400">Contacto</h2>
           <div className="space-y-4 text-sm text-primary-200">
-            <p className="flex items-start gap-3"><MapPin className="mt-0.5 shrink-0 text-accent-300" size={17} /> Arequipa, Perú</p>
-            <Link to="/contacto" className="flex items-center gap-3 transition-colors hover:text-white"><Mail className="shrink-0 text-accent-300" size={17} /> Ver canales de atención</Link>
+            <p className="flex items-start gap-3"><MapPin className="mt-0.5 shrink-0 text-accent-400" size={17} /> Arequipa, Perú</p>
+            <Link to="/contacto" className="flex items-center gap-3 transition-colors hover:text-white"><Mail className="shrink-0 text-accent-400" size={17} /> Ver canales de atención</Link>
           </div>
         </div>
       </div>
