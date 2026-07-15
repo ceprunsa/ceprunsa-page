@@ -248,7 +248,7 @@ const HeroCarousel: React.FC = () => {
 
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % carouselItems.length);
-    }, 6000);
+    }, 2000);
 
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
@@ -267,8 +267,6 @@ const HeroCarousel: React.FC = () => {
     setCurrentSlide(index);
   };
 
-  const currentItem = carouselItems[currentSlide];
-
   return (
     <div className="relative w-full overflow-hidden bg-gray-900 group">
       <div
@@ -279,38 +277,47 @@ const HeroCarousel: React.FC = () => {
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
-        {currentItem.type === "countdown" &&
-        currentItem.eventDate &&
-        currentItem.eventTitle ? (
-          <CountdownTimer
-            targetDate={currentItem.eventDate}
-            eventTitle={currentItem.eventTitle}
-            backgroundImage={currentItem.image}
-          />
-        ) : (
-          <div className="w-full h-full relative overflow-hidden">
-            <img
-              src={currentItem.image || "/home_image.jpeg"}
-              alt={currentItem.title}
-              loading={currentSlide === 0 ? "eager" : "lazy"}
-              fetchPriority={currentSlide === 0 ? "high" : "auto"}
-              className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
-            />
+        <div
+          className="flex h-full transition-transform duration-700 ease-in-out"
+          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+        >
+          {carouselItems.map((item, index) => (
+            <div key={index} className="w-full h-full flex-shrink-0 relative overflow-hidden">
+              {item.type === "countdown" &&
+                item.eventDate &&
+                item.eventTitle ? (
+                <CountdownTimer
+                  targetDate={item.eventDate}
+                  eventTitle={item.eventTitle}
+                  backgroundImage={item.image}
+                />
+              ) : (
+                <div className="w-full h-full relative overflow-hidden">
+                  <img
+                    src={item.image || "/home_image.jpeg"}
+                    alt={item.title}
+                    loading={index === 0 ? "eager" : "lazy"}
+                    fetchPriority={index === 0 ? "high" : "auto"}
+                    className="w-full h-full object-cover transition-transform duration-1000 hover:scale-105"
+                  />
 
-            {/* Overlay for better text readability */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                  {/* Overlay for better text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
 
-            {/* Content overlay for image slides */}
-            <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-16 text-white container-custom mx-auto">
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 drop-shadow-lg">
-                {currentItem.title}
-              </h3>
-              <p className="text-base sm:text-lg lg:text-xl text-gray-200 drop-shadow-md max-w-2xl">
-                {currentItem.description}
-              </p>
+                  {/* Content overlay for image slides */}
+                  <div className="absolute bottom-0 left-0 right-0 p-6 sm:p-10 lg:p-16 text-white container-custom mx-auto">
+                    <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-3 drop-shadow-lg">
+                      {item.title}
+                    </h3>
+                    <p className="text-base sm:text-lg lg:text-xl text-gray-200 drop-shadow-md max-w-2xl">
+                      {item.description}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
-          </div>
-        )}
+          ))}
+        </div>
 
         {/* Navigation Arrows - Hidden on mobile, visible on larger screens */}
         <button
@@ -336,11 +343,10 @@ const HeroCarousel: React.FC = () => {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? "bg-white scale-125 shadow-md"
-                : "bg-white/50 hover:bg-white/80"
-            }`}
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide
+              ? "bg-white scale-125 shadow-md"
+              : "bg-white/50 hover:bg-white/80"
+              }`}
             aria-label={`Ir a slide ${index + 1}`}
           />
         ))}
