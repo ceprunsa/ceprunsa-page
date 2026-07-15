@@ -4,9 +4,7 @@ import type React from "react";
 import { Link } from "react-router-dom";
 import {
   ChevronLeft,
-  AlertTriangle,
   ArrowRight,
-  FileText,
   Smartphone,
   Laptop,
   Store,
@@ -124,48 +122,6 @@ const GuiaPago: React.FC = () => {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Normativa */}
-      <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
-        <div className="container-custom max-w-3xl">
-          <h2 className="font-heading text-2xl md:text-3xl font-bold text-primary-700 mb-10 text-center flex items-center justify-center gap-3">
-            <FileText size={28} className="text-accent-600" />
-            Retiros y Exoneración de Cuotas
-          </h2>
-
-          <div className="bg-white border border-red-100 rounded-2xl shadow-medium p-6 md:p-8">
-            <h3 className="font-heading text-lg font-bold text-red-700 mb-4">
-              ¿Puedo retirarme o solicitar la exoneración de cuotas del CEPRUNSA?
-            </h3>
-            <p className="text-sm text-secondary-600 mb-6 leading-relaxed">
-              Según el <strong>Reglamento de Admisión</strong>, aprobado con <strong>Resolución de Consejo Universitario N° 219-2024</strong>, de fecha 21 de mayo del 2024, se establece:
-            </p>
-            <div className="bg-red-50/50 border-l-4 border-red-500 p-5 rounded-r-xl space-y-4">
-              <h4 className="font-bold text-primary-800 text-sm">
-                Artículo 64°: El postulante no puede solicitar, bajo ningún concepto:
-              </h4>
-              <ul className="space-y-3 text-sm text-secondary-700">
-                <li className="flex items-start gap-2.5">
-                  <span className="bg-red-100 text-red-700 font-semibold px-2 py-0.5 rounded text-xs mt-0.5">64.1</span>
-                  <span>Devolución y/o reembolso del monto abonado.</span>
-                </li>
-                <li className="flex items-start gap-2.5">
-                  <span className="bg-red-100 text-red-700 font-semibold px-2 py-0.5 rounded text-xs mt-0.5">64.2</span>
-                  <span>Exoneración de deuda.</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          {/* Warning */}
-          <div className="mt-6 flex items-start gap-3 bg-yellow-50 border border-yellow-200 rounded-2xl p-5">
-            <AlertTriangle size={20} className="text-yellow-600 flex-shrink-0 mt-0.5" />
-            <p className="text-sm text-yellow-800">
-              <strong>Importante:</strong> Recuerda verificar que el nombre del titular coincida antes de confirmar la transacción de pago en el BCP.
-            </p>
           </div>
         </div>
       </section>
