@@ -642,7 +642,7 @@ const Home: React.FC = () => {
         <div className="container-custom relative">
           <div className="text-center mb-16">
             <h2 className="font-heading text-4xl md:text-5xl font-bold mb-6 text-white">
-              CEPRUNSA en <span className="bg-accent-700 text-white px-2 py-0.5 rounded-lg shadow-sm">números</span>
+              CEPRUNSA en números
             </h2>
             <p className="text-xl text-primary-100 max-w-2xl mx-auto">
               La modalidad de ingreso más efectiva para acceder a la Universidad
@@ -688,9 +688,7 @@ const Home: React.FC = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-primary-400/20 to-transparent rounded-full blur-3xl"></div>
         <div className="container-custom text-center relative">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4 text-white">
-            ¿Listo para ingresar a la{" "}
-            <span className="bg-accent-700 text-white px-2.5 py-0.5 rounded-lg shadow-sm">UNSA</span> por{" "}
-            <span className="bg-accent-700 text-white px-2.5 py-0.5 rounded-lg shadow-sm">CEPRUNSA</span>?
+            ¿Listo para ingresar a la UNSA por CEPRUNSA?
           </h2>
           <p className="text-xl mb-10 opacity-90 max-w-2xl mx-auto">
             Aprovecha esta modalidad oficial de ingreso directo con preparación
