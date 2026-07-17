@@ -211,6 +211,16 @@ const HeroCarousel: React.FC = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const transitionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (transitionTimeoutRef.current) {
+        clearTimeout(transitionTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Minimum swipe distance (in px)
   const minSwipeDistance = 50;
@@ -225,6 +235,7 @@ const HeroCarousel: React.FC = () => {
   };
 
   const onTouchEnd = () => {
+    if (isTransitioning) return;
     if (!touchStart || !touchEnd) return;
 
     const distance = touchStart - touchEnd;
@@ -248,17 +259,33 @@ const HeroCarousel: React.FC = () => {
     return () => clearInterval(interval);
   }, [isAutoPlaying]);
 
+  const startTransitionCooldown = () => {
+    setIsTransitioning(true);
+    if (transitionTimeoutRef.current) {
+      clearTimeout(transitionTimeoutRef.current);
+    }
+    transitionTimeoutRef.current = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 1000);
+  };
+
   const nextSlide = () => {
+    if (isTransitioning) return;
+    startTransitionCooldown();
     setCurrentSlide((prev) => (prev + 1) % carouselItems.length);
   };
 
   const prevSlide = () => {
+    if (isTransitioning) return;
+    startTransitionCooldown();
     setCurrentSlide(
       (prev) => (prev - 1 + carouselItems.length) % carouselItems.length,
     );
   };
 
   const goToSlide = (index: number) => {
+    if (isTransitioning || index === currentSlide) return;
+    startTransitionCooldown();
     setCurrentSlide(index);
   };
 
@@ -317,7 +344,10 @@ const HeroCarousel: React.FC = () => {
         {/* Navigation Arrows - Hidden on mobile, visible on larger screens */}
         <button
           onClick={prevSlide}
-          className="hidden md:flex absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/90 text-white hover:text-gray-900 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100"
+          disabled={isTransitioning}
+          className={`hidden md:flex absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/90 text-white hover:text-gray-900 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 ${
+            isTransitioning ? "pointer-events-none opacity-50" : ""
+          }`}
           aria-label="Imagen anterior"
         >
           <ChevronLeft size={24} />
@@ -325,7 +355,10 @@ const HeroCarousel: React.FC = () => {
 
         <button
           onClick={nextSlide}
-          className="hidden md:flex absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/90 text-white hover:text-gray-900 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100"
+          disabled={isTransitioning}
+          className={`hidden md:flex absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/90 text-white hover:text-gray-900 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 ${
+            isTransitioning ? "pointer-events-none opacity-50" : ""
+          }`}
           aria-label="Siguiente imagen"
         >
           <ChevronRight size={24} />
@@ -338,7 +371,10 @@ const HeroCarousel: React.FC = () => {
           <button
             key={index}
             onClick={() => goToSlide(index)}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${index === currentSlide
+            disabled={isTransitioning}
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
+              isTransitioning ? "pointer-events-none" : ""
+            } ${index === currentSlide
               ? "bg-white scale-125 shadow-md"
               : "bg-white/50 hover:bg-white/80"
               }`}

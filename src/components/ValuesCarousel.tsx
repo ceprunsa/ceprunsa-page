@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { values } from "../data";
 
@@ -10,6 +10,16 @@ const ValuesCarousel: React.FC = () => {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [touchEnd, setTouchEnd] = useState<number | null>(null);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const transitionTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (transitionTimeoutRef.current) {
+        clearTimeout(transitionTimeoutRef.current);
+      }
+    };
+  }, []);
 
   // Responsive items per view
   const getItemsPerView = () => {
@@ -62,6 +72,7 @@ const ValuesCarousel: React.FC = () => {
   };
 
   const onTouchEnd = () => {
+    if (isTransitioning) return;
     if (!touchStart || !touchEnd) return;
 
     const distance = touchStart - touchEnd;
@@ -69,23 +80,42 @@ const ValuesCarousel: React.FC = () => {
     const isRightSwipe = distance < -minSwipeDistance;
 
     if (isLeftSwipe && currentIndex < maxIndex) {
-      setCurrentIndex(currentIndex + 1);
+      startTransitionCooldown();
+      setCurrentIndex((prev) => prev + 1);
     }
     if (isRightSwipe && currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
+      startTransitionCooldown();
+      setCurrentIndex((prev) => prev - 1);
     }
   };
 
+  const startTransitionCooldown = () => {
+    setIsTransitioning(true);
+    if (transitionTimeoutRef.current) {
+      clearTimeout(transitionTimeoutRef.current);
+    }
+    transitionTimeoutRef.current = setTimeout(() => {
+      setIsTransitioning(false);
+    }, 1000);
+  };
+
   const nextSlide = () => {
+    if (isTransitioning) return;
+    startTransitionCooldown();
     setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
   };
 
   const prevSlide = () => {
+    if (isTransitioning) return;
+    startTransitionCooldown();
     setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
   const goToSlide = (index: number) => {
-    setCurrentIndex(Math.min(index, maxIndex));
+    const targetIndex = Math.min(index, maxIndex);
+    if (isTransitioning || targetIndex === currentIndex) return;
+    startTransitionCooldown();
+    setCurrentIndex(targetIndex);
   };
 
   return (
@@ -141,7 +171,10 @@ const ValuesCarousel: React.FC = () => {
       {/* Navigation arrows - Hidden on mobile */}
       <button
         onClick={prevSlide}
-        className="hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 lg:-translate-x-6 bg-white hover:bg-gray-50 text-gray-800 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 items-center justify-center z-10"
+        disabled={isTransitioning}
+        className={`hidden md:flex absolute left-0 top-1/2 transform -translate-y-1/2 -translate-x-4 lg:-translate-x-6 bg-white hover:bg-gray-50 text-gray-800 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 items-center justify-center z-10 ${
+          isTransitioning ? "pointer-events-none opacity-50" : ""
+        }`}
         aria-label="Valor anterior"
       >
         <ChevronLeft size={24} />
@@ -149,7 +182,10 @@ const ValuesCarousel: React.FC = () => {
 
       <button
         onClick={nextSlide}
-        className="hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 lg:translate-x-6 bg-white hover:bg-gray-50 text-gray-800 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 items-center justify-center z-10"
+        disabled={isTransitioning}
+        className={`hidden md:flex absolute right-0 top-1/2 transform -translate-y-1/2 translate-x-4 lg:translate-x-6 bg-white hover:bg-gray-50 text-gray-800 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 items-center justify-center z-10 ${
+          isTransitioning ? "pointer-events-none opacity-50" : ""
+        }`}
         aria-label="Siguiente valor"
       >
         <ChevronRight size={24} />
@@ -164,7 +200,10 @@ const ValuesCarousel: React.FC = () => {
           <button
             key={index}
             onClick={() => goToSlide(index)}
+            disabled={isTransitioning}
             className={`w-2 h-2 lg:w-3 lg:h-3 rounded-full transition-all duration-300 ${
+              isTransitioning ? "pointer-events-none" : ""
+            } ${
               index === currentIndex
                 ? "bg-primary-600 scale-110 shadow-md"
                 : "bg-gray-300 hover:bg-gray-400"
