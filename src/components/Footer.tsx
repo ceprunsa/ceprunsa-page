@@ -48,10 +48,15 @@ const Footer: React.FC = () => (
               <MapPin className="mt-1 shrink-0 text-accent-400" size={17} />
               <div>
                 <p className="text-white font-semibold">Dirección</p>
-                <p className="text-xs text-primary-200 leading-relaxed">
+                <a
+                  href="https://www.google.com/maps/search/?api=1&query=CEPRUNSA+Arequipa"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-primary-200 leading-relaxed hover:text-white transition-colors block"
+                >
                   Calle San Agustín 108<br />
                   <span className="text-[11px] text-primary-400">(A media cuadra de la Plaza de Armas)</span>
-                </p>
+                </a>
               </div>
             </div>
             
