@@ -182,7 +182,7 @@ const Contact: React.FC = () => {
 
                 {/* Dirección */}
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=Av.+Independencia+200+Arequipa"
+                  href="https://www.google.com/maps/search/?api=1&query=Calle+San+Agustin+108+Arequipa"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-4 bg-gray-50 hover:bg-primary-50 border border-gray-100 hover:border-primary-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
@@ -192,13 +192,16 @@ const Contact: React.FC = () => {
                   </div>
                   <div className="min-w-0">
                     <p className="font-semibold text-primary-700 text-sm mb-0.5">Dirección</p>
-                    <p className="text-gray-600 text-sm leading-snug">Av. Independencia 200, Arequipa, Perú</p>
+                    <p className="text-gray-600 text-xs sm:text-sm leading-snug">
+                      Calle San Agustín 108<br />
+                      <span className="text-[11px] text-gray-500 font-medium">(A media cuadra de la Plaza de Armas)</span>
+                    </p>
                   </div>
                 </a>
 
                 {/* Teléfono */}
                 <a
-                  href="tel:+51054123456"
+                  href="tel:+51054391911"
                   className="group flex items-center gap-4 bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
                 >
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
@@ -206,23 +209,33 @@ const Contact: React.FC = () => {
                   </div>
                   <div className="min-w-0">
                     <p className="font-semibold text-primary-700 text-sm mb-0.5">Teléfono</p>
-                    <p className="text-gray-600 text-sm">(054) 123-456</p>
+                    <p className="text-gray-600 text-sm">
+                      054-391911<br />
+                      <span className="text-xs text-gray-500 font-medium">Anexos 1422</span>
+                    </p>
                   </div>
                 </a>
 
                 {/* Email */}
-                <a
-                  href="mailto:info@ceprunsa.edu.pe"
-                  className="group flex items-center gap-4 bg-gray-50 hover:bg-accent-50 border border-gray-100 hover:border-accent-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
+                <div
+                  className="group flex items-center gap-4 bg-gray-50 border border-gray-100 p-5 rounded-2xl transition-all duration-300"
                 >
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-accent-500 to-accent-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
                     <Send className="text-white" size={22} />
                   </div>
-                  <div className="min-w-0">
-                    <p className="font-semibold text-primary-700 text-sm mb-0.5">Email</p>
-                    <p className="text-gray-600 text-sm truncate">info@ceprunsa.edu.pe</p>
+                  <div className="min-w-0 w-full">
+                    <p className="font-semibold text-primary-700 text-sm mb-0.5">E-mails</p>
+                    <p className="text-gray-600 text-xs sm:text-sm leading-snug">
+                      <a href="mailto:ceprunsa@unsa.edu.pe" className="text-accent-600 hover:underline">ceprunsa@unsa.edu.pe</a>
+                      <span className="text-[11px] text-gray-400 block font-medium">(Institucional)</span>
+                    </p>
+                    <div className="text-[11px] text-gray-500 leading-normal mt-1 border-t border-gray-100 pt-1">
+                      <span className="font-medium text-primary-700">Consultas:</span>
+                      <div className="truncate"><a href="mailto:atencion.cliente@cepr.unsa.pe" className="hover:underline hover:text-accent-600">atencion.cliente@cepr.unsa.pe</a></div>
+                      <div className="truncate"><a href="mailto:atencion.postulante@cepr.unsa.pe" className="hover:underline hover:text-accent-600">atencion.postulante@cepr.unsa.pe</a></div>
+                    </div>
                   </div>
-                </a>
+                </div>
 
                 {/* WhatsApp */}
                 <a

@@ -1,6 +1,6 @@
 import type React from "react";
 import { Link } from "react-router-dom";
-import { ArrowUpRight, Mail, MapPin } from "lucide-react";
+import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import type { NavItem } from "../types";
 
 const quickLinks: NavItem[] = [
@@ -44,8 +44,42 @@ const Footer: React.FC = () => (
         <div>
           <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-accent-400">Contacto</h2>
           <div className="space-y-4 text-sm text-primary-200">
-            <p className="flex items-start gap-3"><MapPin className="mt-0.5 shrink-0 text-accent-400" size={17} /> Arequipa, Perú</p>
-            <Link to="/contacto" className="flex items-center gap-3 transition-colors hover:text-white"><Mail className="shrink-0 text-accent-400" size={17} /> Ver canales de atención</Link>
+            <div className="flex items-start gap-3">
+              <MapPin className="mt-1 shrink-0 text-accent-400" size={17} />
+              <div>
+                <p className="text-white font-semibold">Dirección</p>
+                <p className="text-xs text-primary-200 leading-relaxed">
+                  Calle San Agustín 108<br />
+                  <span className="text-[11px] text-primary-400">(A media cuadra de la Plaza de Armas)</span>
+                </p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-3">
+              <Phone className="mt-1 shrink-0 text-accent-400" size={17} />
+              <div>
+                <p className="text-white font-semibold">Teléfono</p>
+                <p className="text-xs text-primary-200">
+                  054-391911 <span className="text-primary-400 font-medium">Anexo 1422</span>
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-start gap-3">
+              <Mail className="mt-1 shrink-0 text-accent-400" size={17} />
+              <div>
+                <p className="text-white font-semibold">E-mails</p>
+                <p className="text-xs text-primary-200 leading-snug">
+                  <span className="text-primary-400 font-medium">Institucional:</span><br />
+                  ceprunsa@unsa.edu.pe
+                </p>
+                <p className="text-xs text-primary-200 leading-snug mt-1.5">
+                  <span className="text-primary-400 font-medium">Consultas:</span><br />
+                  atencion.cliente@cepr.unsa.pe<br />
+                  atencion.postulante@cepr.unsa.pe
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

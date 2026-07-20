@@ -3,19 +3,26 @@ import { MapPin, Phone, Send, MessageCircle, Calendar } from "lucide-react";
 export const contactInfo = [
   {
     title: "Dirección",
-    details: ["Av. Independencia 200, Arequipa, Perú"],
+    details: [
+      "Calle San Agustín 108",
+      "(a media cuadra de la Plaza de Armas de Arequipa)"
+    ],
     icon: MapPin,
     color: "text-blue-600",
   },
   {
     title: "Teléfono",
-    details: ["(054) 123-456"],
+    details: ["054-391911", "Anexos 1422"],
     icon: Phone,
     color: "text-green-600",
   },
   {
     title: "Email",
-    details: ["info@ceprunsa.edu.pe"],
+    details: [
+      "ceprunsa@unsa.edu.pe",
+      "atencion.cliente@cepr.unsa.pe",
+      "atencion.postulante@cepr.unsa.pe"
+    ],
     icon: Send,
     color: "text-accent-600",
   },
