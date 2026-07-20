@@ -28,7 +28,7 @@ export const contactInfo = [
   },
   {
     title: "WhatsApp",
-    details: ["+51 954 123 456"],
+    details: ["+51 908 892 331"],
     icon: MessageCircle,
     color: "text-green-600",
   },

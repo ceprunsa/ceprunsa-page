@@ -12,7 +12,7 @@ interface SocialLink {
 const socialLinks: SocialLink[] = [
   {
     label: "Escríbenos por WhatsApp",
-    href: "https://wa.me/51954123456",
+    href: "https://wa.me/51908892331",
     bg: "bg-[#25D366]",
     icon: (
       <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">

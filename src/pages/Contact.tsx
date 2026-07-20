@@ -239,7 +239,7 @@ const Contact: React.FC = () => {
 
                 {/* WhatsApp */}
                 <a
-                  href="https://wa.me/51954123456"
+                  href="https://wa.me/51908892331"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-4 bg-gray-50 hover:bg-green-50 border border-gray-100 hover:border-green-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
@@ -249,7 +249,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div className="min-w-0">
                     <p className="font-semibold text-primary-700 text-sm mb-0.5">WhatsApp</p>
-                    <p className="text-gray-600 text-sm">+51 954 123 456</p>
+                    <p className="text-gray-600 text-sm">+51 908 892 331</p>
                   </div>
                 </a>
 
@@ -548,7 +548,7 @@ const Contact: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <a
-              href="tel:+51054123456"
+              href="tel:+51054391911"
               className="bg-white text-accent-600 font-semibold py-4 px-8 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
             >
               <Phone className="inline mr-2" size={20} /> Llamar Ahora
@@ -558,7 +558,7 @@ const Contact: React.FC = () => {
               />
             </a>
             <a
-              href="https://wa.me/51954123456"
+              href="https://wa.me/51908892331"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
