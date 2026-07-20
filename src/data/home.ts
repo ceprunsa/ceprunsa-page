@@ -22,12 +22,9 @@ export const features = [
 ];
 
 export const stats = [
-  { number: "85%", label: "Tasa de Ingreso" },
-  { number: "24", label: "Años de Experiencia" },
-  { number: "15", label: "Cursos Especializados" },
-  { number: "10", label: "Semanas de Preparación" },
-  { number: "500+", label: "Estudiantes por Año" },
-  { number: "95%", label: "Satisfacción Estudiantil" },
+  { number: "20000+", label: "Postulantes preparados anualmente" },
+  { number: "27", label: "Años de Experiencia" },
+  { number: "2000+", label: "Vacantes ofertadas para la UNSA" },
 ];
 
 export const testimonials = [

@@ -78,7 +78,6 @@ const useCountUp = (end: number, duration: number = 2000, start: boolean = false
   return count;
 };
 
-// Single stat with animated counter
 const AnimatedStat: React.FC<{ stat: { number: string; label: string }; shouldAnimate: boolean }> = ({
   stat,
   shouldAnimate,
@@ -87,8 +86,8 @@ const AnimatedStat: React.FC<{ stat: { number: string; label: string }; shouldAn
   const suffix = stat.number.replace(/[0-9]/g, "");
   const count = useCountUp(numericPart, 2000, shouldAnimate);
   return (
-    <div className="stat-item text-center group">
-      <div className="bg-white rounded-2xl p-8 group-hover:scale-105 transition-all duration-300 border border-gray-100 shadow-md cursor-default">
+    <div className="stat-item text-center group h-full">
+      <div className="bg-white rounded-2xl p-8 group-hover:scale-105 transition-all duration-300 border border-gray-100 shadow-md cursor-default h-full flex flex-col justify-center">
         <div className="text-4xl md:text-5xl font-bold text-accent-700 mb-3 transition-colors tabular-nums">
           {shouldAnimate ? `${count}${suffix}` : stat.number}
         </div>
@@ -685,7 +684,7 @@ const Home: React.FC = () => {
               Nacional de San Agustín
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {stats.map((stat, index) => (
               <AnimatedStat key={index} stat={stat} shouldAnimate={statsVisible} />
             ))}
