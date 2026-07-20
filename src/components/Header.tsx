@@ -1,7 +1,7 @@
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ArrowUpRight, Menu, X, ChevronDown, PlayCircle, CreditCard } from "lucide-react";
+import { ArrowUpRight, Menu, X, ChevronDown, PlayCircle, CreditCard, FileText } from "lucide-react";
 import { gsap } from "gsap";
 import type { NavItem } from "../types";
 
@@ -25,6 +25,12 @@ const zonaSubItems = [
     path: "/zona-postulante/pago",
     icon: CreditCard,
     desc: "Guía de pago y normativa",
+  },
+  {
+    name: "Documentos Oficiales",
+    path: "/zona-postulante/documentos",
+    icon: FileText,
+    desc: "Reglamento y vacantes 2027",
   },
 ];
 

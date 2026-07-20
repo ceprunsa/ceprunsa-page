@@ -11,6 +11,7 @@ import Carreras from "./pages/Carreras";
 import ZonaPostulante from "./pages/ZonaPostulante";
 import GuiaClases from "./pages/GuiaClases";
 import GuiaPago from "./pages/GuiaPago";
+import DocumentosOficiales from "./pages/DocumentosOficiales";
 
 const router = createBrowserRouter([
   {
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "zona-postulante/pago",
         element: <GuiaPago />,
+      },
+      {
+        path: "zona-postulante/documentos",
+        element: <DocumentosOficiales />,
       },
     ],
   },

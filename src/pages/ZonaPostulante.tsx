@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { Link } from "react-router-dom";
-import { PlayCircle, CreditCard, ArrowRight, BookOpen, Shield } from "lucide-react";
+import { PlayCircle, CreditCard, ArrowRight, BookOpen, Shield, FileText } from "lucide-react";
 
 const guides = [
   {
@@ -26,6 +26,17 @@ const guides = [
     bg: "hover:bg-accent-50",
     border: "hover:border-accent-300",
     tag: "Pasos + Reglamento",
+  },
+  {
+    icon: FileText,
+    title: "Documentos Oficiales 2027",
+    description:
+      "Descarga el Reglamento de Admisión, Cronograma Oficial, Cuadro de Vacantes y Temario de Evaluación para los procesos 2027.",
+    to: "/zona-postulante/documentos",
+    color: "from-primary-600 to-primary-800",
+    bg: "hover:bg-primary-50",
+    border: "hover:border-primary-300",
+    tag: "Reglamentos y Vacantes",
   },
 ];
 
@@ -64,7 +75,7 @@ const ZonaPostulante: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {guides.map((guide) => (
               <Link
                 key={guide.to}
