@@ -92,8 +92,8 @@ const Header: React.FC = () => {
         ref={headerRef}
         className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${
           isScrolled
-            ? "border-accent-800 bg-accent-700/95 shadow-soft backdrop-blur-xl"
-            : "border-transparent bg-accent-700/95 backdrop-blur-md"
+            ? "border-primary-800 bg-primary-700/95 shadow-soft backdrop-blur-xl"
+            : "border-transparent bg-primary-700/95 backdrop-blur-md"
         }`}
       >
         <div className="container-custom flex h-[72px] items-center justify-between">
@@ -112,8 +112,8 @@ const Header: React.FC = () => {
                 className={({ isActive }) =>
                   `rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors ${
                     isActive
-                      ? "bg-accent-800 text-white"
-                      : "text-accent-50 hover:bg-accent-600 hover:text-white"
+                      ? "bg-primary-800 text-white"
+                      : "text-primary-100 hover:bg-primary-600 hover:text-white"
                   }`
                 }
               >
@@ -127,8 +127,8 @@ const Header: React.FC = () => {
                 onClick={() => setIsZonaOpen((o) => !o)}
                 className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors ${
                   isZonaActive
-                    ? "bg-accent-800 text-white"
-                    : "text-accent-50 hover:bg-accent-600 hover:text-white"
+                    ? "bg-primary-800 text-white"
+                    : "text-primary-100 hover:bg-primary-600 hover:text-white"
                 }`}
                 aria-expanded={isZonaOpen}
                 aria-haspopup="true"
@@ -148,7 +148,7 @@ const Header: React.FC = () => {
                       <Link
                         key={sub.path}
                         to={sub.path}
-                        className="block px-4 py-2.5 rounded-xl hover:bg-primary-50 text-sm font-semibold text-gray-800 hover:text-accent-700 transition-colors"
+                        className="block px-4 py-2.5 rounded-xl hover:bg-primary-50 text-sm font-semibold text-gray-800 hover:text-primary-700 transition-colors"
                       >
                         {sub.name}
                       </Link>
@@ -172,7 +172,7 @@ const Header: React.FC = () => {
           {/* Mobile hamburger */}
           <button
             type="button"
-            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-accent-500 text-white transition hover:bg-accent-600 md:hidden"
+            className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-primary-500 text-white transition hover:bg-primary-600 md:hidden"
             onClick={() => setIsMenuOpen((open) => !open)}
             aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
             aria-expanded={isMenuOpen}
@@ -195,16 +195,16 @@ const Header: React.FC = () => {
       {/* Sidebar container */}
       <div
         id="mobile-navigation"
-        className={`fixed top-0 right-0 bottom-0 z-[70] w-[280px] bg-accent-700 shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
+        className={`fixed top-0 right-0 bottom-0 z-[70] w-[280px] bg-primary-700 shadow-2xl transition-transform duration-300 ease-in-out md:hidden flex flex-col ${
           isMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header of the sidebar */}
-        <div className="flex h-[72px] items-center justify-between px-6 border-b border-accent-800">
+        <div className="flex h-[72px] items-center justify-between px-6 border-b border-primary-800">
           <span className="font-semibold text-white text-base">Menú</span>
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-accent-500 text-white transition hover:bg-accent-600"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-primary-500 text-white transition hover:bg-primary-600"
             onClick={() => setIsMenuOpen(false)}
             aria-label="Cerrar menú"
           >
@@ -221,7 +221,7 @@ const Header: React.FC = () => {
               end={item.path === "/"}
               className={({ isActive }) =>
                 `block rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
-                  isActive ? "bg-accent-800 text-white" : "text-accent-50 hover:bg-accent-600"
+                  isActive ? "bg-primary-800 text-white" : "text-primary-100 hover:bg-primary-600"
                 }`
               }
             >
@@ -234,7 +234,7 @@ const Header: React.FC = () => {
             <button
               onClick={() => setIsMobileZonaOpen((o) => !o)}
               className={`w-full flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
-                isZonaActive ? "bg-accent-800 text-white" : "text-accent-50 hover:bg-accent-600"
+                isZonaActive ? "bg-primary-800 text-white" : "text-primary-100 hover:bg-primary-600"
               }`}
             >
               Zona del Postulante
@@ -245,7 +245,7 @@ const Header: React.FC = () => {
             </button>
 
             {isMobileZonaOpen && (
-              <div className="pl-4 pr-2 py-1.5 mt-1 space-y-1 bg-accent-950/20 rounded-xl">
+              <div className="pl-4 pr-2 py-1.5 mt-1 space-y-1 bg-primary-950/20 rounded-xl">
                 {zonaSubItems.map((sub) => (
                   <NavLink
                     key={sub.path}
@@ -253,8 +253,8 @@ const Header: React.FC = () => {
                     className={({ isActive }) =>
                       `block rounded-lg px-4 py-2.5 text-xs font-semibold transition-colors ${
                         isActive
-                          ? "bg-accent-900 text-white"
-                          : "text-accent-100 hover:bg-accent-600 hover:text-white"
+                          ? "bg-primary-900 text-white"
+                          : "text-primary-200 hover:bg-primary-600 hover:text-white"
                       }`
                     }
                   >

@@ -34,7 +34,7 @@ module.exports = {
           950: "#080d1f",
         },
 
-        // Rojo granate del logo como color de acento
+        // Rojo granate/guinda como color de acento
         accent: {
           DEFAULT: "#7a1a2b",
           foreground: "#ffffff",
