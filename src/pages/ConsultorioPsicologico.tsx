@@ -15,7 +15,6 @@ import {
   Shield,
   Sparkles,
   Compass,
-  Calendar,
 } from "lucide-react";
 import { siteConfig } from "../data";
 const services = [
@@ -29,23 +28,25 @@ const services = [
   { icon: Compass, name: "Orientación Vocacional" },
 ];
 
-const schedules = [
-  { day: "Martes", hours: "10:00 h. a 12:55 h." },
-  { day: "Miércoles", hours: "18:15 h. a 19:40 h." },
-  { day: "Jueves", hours: "18:15 h. a 20:40 h." },
-  { day: "Viernes", hours: "10:00 h. a 20:40 h." },
-  { day: "Sábado", hours: "8:30 h. a 21:10 h." },
-  { day: "Domingo", hours: "8:30 h. a 21:10 h." },
-];
-
 const ConsultorioPsicologico: React.FC = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="section-padding bg-gradient-to-br from-primary-50 via-white to-accent-50 relative overflow-hidden">
-        <div className="absolute inset-0 bg-pattern opacity-5" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-primary-100 to-transparent rounded-full blur-3xl opacity-30" />
-        <div className="container-custom relative">
+      <section className="relative bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden flex flex-col">
+        {/* Full Width Image */}
+        <div className="w-full relative z-10 shadow-2xl order-1 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[50vh]">
+          <img
+            src="/consultorio-psicologico-header.png"
+            alt="Consultorio Psicológico CEPRUNSA"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+        </div>
+
+        <div className="absolute inset-0 bg-pattern opacity-5 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-primary-100 to-transparent rounded-full blur-3xl opacity-30 pointer-events-none" />
+        
+        <div className="container-custom relative pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20 z-10 order-2">
           <Link
             to="/zona-postulante"
             className="inline-flex items-center gap-2 text-sm text-primary-600 hover:text-accent-700 font-semibold mb-8 transition-colors group"
@@ -62,7 +63,7 @@ const ConsultorioPsicologico: React.FC = () => {
               Consultorio <span className="text-accent-900">Psicológico</span>
             </h1>
             <p className="text-xl text-secondary-600 leading-relaxed">
-              Sabemos que prepararte para ingresar a la universidad también implica cuidar de ti. 
+              Sabemos que prepararte para ingresar a la universidad también implica cuidar de ti.
               Encuentra un espacio de apoyo y orientación pensado exclusivamente para tu bienestar y salud mental.
             </p>
           </div>
@@ -73,10 +74,10 @@ const ConsultorioPsicologico: React.FC = () => {
       <section className="section-padding bg-white">
         <div className="container-custom max-w-5xl">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
-            
+
             {/* Left: Services and Details */}
             <div className="lg:col-span-7 space-y-10">
-              
+
               {/* Target audience badge */}
               <div className="bg-gradient-to-r from-primary-700 to-primary-900 text-white p-5 rounded-2xl shadow-soft flex items-center justify-between">
                 <div>
@@ -129,69 +130,67 @@ const ConsultorioPsicologico: React.FC = () => {
                   </div>
                 </div>
               </div>
-
             </div>
 
-            {/* Right: Booking and Schedules */}
-            <div className="lg:col-span-5 space-y-8">
-              
-              {/* Schedules Card */}
-              <div className="bg-white border border-primary-100 p-6 md:p-8 rounded-3xl shadow-medium">
-                <h3 className="font-heading text-xl font-bold text-primary-700 mb-6 flex items-center gap-2 border-b border-primary-100 pb-3">
-                  <Calendar size={20} className="text-accent-600" />
-                  Horarios Disponibles
-                </h3>
-                <div className="space-y-3.5">
-                  {schedules.map((sch, idx) => (
-                    <div key={idx} className="flex justify-between items-center text-sm border-b border-gray-50 pb-2">
-                      <span className="font-bold text-gray-700">{sch.day}</span>
-                      <span className="text-xs font-bold text-accent-700 bg-accent-50 border border-accent-100 px-3 py-1.5 rounded-lg whitespace-nowrap">
-                        {sch.hours}
-                      </span>
-                    </div>
-                  ))}
+            {/* Right: Booking Actions Card */}
+            <div className="lg:col-span-5">
+              <div className="bg-white border border-primary-100 p-6 md:p-8 rounded-3xl shadow-medium space-y-6">
+                <div>
+                  <h3 className="font-heading text-xl font-bold mb-2 text-primary-700">Reserva tu Cita</h3>
+                  <p className="text-sm text-gray-600 leading-relaxed">
+                    Reserva una sesión de orientación y asesoría psicológica en el horario de tu preferencia.
+                  </p>
                 </div>
-                <p className="text-[11px] text-gray-500 mt-4 italic text-center font-medium">
-                  * Horarios sujetos a variaciones y reservas previas.
-                </p>
+
+                <div className="space-y-4 pt-2">
+                  {siteConfig.psychologyServiceActive ? (
+                    <>
+                      <a
+                        href={`https://wa.me/51${siteConfig.whatsappPsychologyNumber}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center text-center gap-2.5 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl text-sm md:text-base group"
+                      >
+                        <MessageCircle size={20} />
+                        Reservar Cita por WhatsApp
+                        <ExternalLink size={14} className="opacity-70" />
+                      </a>
+
+                      <a
+                        href="http://bit.ly/4dEyR0t"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full flex items-center justify-center text-center gap-2 bg-white border-2 border-primary-500 text-primary-700 hover:bg-primary-50 font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] text-sm shadow-soft hover:shadow-medium"
+                      >
+                        Revisar Horarios en Línea
+                        <ExternalLink size={14} />
+                      </a>
+                    </>
+                  ) : (
+                    <>
+                      <div
+                        className="w-full flex items-center justify-center text-center gap-2.5 bg-gray-100 border border-gray-200 text-gray-400 font-bold py-4 px-6 rounded-2xl cursor-not-allowed text-sm md:text-base select-none"
+                        title="Las reservas por WhatsApp se encuentran inhabilitadas porque el servicio está inactivo."
+                      >
+                        <MessageCircle size={20} className="opacity-50" />
+                        Reservar por WhatsApp (Inactivo)
+                      </div>
+
+                      <div
+                        className="w-full flex items-center justify-center text-center gap-2.5 bg-gray-100 border border-gray-200 text-gray-400 font-bold py-4 px-6 rounded-2xl cursor-not-allowed text-sm select-none"
+                        title="La agenda de horarios se encuentra inhabilitada porque el servicio está inactivo."
+                      >
+                        Horarios en Línea (Inactivo)
+                      </div>
+
+                      <div className="text-xs text-red-700 bg-red-50 border border-red-100 p-4 rounded-2xl font-semibold text-center mt-3 leading-relaxed">
+                        * El servicio de consultorio psicológico se encuentra temporalmente inactivo.
+                      </div>
+                    </>
+                  )}
+                </div>
               </div>
-
-              {/* Booking CTA Actions */}
-              <div className="space-y-4">
-                {siteConfig.whatsappBookingEnabled ? (
-                  <a
-                    href={`https://wa.me/51${siteConfig.whatsappPsychologyNumber}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full flex items-center justify-center text-center gap-2.5 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl text-base group"
-                  >
-                    <MessageCircle size={20} />
-                    Reservar Cita por WhatsApp
-                    <ExternalLink size={14} className="opacity-70" />
-                  </a>
-                ) : (
-                  <div
-                    className="w-full flex items-center justify-center text-center gap-2.5 bg-gray-150 border border-gray-200 text-gray-400 font-bold py-4 px-6 rounded-2xl cursor-not-allowed text-base select-none"
-                    title="Las reservas por WhatsApp se encuentran temporalmente inhabilitadas."
-                  >
-                    <MessageCircle size={20} className="opacity-60" />
-                    Reservas por WhatsApp Inhabilitadas
-                  </div>
-                )}
-
-                <a
-                  href="http://bit.ly/4dEyR0t"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center text-center gap-2 bg-white border-2 border-primary-500 text-primary-700 hover:bg-primary-50 font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] text-sm shadow-soft hover:shadow-medium"
-                >
-                  Revisar Horarios en Línea
-                  <ExternalLink size={14} />
-                </a>
-              </div>
-
             </div>
-
           </div>
         </div>
       </section>
