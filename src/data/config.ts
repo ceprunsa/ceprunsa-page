@@ -14,7 +14,7 @@ export const siteConfig = {
 
   // CONFIGURACIÓN DEL CONSULTORIO PSICOLÓGICO
   // Define si el botón para reservar cita por WhatsApp está habilitado (true) o inhabilitado (false)
-  whatsappBookingEnabled: false,
+  whatsappBookingEnabled: true,
 
   // NÚMEROS DE CONTACTO (Sin espacios ni caracteres especiales para los enlaces wa.me/tel)
   // Formato visual y link se generan automáticamente
