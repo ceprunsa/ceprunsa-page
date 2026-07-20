@@ -1,4 +1,5 @@
 import type { Processes } from "../types";
+import { siteConfig } from "./config";
 
 export const processesOptions: string[] = [
   "CEPRUNSA I Fase",
@@ -43,7 +44,7 @@ export const processes: Processes[] = [
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
-    recommended: false,
+    recommended: siteConfig.nextProcessToStart === 1,
   },
   {
     title: "CEPRUNSA Ciclo Quintos",
@@ -77,7 +78,7 @@ export const processes: Processes[] = [
     eligibility: ["Solo estudiantes de 5to de secundaria (Quintos)"],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
-    recommended: true,
+    recommended: siteConfig.nextProcessToStart === 2,
   },
   {
     title: "CEPRUNSA II Fase",
@@ -114,7 +115,7 @@ export const processes: Processes[] = [
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
-    recommended: false,
+    recommended: siteConfig.nextProcessToStart === 3,
   },
   {
     title: "Proceso Extraordinario",
@@ -144,7 +145,7 @@ export const processes: Processes[] = [
     ],
     price: "Consultar",
     installments: "Facilidades de pago disponibles",
-    recommended: false,
+    recommended: siteConfig.nextProcessToStart === 4,
   },
 ];
 

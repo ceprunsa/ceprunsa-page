@@ -12,6 +12,7 @@ import ZonaPostulante from "./pages/ZonaPostulante";
 import GuiaClases from "./pages/GuiaClases";
 import GuiaPago from "./pages/GuiaPago";
 import DocumentosOficiales from "./pages/DocumentosOficiales";
+import ConsultorioPsicologico from "./pages/ConsultorioPsicologico";
 
 const router = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
       {
         path: "zona-postulante/documentos",
         element: <DocumentosOficiales />,
+      },
+      {
+        path: "zona-postulante/psicologia",
+        element: <ConsultorioPsicologico />,
       },
     ],
   },

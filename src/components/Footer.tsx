@@ -2,6 +2,7 @@ import type React from "react";
 import { Link } from "react-router-dom";
 import { ArrowUpRight, Mail, MapPin, Phone } from "lucide-react";
 import type { NavItem } from "../types";
+import { siteConfig } from "../data";
 
 const quickLinks: NavItem[] = [
   { name: "Inicio", path: "/" },
@@ -65,7 +66,7 @@ const Footer: React.FC = () => (
               <div>
                 <p className="text-white font-semibold">Teléfono</p>
                 <p className="text-xs text-primary-200">
-                  054-391911 <span className="text-primary-400 font-medium">Anexo 1422</span>
+                  {siteConfig.phoneNumber} <span className="text-primary-400 font-medium">Anexo {siteConfig.phoneAnnex}</span>
                 </p>
               </div>
             </div>
@@ -76,12 +77,12 @@ const Footer: React.FC = () => (
                 <p className="text-white font-semibold">E-mails</p>
                 <p className="text-xs text-primary-200 leading-snug">
                   <span className="text-primary-400 font-medium">Institucional:</span><br />
-                  ceprunsa@unsa.edu.pe
+                  <a href={`mailto:${siteConfig.emailInstitutional}`} className="hover:underline">{siteConfig.emailInstitutional}</a>
                 </p>
                 <p className="text-xs text-primary-200 leading-snug mt-1.5">
                   <span className="text-primary-400 font-medium">Consultas:</span><br />
-                  atencion.cliente@cepr.unsa.pe<br />
-                  atencion.postulante@cepr.unsa.pe
+                  <a href={`mailto:${siteConfig.emailClientQuery}`} className="hover:underline">{siteConfig.emailClientQuery}</a><br />
+                  <a href={`mailto:${siteConfig.emailApplicantQuery}`} className="hover:underline">{siteConfig.emailApplicantQuery}</a>
                 </p>
               </div>
             </div>

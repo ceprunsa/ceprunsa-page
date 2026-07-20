@@ -1,7 +1,7 @@
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
-import { ArrowUpRight, Menu, X, ChevronDown, PlayCircle, CreditCard, FileText } from "lucide-react";
+import { ArrowUpRight, Menu, X, ChevronDown, PlayCircle, CreditCard, FileText, Brain } from "lucide-react";
 import { gsap } from "gsap";
 import type { NavItem } from "../types";
 
@@ -31,6 +31,12 @@ const zonaSubItems = [
     path: "/zona-postulante/documentos",
     icon: FileText,
     desc: "Reglamento y vacantes 2027",
+  },
+  {
+    name: "Consultorio Psicológico",
+    path: "/zona-postulante/psicologia",
+    icon: Brain,
+    desc: "Apoyo y orientación emocional",
   },
 ];
 

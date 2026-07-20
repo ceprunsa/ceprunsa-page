@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { Link } from "react-router-dom";
-import { PlayCircle, CreditCard, ArrowRight, BookOpen, Shield, FileText } from "lucide-react";
+import { PlayCircle, CreditCard, ArrowRight, BookOpen, Shield, FileText, Brain } from "lucide-react";
 
 const guides = [
   {
@@ -37,6 +37,17 @@ const guides = [
     bg: "hover:bg-primary-50",
     border: "hover:border-primary-300",
     tag: "Reglamentos y Vacantes",
+  },
+  {
+    icon: Brain,
+    title: "Consultorio Psicológico",
+    description:
+      "Reserva tus sesiones de orientación virtual de 40 minutos para el manejo de estrés, ansiedad, apoyo y acompañamiento emocional.",
+    to: "/zona-postulante/psicologia",
+    color: "from-accent-600 to-accent-800",
+    bg: "hover:bg-accent-50",
+    border: "hover:border-accent-300",
+    tag: "Orientación y Apoyo",
   },
 ];
 
@@ -75,7 +86,7 @@ const ZonaPostulante: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto">
             {guides.map((guide) => (
               <Link
                 key={guide.to}

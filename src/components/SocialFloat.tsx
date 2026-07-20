@@ -2,6 +2,8 @@ import type React from "react";
 import { useState } from "react";
 import { X, MessageSquare } from "lucide-react";
 
+import { siteConfig } from "../data";
+
 interface SocialLink {
   label: string;
   href: string;
@@ -12,7 +14,7 @@ interface SocialLink {
 const socialLinks: SocialLink[] = [
   {
     label: "Escríbenos por WhatsApp",
-    href: "https://wa.me/51908892331",
+    href: `https://wa.me/51${siteConfig.whatsappNumber}`,
     bg: "bg-[#25D366]",
     icon: (
       <svg className="w-7 h-7" fill="currentColor" viewBox="0 0 24 24">
