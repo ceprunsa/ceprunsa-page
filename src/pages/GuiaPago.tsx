@@ -50,12 +50,23 @@ const GuiaPago: React.FC = () => {
   return (
     <div>
       {/* Hero */}
-      <section className="section-padding bg-gradient-to-br from-accent-50 via-white to-primary-50 relative overflow-hidden">
-        <div className="absolute inset-0 bg-pattern opacity-5" />
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-accent-100 to-transparent rounded-full blur-3xl opacity-30" />
-        <div className="container-custom relative">
+      <section className="relative bg-gradient-to-br from-accent-50 via-white to-primary-50 overflow-hidden flex flex-col">
+        {/* Full Width Image */}
+        <div className="w-full relative z-10 shadow-2xl order-1 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[50vh]">
+          <img
+            src="/pago-cuotas-header.png"
+            alt="Pago de Cuotas CEPRUNSA"
+            className="w-full h-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+        </div>
+
+        <div className="absolute inset-0 bg-pattern opacity-5 pointer-events-none" />
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-accent-100 to-transparent rounded-full blur-3xl opacity-30 pointer-events-none" />
+
+        <div className="container-custom relative pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20 z-10 order-2">
           <Link
-            to="/zona-postulante/clases"
+            to="/zona-postulante"
             className="inline-flex items-center gap-2 text-sm text-primary-600 hover:text-accent-700 font-semibold mb-8 transition-colors group"
           >
             <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
