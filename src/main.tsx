@@ -2,6 +2,7 @@ import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
+import { ConfigProvider } from "./context/ConfigContext";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import About from "./pages/About";
@@ -13,6 +14,7 @@ import GuiaClases from "./pages/GuiaClases";
 import GuiaPago from "./pages/GuiaPago";
 import DocumentosOficiales from "./pages/DocumentosOficiales";
 import ConsultorioPsicologico from "./pages/ConsultorioPsicologico";
+import Admin from "./pages/Admin";
 
 const router = createBrowserRouter([
   {
@@ -61,10 +63,16 @@ const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/admin",
+    element: <Admin />,
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <ConfigProvider>
+      <RouterProvider router={router} />
+    </ConfigProvider>
   </StrictMode>
 );

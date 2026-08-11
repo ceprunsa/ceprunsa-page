@@ -12,6 +12,8 @@ import {
   ArrowRight,
 } from "lucide-react";
 
+import { useConfig } from "../context/ConfigContext";
+
 const steps = [
   {
     step: "01",
@@ -40,6 +42,7 @@ const requirements = [
 ];
 
 const GuiaClases: React.FC = () => {
+  const { getImageUrl } = useConfig();
   return (
     <div>
       {/* Hero */}
@@ -47,7 +50,7 @@ const GuiaClases: React.FC = () => {
         {/* Full Width Image */}
         <div className="w-full relative z-10 shadow-2xl order-1 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[50vh]">
           <img
-            src="/acceso-clases-header.png"
+            src={getImageUrl("/acceso-clases-header.png")}
             alt="Acceso a Clases CEPRUNSA"
             className="w-full h-full object-cover"
           />

@@ -4,8 +4,10 @@ import type React from "react";
 import { Link } from "react-router-dom";
 import { ChevronLeft, Download, FileText, ExternalLink } from "lucide-react";
 import { officialDocuments2027 } from "../data/documents";
+import { useConfig } from "../context/ConfigContext";
 
 const DocumentosOficiales: React.FC = () => {
+  const { getImageUrl } = useConfig();
   return (
     <div>
       {/* Hero */}
@@ -13,7 +15,7 @@ const DocumentosOficiales: React.FC = () => {
         {/* Full Width Image */}
         <div className="w-full relative z-10 shadow-2xl order-1 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[50vh]">
           <img
-            src="/documentos-oficiales-header.png"
+            src={getImageUrl("/documentos-oficiales-header.png")}
             alt="Documentos Oficiales CEPRUNSA"
             className="w-full h-full object-cover"
           />

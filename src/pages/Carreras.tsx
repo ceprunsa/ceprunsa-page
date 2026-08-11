@@ -7,6 +7,7 @@ import {
   ExternalLink,
 } from "lucide-react";
 import { unsaCarreras } from "../data/unsa_carreras";
+import { useConfig } from "../context/ConfigContext";
 
 interface CarreraData {
   nombre: string;
@@ -32,6 +33,7 @@ type FacultadesPorArea = Record<string, CarrerasPorFacultad>;
 type UnsaCarrerasData = Record<string, FacultadesPorArea>;
 
 const Carreras: React.FC = () => {
+  const { getImageUrl } = useConfig();
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedArea, setSelectedArea] = useState<string>("Todas");
   const [selectedFacultad, setSelectedFacultad] = useState<string>("Todas");
@@ -212,7 +214,7 @@ const Carreras: React.FC = () => {
                 >
                   <div className="relative h-48 overflow-hidden">
                     <img
-                      src={carrera.imagen}
+                      src={getImageUrl(carrera.imagen)}
                       alt={carrera.nombre}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"

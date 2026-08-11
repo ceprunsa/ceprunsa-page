@@ -5,6 +5,8 @@ import { ArrowUpRight, Menu, X, ChevronDown, PlayCircle, CreditCard, FileText, B
 import { gsap } from "gsap";
 import type { NavItem } from "../types";
 
+import { useConfig } from "../context/ConfigContext";
+
 const navItems: NavItem[] = [
   { name: "Inicio", path: "/" },
   { name: "Nosotros", path: "/nosotros" },
@@ -98,6 +100,8 @@ const Header: React.FC = () => {
 
   const isZonaActive = location.pathname.startsWith("/zona-postulante");
 
+  const { getImageUrl } = useConfig();
+
   return (
     <>
       <header
@@ -110,7 +114,7 @@ const Header: React.FC = () => {
       >
         <div className="container-custom flex h-[72px] items-center justify-between">
           <Link data-header-item to="/" className="flex items-center" aria-label="CEPRUNSA, inicio">
-            <img src="/logo-ceprunsa-white.png" alt="CEPRUNSA" className="h-9 w-auto sm:h-10" />
+            <img src={getImageUrl("/logo-ceprunsa-white.png")} alt="CEPRUNSA" className="h-9 w-auto sm:h-10" />
           </Link>
 
           {/* Desktop nav */}

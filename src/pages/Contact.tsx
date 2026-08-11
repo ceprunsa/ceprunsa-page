@@ -14,7 +14,8 @@ import {
   ChevronRight,
   Facebook,
 } from "lucide-react";
-import { processesOptions, faqs, siteConfig } from "../data";
+import { processesOptions, faqs } from "../data";
+import { useConfig } from "../context/ConfigContext";
 import type { FormData } from "../types";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -22,6 +23,7 @@ gsap.registerPlugin(ScrollTrigger);
 const APPS_SCRIPT_URL = import.meta.env.VITE_APPS_SCRIPT_URL ?? "";
 
 const Contact: React.FC = () => {
+  const { config } = useConfig();
   const contactRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
   const faqRef = useRef<HTMLDivElement>(null);
@@ -201,7 +203,7 @@ const Contact: React.FC = () => {
 
                         {/* Teléfono */}
                 <a
-                  href={`tel:+51${siteConfig.phoneNumber.replace(/[^0-9]/g, "")}`}
+                  href={`tel:+51${config.phoneNumber.replace(/[^0-9]/g, "")}`}
                   className="group flex items-center gap-4 bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
                 >
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shadow-md group-hover:scale-110 transition-transform duration-300">
@@ -210,8 +212,8 @@ const Contact: React.FC = () => {
                   <div className="min-w-0">
                     <p className="font-semibold text-primary-700 text-sm mb-0.5">Teléfono</p>
                     <p className="text-gray-600 text-sm">
-                      {siteConfig.phoneNumber}<br />
-                      <span className="text-xs text-gray-500 font-medium">Anexos {siteConfig.phoneAnnex}</span>
+                      {config.phoneNumber}<br />
+                      <span className="text-xs text-gray-500 font-medium">Anexos {config.phoneAnnex}</span>
                     </p>
                   </div>
                 </a>
@@ -226,20 +228,20 @@ const Contact: React.FC = () => {
                   <div className="min-w-0 w-full">
                     <p className="font-semibold text-primary-700 text-sm mb-0.5">E-mails</p>
                     <p className="text-gray-600 text-xs sm:text-sm leading-snug">
-                      <a href={`mailto:${siteConfig.emailInstitutional}`} className="text-accent-600 hover:underline">{siteConfig.emailInstitutional}</a>
+                      <a href={`mailto:${config.emailInstitutional}`} className="text-accent-600 hover:underline">{config.emailInstitutional}</a>
                       <span className="text-[11px] text-gray-400 block font-medium">(Institucional)</span>
                     </p>
                     <div className="text-[11px] text-gray-500 leading-normal mt-1 border-t border-gray-100 pt-1">
                       <span className="font-medium text-primary-700">Consultas:</span>
-                      <div className="truncate"><a href={`mailto:${siteConfig.emailClientQuery}`} className="hover:underline hover:text-accent-600">{siteConfig.emailClientQuery}</a></div>
-                      <div className="truncate"><a href={`mailto:${siteConfig.emailApplicantQuery}`} className="hover:underline hover:text-accent-600">{siteConfig.emailApplicantQuery}</a></div>
+                      <div className="truncate"><a href={`mailto:${config.emailClientQuery}`} className="hover:underline hover:text-accent-600">{config.emailClientQuery}</a></div>
+                      <div className="truncate"><a href={`mailto:${config.emailApplicantQuery}`} className="hover:underline hover:text-accent-600">{config.emailApplicantQuery}</a></div>
                     </div>
                   </div>
                 </div>
 
                 {/* WhatsApp */}
                 <a
-                  href={`https://wa.me/51${siteConfig.whatsappNumber}`}
+                  href={`https://wa.me/51${config.whatsappNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group flex items-center gap-4 bg-gray-50 hover:bg-green-50 border border-gray-100 hover:border-green-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
@@ -249,7 +251,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div className="min-w-0">
                     <p className="font-semibold text-primary-700 text-sm mb-0.5">WhatsApp</p>
-                    <p className="text-gray-600 text-sm">+{siteConfig.whatsappNumber.slice(0, 2)} {siteConfig.whatsappNumber.slice(2, 5)} {siteConfig.whatsappNumber.slice(5, 8)} {siteConfig.whatsappNumber.slice(8)}</p>
+                    <p className="text-gray-600 text-sm">+{config.whatsappNumber.slice(0, 2)} {config.whatsappNumber.slice(2, 5)} {config.whatsappNumber.slice(5, 8)} {config.whatsappNumber.slice(8)}</p>
                   </div>
                 </a>
 
@@ -548,7 +550,7 @@ const Contact: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <a
-              href={`tel:+51${siteConfig.phoneNumber.replace(/[^0-9]/g, "")}`}
+              href={`tel:+51${config.phoneNumber.replace(/[^0-9]/g, "")}`}
               className="bg-white text-accent-600 font-semibold py-4 px-8 rounded-xl hover:bg-gray-100 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"
             >
               <Phone className="inline mr-2" size={20} /> Llamar Ahora
@@ -558,7 +560,7 @@ const Contact: React.FC = () => {
               />
             </a>
             <a
-              href={`https://wa.me/51${siteConfig.whatsappNumber}`}
+              href={`https://wa.me/51${config.whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-green-500 hover:bg-green-600 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"

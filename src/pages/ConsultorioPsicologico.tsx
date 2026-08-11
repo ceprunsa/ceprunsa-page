@@ -16,7 +16,8 @@ import {
   Sparkles,
   Compass,
 } from "lucide-react";
-import { siteConfig } from "../data";
+import { useConfig } from "../context/ConfigContext";
+
 const services = [
   { icon: Brain, name: "Manejo del estrés" },
   { icon: Heart, name: "Manejo de ansiedad" },
@@ -29,6 +30,8 @@ const services = [
 ];
 
 const ConsultorioPsicologico: React.FC = () => {
+  const { config, getImageUrl } = useConfig();
+
   return (
     <div>
       {/* Hero */}
@@ -36,7 +39,7 @@ const ConsultorioPsicologico: React.FC = () => {
         {/* Full Width Image */}
         <div className="w-full relative z-10 shadow-2xl order-1 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[50vh]">
           <img
-            src="/consultorio-psicologico-header.png"
+            src={getImageUrl("/consultorio-psicologico-header.png")}
             alt="Consultorio Psicológico CEPRUNSA"
             className="w-full h-full object-cover"
           />
@@ -143,10 +146,10 @@ const ConsultorioPsicologico: React.FC = () => {
                 </div>
 
                 <div className="space-y-4 pt-2">
-                  {siteConfig.psychologyServiceActive ? (
+                  {config.psychologyServiceActive ? (
                     <>
                       <a
-                        href={`https://wa.me/51${siteConfig.whatsappPsychologyNumber}`}
+                        href={`https://wa.me/51${config.whatsappPsychologyNumber}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full flex items-center justify-center text-center gap-2.5 bg-green-500 hover:bg-green-600 text-white font-bold py-4 px-6 rounded-2xl transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-xl text-sm md:text-base group"
@@ -178,33 +181,27 @@ const ConsultorioPsicologico: React.FC = () => {
 
                       <div
                         className="w-full flex items-center justify-center text-center gap-2.5 bg-gray-100 border border-gray-200 text-gray-400 font-bold py-4 px-6 rounded-2xl cursor-not-allowed text-sm select-none"
-                        title="La agenda de horarios se encuentra inhabilitada porque el servicio está inactivo."
+                        title="La revisión de horarios se encuentra inhabilitada porque el servicio está inactivo."
                       >
-                        Horarios en Línea (Inactivo)
-                      </div>
-
-                      <div className="text-xs text-red-700 bg-red-50 border border-red-100 p-4 rounded-2xl font-semibold text-center mt-3 leading-relaxed">
-                        * El servicio de consultorio psicológico se encuentra temporalmente inactivo.
+                        Revisar Horarios en Línea (Inactivo)
                       </div>
                     </>
                   )}
                 </div>
+
+                <div className="border-t border-gray-100 pt-4 text-center">
+                  <p className="text-xs text-gray-600 font-medium mb-1">¿Dudas sobre el servicio?</p>
+                  <a
+                    href="mailto:atencion.cliente@cepr.unsa.pe"
+                    className="text-xs text-primary-600 hover:underline font-semibold"
+                  >
+                    Contacta a atención al cliente
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Navigation footer */}
-      <section className="py-10 bg-gray-50 border-t border-gray-100">
-        <div className="container-custom flex items-center justify-start">
-          <Link
-            to="/zona-postulante"
-            className="inline-flex items-center gap-2 text-primary-600 hover:text-accent-700 font-semibold text-sm transition-colors group"
-          >
-            <ChevronLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-            Volver a Zona del Postulante
-          </Link>
+          </div>
         </div>
       </section>
     </div>

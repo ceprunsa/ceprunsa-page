@@ -18,11 +18,19 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { processes } from "../data";
+import { useConfig } from "../context/ConfigContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const Processes: React.FC = () => {
+  const { config, getImageUrl } = useConfig();
   const programsRef = useRef<HTMLElement>(null);
+
+  // Map processes so recommended matches config.nextProcessToStart dynamically
+  const activeProcesses = processes.map((p, index) => ({
+    ...p,
+    recommended: index + 1 === config.nextProcessToStart,
+  }));
   const comparisonRef = useRef<HTMLElement>(null);
   const [expandedCourses, setExpandedCourses] = useState<
     Record<number, boolean>
@@ -90,7 +98,7 @@ const Processes: React.FC = () => {
         {/* Full Width Image */}
         <div className="w-full relative z-10 shadow-2xl order-1 h-[300px] sm:h-[400px] md:h-[500px] lg:h-[60vh]">
           <img
-            src="/ceprunsa_ciclo_quintos.png"
+            src={getImageUrl("/ceprunsa_ciclo_quintos.png")}
             alt="CEPRUNSA Ciclo Quintos"
             className="w-full h-full object-cover"
           />
@@ -119,7 +127,7 @@ const Processes: React.FC = () => {
         <div className="container-custom">
 
           <div className="flex flex-col gap-8">
-            {processes.map((process, index) => (
+            {activeProcesses.map((process, index) => (
               <div
                 key={index}
                 className={`program-card relative group rounded-2xl transition-all duration-300 ${

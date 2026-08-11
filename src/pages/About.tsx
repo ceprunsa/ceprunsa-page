@@ -7,10 +7,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Award, Target, Users, ExternalLink } from "lucide-react";
 import { achievements, teamMembers, methodologyItems } from "../data";
 import ValuesCarousel from "../components/ValuesCarousel";
+import { useConfig } from "../context/ConfigContext";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const About: React.FC = () => {
+  const { getImageUrl } = useConfig();
   const aboutRef = useRef<HTMLDivElement>(null);
   const valuesRef = useRef<HTMLDivElement>(null);
   const historyRef = useRef<HTMLDivElement>(null);
@@ -357,7 +359,7 @@ const About: React.FC = () => {
                 <div className="relative mb-6">
                   {member.image ? (
                     <img
-                      src={member.image}
+                      src={getImageUrl(member.image)}
                       alt={member.name}
                       className="w-24 h-24 rounded-full mx-auto object-cover group-hover:scale-110 transition-transform duration-300"
                     />

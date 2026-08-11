@@ -18,6 +18,7 @@ import {
   CheckCircle,
 } from "lucide-react";
 import { features, stats, testimonials } from "../data";
+import { useConfig } from "../context/ConfigContext";
 gsap.registerPlugin(ScrollTrigger);
 
 interface CarouselItem {
@@ -102,6 +103,7 @@ const CountdownTimer: React.FC<{
   eventTitle: string;
   backgroundImage?: string;
 }> = ({ targetDate, eventTitle, backgroundImage }) => {
+  const { getImageUrl } = useConfig();
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -134,7 +136,7 @@ const CountdownTimer: React.FC<{
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src={backgroundImage || "/ceprunsa_ciclo_quintos.png"}
+          src={getImageUrl(backgroundImage || "/ceprunsa_ciclo_quintos.png")}
           alt="Inscripciones CEPRUNSA"
           className="w-full h-full object-cover"
         />
@@ -206,6 +208,7 @@ const CountdownTimer: React.FC<{
 };
 
 const HeroCarousel: React.FC = () => {
+  const { getImageUrl } = useConfig();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [touchStart, setTouchStart] = useState<number | null>(null);
@@ -315,7 +318,7 @@ const HeroCarousel: React.FC = () => {
               ) : (
                 <div className="w-full h-full relative overflow-hidden">
                   <img
-                    src={item.image || "/home_image.jpeg"}
+                    src={getImageUrl(item.image || "/home_image.jpeg")}
                     alt={item.title}
                     loading={index === 0 ? "eager" : "lazy"}
                     fetchPriority={index === 0 ? "high" : "auto"}
