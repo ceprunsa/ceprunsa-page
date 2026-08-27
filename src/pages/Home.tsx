@@ -17,7 +17,7 @@ import {
   ChevronDown,
   CheckCircle,
 } from "lucide-react";
-import { features, stats, testimonials } from "../data";
+import { stats, testimonials } from "../data";
 import { useConfig } from "../context/ConfigContext";
 gsap.registerPlugin(ScrollTrigger);
 
@@ -132,7 +132,7 @@ const CountdownTimer: React.FC<{
   }, [targetDate]);
 
   return (
-    <div className="w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[70vh] relative overflow-hidden">
+    <div className="w-full h-[600px] sm:h-[750px] md:h-[850px] lg:h-[92vh] relative overflow-hidden">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -294,7 +294,7 @@ const HeroCarousel: React.FC = () => {
   return (
     <div className="relative w-full overflow-hidden bg-gray-900 group">
       <div
-        className="relative w-full h-[400px] sm:h-[500px] md:h-[600px] lg:h-[70vh] overflow-hidden"
+        className="relative w-full h-[600px] sm:h-[750px] md:h-[850px] lg:h-[92vh] overflow-hidden"
         onMouseEnter={() => setIsAutoPlaying(false)}
         onMouseLeave={() => setIsAutoPlaying(true)}
         onTouchStart={onTouchStart}
@@ -343,27 +343,25 @@ const HeroCarousel: React.FC = () => {
           ))}
         </div>
 
-        {/* Navigation Arrows - Hidden on mobile, visible on larger screens */}
+        {/* Navigation Arrows */}
         <button
           onClick={prevSlide}
           disabled={isTransitioning}
-          className={`hidden md:flex absolute left-4 lg:left-8 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/90 text-white hover:text-gray-900 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 ${
-            isTransitioning ? "pointer-events-none opacity-50" : ""
-          }`}
+          className={`flex absolute left-3 sm:left-6 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/60 text-white p-3 sm:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center backdrop-blur-sm opacity-80 hover:opacity-100 ${isTransitioning ? "pointer-events-none opacity-40" : ""
+            }`}
           aria-label="Imagen anterior"
         >
-          <ChevronLeft size={24} />
+          <ChevronLeft size={28} />
         </button>
 
         <button
           onClick={nextSlide}
           disabled={isTransitioning}
-          className={`hidden md:flex absolute right-4 lg:right-8 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/90 text-white hover:text-gray-900 p-3 lg:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center backdrop-blur-sm opacity-0 group-hover:opacity-100 ${
-            isTransitioning ? "pointer-events-none opacity-50" : ""
-          }`}
+          className={`flex absolute right-3 sm:right-6 top-1/2 transform -translate-y-1/2 bg-black/30 hover:bg-black/60 text-white p-3 sm:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20 items-center justify-center backdrop-blur-sm opacity-80 hover:opacity-100 ${isTransitioning ? "pointer-events-none opacity-40" : ""
+            }`}
           aria-label="Siguiente imagen"
         >
-          <ChevronRight size={24} />
+          <ChevronRight size={28} />
         </button>
       </div>
 
@@ -374,11 +372,10 @@ const HeroCarousel: React.FC = () => {
             key={index}
             onClick={() => goToSlide(index)}
             disabled={isTransitioning}
-            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${
-              isTransitioning ? "pointer-events-none" : ""
-            } ${index === currentSlide
-              ? "bg-white scale-125 shadow-md"
-              : "bg-white/50 hover:bg-white/80"
+            className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all duration-300 ${isTransitioning ? "pointer-events-none" : ""
+              } ${index === currentSlide
+                ? "bg-white scale-125 shadow-md"
+                : "bg-white/50 hover:bg-white/80"
               }`}
             aria-label={`Ir a slide ${index + 1}`}
           />
@@ -451,8 +448,8 @@ const TestimonialCard: React.FC<{
 };
 
 const Home: React.FC = () => {
+  const { getImageUrl } = useConfig();
   const heroRef = useRef<HTMLElement>(null);
-  const featuresRef = useRef<HTMLElement>(null);
   const statsRef = useRef<HTMLElement>(null);
   const testimonialsRef = useRef<HTMLElement>(null);
   const [statsVisible, setStatsVisible] = useState(false);
@@ -496,22 +493,7 @@ const Home: React.FC = () => {
       }
     );
 
-    // Features animation
-    gsap.fromTo(
-      ".feature-card",
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        stagger: 0.2,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: featuresRef.current,
-          start: "top 80%",
-        },
-      },
-    );
+
 
     // Stats animation + count-up trigger
     gsap.fromTo(
@@ -625,47 +607,65 @@ const Home: React.FC = () => {
         </div>
       </section>
 
-
-      {/* Features Section */}
-      <section
-        ref={featuresRef}
-        className="section-padding bg-gradient-to-b from-gray-50 to-white relative"
-      >
-        <div className="absolute inset-0 bg-pattern opacity-5"></div>
-        <div className="container-custom relative">
-          <div className="text-center mb-20">
-            <h2 className="font-heading text-4xl md:text-5xl font-bold text-primary-700 mb-6">
-              ¿Por qué elegir <span className="text-accent-900">CEPRUNSA</span>?
+      {/* Te preparamos para la UNSA Section */}
+      <section className="section-padding bg-white relative overflow-hidden">
+        <div className="container-custom max-w-5xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-10 md:mb-14">
+            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary-900 tracking-tight leading-tight">
+              Te preparamos para la
+              <span className="block text-5xl sm:text-6xl md:text-7xl font-black tracking-normal mt-2 sm:mt-3">
+                <span className="text-[#595959]">UNS</span>
+                <span className="text-[#7A1A2B]">A</span>
+              </span>
             </h2>
-            <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
-              Una modalidad de ingreso diseñada para maximizar tus posibilidades
-              de éxito con preparación integral y especializada.
-            </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="feature-card group relative block rounded-2xl cursor-default"
-              >
-                <div className="bg-white p-10 rounded-2xl shadow-soft hover:shadow-large transition-all duration-500 border border-gray-100 hover:border-accent-200 text-center h-full hover:-translate-y-2">
-                  <div className="relative mb-8">
-                    <div className="bg-gradient-to-br from-primary-500 to-primary-700 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 group-hover:rotate-3 transition-all duration-500 shadow-lg">
-                      <feature.icon className="text-white" size={36} />
-                    </div>
-                  </div>
-                  <h3 className="font-heading text-2xl font-semibold text-primary-700 mb-6 group-hover:text-accent-700 transition-colors">
-                    {feature.title}
-                  </h3>
-                  <p className="text-secondary-600 leading-relaxed text-lg">
-                    {feature.description}
-                  </p>
-                </div>
+
+          {/* Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
+            {/* Card 1: ¿Estás en quinto de secundaria? */}
+            <Link
+              to="/procesos"
+              className="group block rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 bg-white"
+            >
+              <div className="relative h-72 sm:h-80 md:h-96 w-full overflow-hidden bg-gray-100">
+                <img
+                  src={getImageUrl("/ceprunsa_ciclo_quintos.png")}
+                  alt="¿Estás en quinto de secundaria?"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
               </div>
-            ))}
+              <div className="bg-gradient-to-r from-primary-700 to-primary-900 p-6 sm:p-8 text-center min-h-[120px] flex items-center justify-center">
+                <h3 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                  ¿Estás en quinto<br />de secundaria?
+                </h3>
+              </div>
+            </Link>
+
+            {/* Card 2: ¿Terminaste el colegio? */}
+            <Link
+              to="/procesos"
+              className="group block rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 bg-white"
+            >
+              <div className="relative h-72 sm:h-80 md:h-96 w-full overflow-hidden bg-gray-100">
+                <img
+                  src={getImageUrl("/ceprunsa-estudiantes-demo.jpg")}
+                  alt="¿Terminaste el colegio?"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                />
+              </div>
+              <div className="bg-gradient-to-r from-accent-800 to-accent-950 p-6 sm:p-8 text-center min-h-[120px] flex items-center justify-center">
+                <h3 className="font-heading text-2xl sm:text-3xl md:text-4xl font-extrabold text-white leading-tight">
+                  ¿Terminaste el<br />colegio?
+                </h3>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
+
+
+
 
       {/* Stats Section */}
       <section
