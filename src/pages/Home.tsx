@@ -625,7 +625,7 @@ const Home: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 max-w-4xl mx-auto">
             {/* Card 1: ¿Estás en quinto de secundaria? */}
             <Link
-              to="/procesos"
+              to="/procesos?perfil=5to"
               className="group block rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 bg-white"
             >
               <div className="relative h-72 sm:h-80 md:h-96 w-full overflow-hidden bg-gray-100">
@@ -644,7 +644,7 @@ const Home: React.FC = () => {
 
             {/* Card 2: ¿Terminaste el colegio? */}
             <Link
-              to="/procesos"
+              to="/procesos?perfil=egresados"
               className="group block rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 border border-gray-100 bg-white"
             >
               <div className="relative h-72 sm:h-80 md:h-96 w-full overflow-hidden bg-gray-100">

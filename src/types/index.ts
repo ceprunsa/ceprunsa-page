@@ -1,17 +1,46 @@
 import type { LucideIcon } from "lucide-react";
 
+export interface ProcessTimelineItem {
+  event: string;
+  date: string;
+  detail?: string;
+}
+
 export interface Processes {
+  id: string;
   title: string;
+  shortTitle: string;
+  badge: string;
   duration: string;
   schedule: string;
   description: string;
+  targetAudience: string;
   courses: string[];
   benefits: string[];
   eligibility: string[];
   additionalEligibility?: string[];
-  price: string;
-  installments: string;
   recommended: boolean;
+  
+  // Detailed view data (4 tabs only: general, beneficios, cronograma, preparacion)
+  details: {
+    inversion: string;
+    ultimoDiaPago: string;
+    modalidad: string;
+    inicioClases: string;
+    finClases: string;
+    horarioClases: {
+      dias: string;
+      turnos: string[];
+    };
+    
+    presentacion: {
+      dirigidoA: string;
+      enQueConsiste: string;
+      resumen: string;
+    };
+    
+    cronograma: ProcessTimelineItem[];
+  };
 }
 
 export interface ContactInfo {
