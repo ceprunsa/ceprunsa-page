@@ -42,7 +42,7 @@ const carouselItems: CarouselItem[] = [
     type: "image",
     title: "Estudiantes CEPRUNSA",
     description:
-      "Preparándose para el examen de ingreso con metodología especializada",
+      "Preparándose para el examen de ingreso a la UNSA",
     image: "/home_image.jpeg",
   },
   {
