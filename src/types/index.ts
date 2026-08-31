@@ -15,6 +15,7 @@ export interface Processes {
   schedule: string;
   description: string;
   targetAudience: string;
+  image?: string;
   courses: string[];
   benefits: string[];
   eligibility: string[];

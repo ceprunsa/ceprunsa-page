@@ -167,31 +167,36 @@ const Processes: React.FC = () => {
 
         <div className="container-custom relative z-10">
           {selectedProcess ? (
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-              <div>
-                <button
-                  onClick={handleBackToCatalog}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-sm transition-all duration-200 border border-white/15 backdrop-blur-sm mb-4 group"
-                >
-                  <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
-                  Volver al catálogo de procesos
-                </button>
-                <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white">
-                  {selectedProcess.title}
-                </h1>
-                <p className="text-primary-100 mt-2 text-base sm:text-lg max-w-2xl">
-                  {selectedProcess.description}
-                </p>
-              </div>
-              <div className="flex items-center gap-3">
-                <span className="px-4 py-1.5 rounded-full bg-yellow-400 text-yellow-950 font-bold text-xs uppercase tracking-wider shadow-md">
-                  {selectedProcess.badge}
-                </span>
-                {selectedProcess.recommended && (
-                  <span className="px-3 py-1.5 rounded-full bg-accent-600 text-white font-semibold text-xs flex items-center gap-1.5 shadow-md animate-pulse">
-                    <Star size={14} className="fill-current" /> Próximo a Iniciar
+            <div>
+              <button
+                onClick={handleBackToCatalog}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white font-medium text-sm transition-all duration-200 border border-white/15 backdrop-blur-sm mb-6 group"
+              >
+                <ArrowLeft size={16} className="group-hover:-translate-x-1 transition-transform" />
+                Volver al catálogo de procesos
+              </button>
+
+              {/* Individual Process Image Header Banner */}
+              <div className="relative w-full h-64 sm:h-80 md:h-96 rounded-3xl overflow-hidden shadow-2xl border border-white/20 group">
+                <img
+                  src={getImageUrl(selectedProcess.image || "/ceprunsa_ciclo_quintos.png")}
+                  alt={selectedProcess.title}
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).src = getImageUrl("/ceprunsa_ciclo_quintos.png");
+                  }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary-950/80 via-primary-950/20 to-transparent" />
+                <div className="absolute bottom-6 left-6 right-6 flex items-center justify-between z-10">
+                  <span className="px-4 py-2 rounded-full bg-yellow-400 text-yellow-950 font-extrabold text-sm sm:text-base uppercase tracking-wider shadow-lg">
+                    {selectedProcess.title}
                   </span>
-                )}
+                  {selectedProcess.recommended && (
+                    <span className="px-4 py-2 rounded-full bg-accent-600 text-white font-bold text-xs sm:text-sm flex items-center gap-1.5 shadow-lg animate-pulse">
+                      <Star size={16} className="fill-current text-yellow-300" /> Próximo a Iniciar
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
           ) : (
@@ -422,6 +427,17 @@ const Processes: React.FC = () => {
 
               {/* LEFT SIDEBAR NAVIGATION MENU (Smooth scroll to section on click) */}
               <div className="lg:col-span-4 space-y-6 lg:sticky lg:top-24">
+                {/* CTA Button: Inscríbete aquí */}
+                <a
+                  href="https://sisadmision.unsa.edu.pe/pregrado/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-gradient-to-r from-accent-700 via-accent-800 to-accent-900 hover:from-accent-600 hover:to-accent-800 text-white font-extrabold text-lg shadow-xl hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] border border-accent-600 group"
+                >
+                  <span>Inscríbete aquí</span>
+                  <ChevronRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+
                 {/* Tabs Navigation Card */}
                 <div className="bg-white rounded-2xl shadow-soft border border-slate-200 overflow-hidden">
                   <div className="p-4 bg-slate-100/70 border-b border-slate-200 text-xs font-bold uppercase tracking-wider text-slate-500">
