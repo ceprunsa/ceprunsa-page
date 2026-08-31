@@ -259,12 +259,14 @@ const Processes: React.FC = () => {
                   key={process.id}
                   className="catalog-card group bg-white rounded-3xl overflow-hidden shadow-medium hover:shadow-large border border-slate-200/80 transition-all duration-300 flex flex-col justify-between"
                 >
-                  {/* Card Header Visual Banner with CEPRUNSA palette */}
+                  {/* Card Header Visual Banner with Process Image & CEPRUNSA palette */}
                   <div className="relative h-64 sm:h-72 bg-gradient-to-br from-primary-900 via-primary-800 to-accent-800 p-6 sm:p-8 flex flex-col justify-between overflow-hidden">
-                    {/* Decorative Background Elements */}
-                    <div className="absolute -right-8 -top-8 w-48 h-48 rounded-full bg-yellow-400/20 blur-xl pointer-events-none" />
-                    <div className="absolute right-4 bottom-0 w-44 h-44 rounded-full bg-accent-500/20 blur-2xl pointer-events-none" />
-                    <div className="absolute -left-10 bottom-0 w-36 h-36 rounded-full bg-primary-600/30 blur-lg pointer-events-none" />
+                    <img
+                      src={getImageUrl(process.image || "/ceprunsa_ciclo_quintos.png")}
+                      alt={process.title}
+                      className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-primary-950/90 via-primary-900/60 to-primary-900/40" />
 
                     {/* Top Row: Recommended Badge if applicable */}
                     <div className="relative z-10 flex items-start justify-end">
@@ -277,13 +279,13 @@ const Processes: React.FC = () => {
 
                     {/* Middle Title Area */}
                     <div className="relative z-10 my-auto pt-2">
-                      <span className="text-yellow-400 font-heading font-extrabold text-sm sm:text-base tracking-widest uppercase block mb-1">
+                      <span className="text-yellow-400 font-heading font-extrabold text-sm sm:text-base tracking-widest uppercase block mb-1 drop-shadow-sm">
                         CEPRE / CEPRUNSA
                       </span>
-                      <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-white leading-none drop-shadow-sm">
+                      <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-white leading-none drop-shadow-md">
                         {process.shortTitle}
                       </h2>
-                      <p className="text-primary-100 text-sm font-medium mt-2 italic">
+                      <p className="text-primary-100 text-sm font-medium mt-2 italic drop-shadow-sm">
                         {process.schedule}
                       </p>
                     </div>
@@ -293,7 +295,7 @@ const Processes: React.FC = () => {
                       <span className="px-4 py-1.5 rounded-full bg-accent-700 text-white font-bold text-xs uppercase tracking-wider shadow-md border border-accent-500">
                         {process.badge}
                       </span>
-                      <span className="text-xs text-yellow-300 font-semibold uppercase tracking-wide">
+                      <span className="text-xs text-yellow-300 font-semibold uppercase tracking-wide drop-shadow-sm">
                         MODALIDAD VIRTUAL
                       </span>
                     </div>

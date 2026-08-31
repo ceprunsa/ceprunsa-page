@@ -15,7 +15,7 @@ export const processes: Processes[] = [
     shortTitle: "I Fase",
     badge: "MARZO - JULIO",
     targetAudience: "5° de Secundaria y Secundaria Completa",
-    image: "/ceprunsa-estudiantes-demo.jpg",
+    image: "/ceprunsa_i_fase.jpg",
     duration: "10 semanas",
     schedule: "Primera oportunidad anual",
     description:
@@ -165,7 +165,7 @@ export const processes: Processes[] = [
     shortTitle: "II Fase",
     badge: "OCTUBRE - ENERO",
     targetAudience: "5° de Secundaria y Secundaria Completa",
-    image: "/home_image.jpeg",
+    image: "/ceprunsa_ii_fase.jpg",
     duration: "10 semanas",
     schedule: "Segunda oportunidad anual",
     description:
@@ -240,7 +240,7 @@ export const processes: Processes[] = [
     shortTitle: "Extraordinario",
     badge: "ENERO - FEBRERO",
     targetAudience: "Secundaria Completa",
-    image: "/ceprunsa_local.jpeg",
+    image: "/proceso_extraordinario.jpg",
     duration: "3 semanas",
     schedule: "Modalidad Intensiva",
     description:
