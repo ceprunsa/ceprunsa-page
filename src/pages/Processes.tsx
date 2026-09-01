@@ -280,7 +280,7 @@ const Processes: React.FC = () => {
                     {/* Middle Title Area */}
                     <div className="relative z-10 my-auto pt-2">
                       <span className="text-yellow-400 font-heading font-extrabold text-sm sm:text-base tracking-widest uppercase block mb-1 drop-shadow-sm">
-                        CEPRE / CEPRUNSA
+                        CEPRUNSA
                       </span>
                       <h2 className="font-heading text-3xl sm:text-4xl font-extrabold text-white leading-none drop-shadow-md">
                         {process.shortTitle}

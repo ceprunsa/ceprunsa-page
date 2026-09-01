@@ -5,7 +5,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Award, Target, Users, ExternalLink } from "lucide-react";
-import { achievements, teamMembers, methodologyItems } from "../data";
+import { achievements, teamMembers } from "../data";
 import ValuesCarousel from "../components/ValuesCarousel";
 import { useConfig } from "../context/ConfigContext";
 
@@ -109,7 +109,7 @@ const About: React.FC = () => {
               <div className="space-y-6">
                 <p className="text-secondary-600 leading-relaxed text-lg">
                   CEPRUNSA fue fundado en el año{" "}
-                  <strong className="text-accent-700">2000</strong> con el
+                  <strong className="text-accent-700">1999</strong> con el
                   objetivo de brindar una preparación de calidad a los
                   estudiantes que aspiran a ingresar a la Universidad Nacional
                   de San Agustín de Arequipa.
@@ -151,7 +151,7 @@ const About: React.FC = () => {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent pointer-events-none" />
                   <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg shadow-lg">
                     <div className="text-sm font-bold text-accent-600">
-                      2000
+                      1999
                     </div>
                     <div className="text-xs text-gray-600">Fundación</div>
                   </div>
@@ -286,55 +286,6 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Methodology Section */}
-      <section className="section-padding bg-white">
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
-              Nuestra <span className="text-accent-900">Metodología</span>
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Un sistema integral diseñado específicamente para el éxito en el
-              examen CEPRUNSA.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {methodologyItems.map((item, index) => (
-              <div
-                key={index}
-                className={`bg-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 ${item.borderColor}`}
-              >
-                <div
-                  className={`${item.bgColor} w-16 h-16 rounded-xl flex items-center justify-center mb-6`}
-                >
-                  <item.icon className={item.iconColor} size={28} />
-                </div>
-                <h3 className="font-heading text-xl font-bold text-primary-700 mb-4">
-                  {item.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {item.description}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <div className="bg-gradient-to-r from-accent-50 to-primary-50 p-8 rounded-2xl border border-accent-200 max-w-3xl mx-auto">
-              <h3 className="font-heading text-2xl font-bold text-primary-700 mb-4 flex items-center justify-center gap-2">
-                <Target className="text-primary-700" size={24} />
-                Ventaja Metodológica
-              </h3>
-              <p className="text-gray-700 leading-relaxed text-lg">
-                Nuestro examen se basa completamente en el avance académico
-                realizado durante las 10 semanas. Esto garantiza que estudies
-                exactamente lo que necesitas para ingresar a la UNSA.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* Team Section */}
       <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
