@@ -5,8 +5,8 @@ import { useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Award, Target, Users, ExternalLink } from "lucide-react";
-import { achievements, teamMembers, methodologyItems } from "../data";
+import { Users, ExternalLink } from "lucide-react";
+import { achievements, teamMembers } from "../data";
 import ValuesCarousel from "../components/ValuesCarousel";
 import { useConfig } from "../context/ConfigContext";
 

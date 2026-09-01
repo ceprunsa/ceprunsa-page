@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Target, Brain, CheckCircle, Users, Lightbulb, TrendingUp } from "lucide-react";
+import { ArrowLeft, Target } from "lucide-react";
 import { methodologyItems } from "../data";
 
 const Metodologia: React.FC = () => {
