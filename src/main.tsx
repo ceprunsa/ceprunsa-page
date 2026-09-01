@@ -6,6 +6,9 @@ import { ConfigProvider } from "./context/ConfigContext";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import About from "./pages/About";
+import MisionVision from "./pages/MisionVision";
+import Iso9001 from "./pages/Iso9001";
+import Metodologia from "./pages/Metodologia";
 import Processes from "./pages/Processes";
 import Contact from "./pages/Contact";
 import Carreras from "./pages/Carreras";
@@ -28,6 +31,18 @@ const router = createBrowserRouter([
       {
         path: "nosotros",
         element: <About />,
+      },
+      {
+        path: "nosotros/mision-vision",
+        element: <MisionVision />,
+      },
+      {
+        path: "nosotros/iso-9001",
+        element: <Iso9001 />,
+      },
+      {
+        path: "nosotros/metodologia",
+        element: <Metodologia />,
       },
       {
         path: "procesos",

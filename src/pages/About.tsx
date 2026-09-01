@@ -2,10 +2,11 @@
 
 import type React from "react";
 import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Award, Target, Users, ExternalLink } from "lucide-react";
-import { achievements, teamMembers } from "../data";
+import { achievements, teamMembers, methodologyItems } from "../data";
 import ValuesCarousel from "../components/ValuesCarousel";
 import { useConfig } from "../context/ConfigContext";
 
@@ -171,57 +172,81 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      {/* Mission & Vision */}
+      {/* 3 Options Section */}
       <section className="section-padding bg-white relative">
-        <div className="absolute inset-0 bg-pattern opacity-5"></div>
-        <div className="container-custom relative">
+        <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
-              Misión y <span className="text-accent-900">Visión</span>
+              Conoce más sobre <span className="text-accent-900">CEPRUNSA</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Los pilares fundamentales que guían nuestro compromiso educativo y
-              definen nuestro rumbo institucional.
+              Explora los aspectos clave que definen nuestra excelencia e identidad institucional.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="group">
-              <div className="bg-white p-10 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 h-full">
-                <div className="bg-gradient-to-br from-accent-100 to-accent-200 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
-                  <Target className="text-accent-600" size={36} />
-                </div>
-                <h3 className="font-heading text-2xl font-bold text-primary-700 mb-6">
-                  Nuestra Misión
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            {/* Card 1: Misión y Visión */}
+            <Link
+              to="/nosotros/mision-vision"
+              className="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 block h-72 sm:h-80 lg:h-96 border border-slate-100"
+            >
+              <img
+                src={getImageUrl("/ceprunsa-estudiantes-demo.jpg")}
+                alt="Nuestra Misión y Visión"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent opacity-90 group-hover:opacity-80 transition-opacity" />
+              <div className="absolute bottom-6 left-6 right-6 flex items-end gap-3 z-10">
+                <span className="text-yellow-400 font-extrabold text-3xl sm:text-4xl leading-none drop-shadow-md select-none group-hover:scale-110 transition-transform">
+                  +
+                </span>
+                <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-black text-white uppercase tracking-wider leading-tight drop-shadow-md group-hover:text-yellow-300 transition-colors">
+                  NUESTRA MISIÓN Y VISIÓN
                 </h3>
-                <p className="text-gray-600 leading-relaxed text-lg">
-                  Brindar una preparación preuniversitaria que prepare a los
-                  postulantes para el examen de admisión, también promueva la
-                  adquisición de conocimientos y el desarrollo de competencias,
-                  capacidades y aptitudes necesarias para tener éxito en los
-                  estudios universitarios, incluyendo orientación vocacional y
-                  apoyo emocional.
-                </p>
               </div>
-            </div>
-            <div className="group">
-              <div className="bg-white p-10 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-primary-200 h-full">
-                <div className="bg-gradient-to-br from-primary-100 to-primary-200 w-20 h-20 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
-                  <Award className="text-primary-600" size={36} />
-                </div>
-                <h3 className="font-heading text-2xl font-bold text-primary-700 mb-6">
-                  Nuestra Visión
+            </Link>
+
+            {/* Card 2: Certificación ISO 9001:2015 */}
+            <Link
+              to="/nosotros/iso-9001"
+              className="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 block h-72 sm:h-80 lg:h-96 border border-slate-100"
+            >
+              <img
+                src={getImageUrl("/ceprunsa_local.jpeg")}
+                alt="Certificación ISO 9001:2015"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent opacity-90 group-hover:opacity-80 transition-opacity" />
+              <div className="absolute bottom-6 left-6 right-6 flex items-end gap-3 z-10">
+                <span className="text-yellow-400 font-extrabold text-3xl sm:text-4xl leading-none drop-shadow-md select-none group-hover:scale-110 transition-transform">
+                  +
+                </span>
+                <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-black text-white uppercase tracking-wider leading-tight drop-shadow-md group-hover:text-yellow-300 transition-colors">
+                  CERTIFICACIÓN ISO 9001:2015
                 </h3>
-                <p className="text-gray-600 leading-relaxed text-lg">
-                  Nos proyectamos como un centro líder en la preparación
-                  preuniversitaria a nivel regional, reconocidos por nuestra
-                  excelencia académica y compromiso con el desarrollo personal
-                  de los estudiantes. Buscamos crear un ambiente de apoyo y guía
-                  que permita a cada estudiante alcanzar su máximo potencial y
-                  tomar decisiones informadas sobre su futuro académico y
-                  profesional.
-                </p>
               </div>
-            </div>
+            </Link>
+
+            {/* Card 3: Nuestra Metodología */}
+            <Link
+              to="/nosotros/metodologia"
+              className="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 block h-72 sm:h-80 lg:h-96 border border-slate-100"
+            >
+              <img
+                src={getImageUrl("/acceso-clases-header.png")}
+                alt="Nuestra Metodología"
+                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/40 to-transparent opacity-90 group-hover:opacity-80 transition-opacity" />
+              <div className="absolute bottom-6 left-6 right-6 flex items-end gap-3 z-10">
+                <span className="text-yellow-400 font-extrabold text-3xl sm:text-4xl leading-none drop-shadow-md select-none group-hover:scale-110 transition-transform">
+                  +
+                </span>
+                <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-black text-white uppercase tracking-wider leading-tight drop-shadow-md group-hover:text-yellow-300 transition-colors">
+                  NUESTRA METODOLOGÍA
+                </h3>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
@@ -290,9 +315,9 @@ const About: React.FC = () => {
       {/* Team Section */}
       <section className="section-padding bg-gradient-to-b from-gray-50 to-white">
         <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
-              Nuestro <span className="text-accent-900">Equipo</span>
+          <div className="text-center mb-14">
+            <h2 className="font-heading text-3xl md:text-4xl font-extrabold text-primary-700 mb-4">
+              Equipo de <span className="text-accent-900">Trabajo</span>
             </h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
               Profesionales altamente calificados comprometidos con la
@@ -300,11 +325,11 @@ const About: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 lg:gap-12 max-w-6xl mx-auto items-start">
             {teamMembers.map((member, index) => (
               <div
                 key={index}
-                className="bg-gradient-to-b from-gray-50 to-white p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-gray-100 hover:border-accent-200 group flex flex-col h-full"
+                className="group flex flex-col items-center text-center p-4 transition-all duration-300"
               >
                 {/* Profile Image or Icon */}
                 <div className="relative mb-6">
@@ -312,41 +337,41 @@ const About: React.FC = () => {
                     <img
                       src={getImageUrl(member.image)}
                       alt={member.name}
-                      className="w-24 h-24 rounded-full mx-auto object-cover group-hover:scale-110 transition-transform duration-300"
+                      className="w-48 h-48 sm:w-56 sm:h-56 md:w-60 md:h-60 rounded-full mx-auto object-cover shadow-lg border-4 border-white transition-transform duration-500 group-hover:scale-105"
                     />
                   ) : (
-                    <div className="w-24 h-24 bg-gradient-to-br from-primary-200 to-accent-200 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300">
-                      <Users className="text-primary-600" size={36} />
+                    <div className="w-48 h-48 sm:w-56 sm:h-56 md:w-60 md:h-60 bg-gradient-to-br from-primary-200 to-accent-200 rounded-full flex items-center justify-center mx-auto shadow-lg transition-transform duration-500 group-hover:scale-105">
+                      <Users className="text-primary-600" size={64} />
                     </div>
                   )}
                 </div>
 
-                <div className="text-center mb-4">
-                  <h3 className="font-heading text-lg font-bold text-primary-700 mb-2">
-                    {member.name}
-                  </h3>
-                  <p className="text-accent-600 font-semibold text-sm uppercase tracking-wide mb-4">
-                    {member.role}
-                  </p>
-                </div>
+                {/* Name */}
+                <h3 className="font-heading text-xl sm:text-2xl font-bold text-accent-700 mb-1 leading-tight">
+                  {member.name}
+                </h3>
 
-                <p className="text-gray-600 text-sm leading-relaxed text-justify mb-6 flex-grow">
+                {/* Role */}
+                <p className="text-base sm:text-lg font-bold text-gray-900 mb-2">
+                  {member.role}
+                </p>
+
+                {/* Description */}
+                <p className="text-gray-600 text-sm font-medium leading-relaxed max-w-xs mx-auto mb-4">
                   {member.description}
                 </p>
 
                 {/* CV Link */}
                 {member.cvLink && (
-                  <div className="text-center mt-auto">
-                    <a
-                      href={member.cvLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-300 text-sm font-medium"
-                    >
-                      <span>Ver CV</span>
-                      <ExternalLink size={16} />
-                    </a>
-                  </div>
+                  <a
+                    href={member.cvLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary-50 text-primary-700 hover:bg-primary-100 border border-primary-200 rounded-lg transition-colors duration-300 text-xs font-semibold shadow-xs"
+                  >
+                    <span>Ver CV en CONCYTEC</span>
+                    <ExternalLink size={14} />
+                  </a>
                 )}
               </div>
             ))}

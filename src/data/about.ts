@@ -106,28 +106,28 @@ export const achievements = [
 
 export const teamMembers = [
   {
-    name: "Mg. Arnaldo Humberto Valdivia Loaiza",
-    role: "COORDINADOR ACADÉMICO",
-    description:
-      "Docente especializado en Filosofía, con una maestría en Docencia Universitaria y Gestión Educativa. Actualmente es docente en la Universidad Nacional de San Agustín, con experiencia previa en diversas universidades peruanas desde 2003. En cuanto a su formación académica, es bachiller y licenciado en Filosofía por la Universidad Nacional de San Agustín de Arequipa, además de haber completado un diplomado en Desarrollo de Habilidades Digitales para el Aprendizaje y programas de formación docente en enseñanza e innovación.",
-    image: "/DR-ARNALDO.jpg",
-    cvLink:
-      "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=63640",
-  },
-  {
     name: "Dra. Maria Elena Rojas Zegarra",
-    role: "DIRECTORA",
+    role: "Directora",
     description:
-      "Doctora en Psicología por la Universidad Complutense de Madrid. Actualmente, cursa el Máster en Investigación Psicológica por la Universidad Internacional de La Rioja (UNIR), España. Posee un Diplomado Internacional en el Modelo de Terapia Breve de Resolución de Problemas del Brief Therapy Center de Palo Alto, California, y es experta en Psicoterapia Breve para Niños y Adolescentes por la Universidad San Jorge, España.",
+      "Doctora en Psicología (UCM, España), experta en Psicoterapia Breve y Gestión Educativa.",
     image: "/DRA-MARIA-ELENA-2.jpg",
     cvLink:
       "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=20316",
   },
   {
-    name: "Mg. Jose Miguel Rojas Hualpa",
-    role: "COORDINADOR ADMINISTRATIVO",
+    name: "Mg. Arnaldo Humberto Valdivia Loaiza",
+    role: "Coordinador Académico",
     description:
-      "Posee el grado en Ciencias Biológicas por la Universidad Nacional de San Agustín de Arequipa (2010) y el grado en Ingeniería Ambiental (2018). Es Magíster en Biología Funcional y Molecular por la Universidad Estadual de Campinas (2014). Fue investigador en el Laboratorio de Química de Proteínas de la Universidad Estadual de Campinas (2012 – 2014).",
+      "Mg. en Docencia Universitaria y Gestión Educativa. Licenciado en Filosofía (UNSA).",
+    image: "/DR-ARNALDO.jpg",
+    cvLink:
+      "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=63640",
+  },
+  {
+    name: "Mg. Jose Miguel Rojas Hualpa",
+    role: "Coordinador Administrativo",
+    description:
+      "Mg. en Biología Funcional y Molecular (UNICAMP). Lic. en Ciencias Biológicas e Ing. Ambiental (UNSA).",
     image: "/DR-JOSE.jpg",
     cvLink:
       "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=150092",
