@@ -191,7 +191,7 @@ const About: React.FC = () => {
               className="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 block h-72 sm:h-80 lg:h-96 border border-slate-100"
             >
               <img
-                src={getImageUrl("/ceprunsa-estudiantes-demo.jpg")}
+                src={getImageUrl("/nosotros_opciones.jpg")}
                 alt="Nuestra Misión y Visión"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
