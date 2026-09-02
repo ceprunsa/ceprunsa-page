@@ -11,7 +11,7 @@ const Metodologia: React.FC = () => {
         <div className="absolute inset-0 bg-pattern opacity-10 pointer-events-none" />
         <div className="container-custom relative z-10">
           <Link
-            to="/nosotros"
+            to="/nosotros#conoce-mas"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-semibold mb-6 transition-colors backdrop-blur-sm"
           >
             <ArrowLeft size={16} /> Volver a Nosotros
@@ -77,7 +77,7 @@ const Metodologia: React.FC = () => {
         {/* Back Link Bottom */}
         <div className="text-center">
           <Link
-            to="/nosotros"
+            to="/nosotros#conoce-mas"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-primary-700 hover:bg-primary-800 text-white font-bold transition-all shadow-md"
           >
             <ArrowLeft size={18} /> Volver a Nosotros

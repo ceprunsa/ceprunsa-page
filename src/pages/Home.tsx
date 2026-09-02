@@ -6,7 +6,6 @@ import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  Star,
   Award,
   GraduationCap,
   ChevronLeft,
@@ -14,7 +13,6 @@ import {
   Calendar,
   Clock,
   ArrowRight,
-  ChevronDown,
   CheckCircle,
 } from "lucide-react";
 import { stats, testimonials } from "../data";
@@ -386,64 +384,88 @@ const HeroCarousel: React.FC = () => {
 };
 
 
-// Expandable testimonial card
-const TestimonialCard: React.FC<{
-  testimonial: { name: string; career: string; text: string; rating: number };
-  index: number;
-}> = ({ testimonial }) => {
-  const [expanded, setExpanded] = useState(false);
-  const isLong = testimonial.text.length > 100;
+// Custom Testimonials Section matching reference image
+const TestimonialsSection: React.FC<{
+  testimonialsRef: React.RefObject<HTMLElement | null>;
+}> = ({ testimonialsRef }) => {
+  const { getImageUrl } = useConfig();
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const prevTestimonial = () => {
+    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+  };
+
+  const nextTestimonial = () => {
+    setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+  };
+
+  const current = testimonials[currentIndex];
+
   return (
-    <div className="testimonial-card group h-full">
-      <div
-        className="bg-gradient-to-br from-primary-50 to-accent-50 p-8 rounded-2xl shadow-soft hover:shadow-medium transition-all duration-300 border border-primary-100 hover:border-accent-200 h-full flex flex-col cursor-pointer"
-        onClick={() => isLong && setExpanded((e) => !e)}
-        title={isLong ? (expanded ? "Mostrar menos" : "Leer más") : undefined}
-      >
-        <div className="flex items-center mb-4">
-          {[...Array(testimonial.rating)].map((_, i) => (
-            <Star
-              key={i}
-              className="text-accent-500 fill-current group-hover:text-accent-600 transition-colors"
-              size={20}
-            />
-          ))}
+    <section
+      ref={testimonialsRef}
+      className="py-16 md:py-24 bg-[#F5F7FA] relative overflow-hidden"
+    >
+      <div className="container-custom max-w-6xl mx-auto px-4">
+        {/* Title Header matching example image */}
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B2545] tracking-tight">
+            Conoce los
+          </h2>
+          <span className="block font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#0B2545] tracking-tight mt-1">
+            testimonios
+          </span>
+          <div className="w-20 sm:w-24 h-1.5 bg-[#FF8A00] rounded-full mx-auto mt-4"></div>
         </div>
-        <p
-          className={`text-gray-700 mb-6 italic text-lg leading-relaxed flex-1 transition-all duration-300 ${!expanded && isLong ? "line-clamp-4" : ""}`}
-        >
-          "{testimonial.text}"
-        </p>
-        {isLong && (
+
+        {/* Featured Testimonial Card */}
+        <div className="relative bg-white rounded-3xl shadow-xl border border-gray-100 p-6 sm:p-10 md:p-14 min-h-[420px] flex items-center transition-all duration-500">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center w-full">
+            {/* Image on Left with custom right rounded arch */}
+            <div className="md:col-span-5 flex justify-center">
+              <div
+                className="relative w-full max-w-[320px] sm:max-w-[360px] h-[320px] sm:h-[380px] md:h-[420px] overflow-hidden shadow-xl bg-gray-100 transition-all duration-500 flex-shrink-0"
+                style={{ borderRadius: "0px 160px 160px 0px" }}
+              >
+                <img
+                  src={getImageUrl((current as any).image || "/student_maria.jpg")}
+                  alt={current.name}
+                  className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+            </div>
+
+            {/* Content on Right */}
+            <div className="md:col-span-7 flex flex-col justify-center text-left space-y-4 md:space-y-6 md:pr-6">
+              <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-[#5B50E6] leading-tight">
+                {current.name} -{" "}
+                <span className="text-[#5B50E6] font-semibold">{current.career}</span>
+              </h3>
+
+              <p className="text-gray-700 text-base sm:text-lg md:text-xl leading-relaxed font-normal">
+                "{current.text}"
+              </p>
+            </div>
+          </div>
+
+          {/* Navigation Arrows */}
           <button
-            className="text-accent-700 text-sm font-semibold flex items-center gap-1 mb-4 hover:text-accent-900 transition-colors w-fit"
-            onClick={(e) => { e.stopPropagation(); setExpanded((ex) => !ex); }}
-            aria-label={expanded ? "Mostrar menos" : "Leer más"}
+            onClick={prevTestimonial}
+            className="absolute left-2 sm:-left-5 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-[#0B2545] p-3 sm:p-4 rounded-full shadow-lg border border-gray-200 transition-all duration-300 hover:scale-110 z-20"
+            aria-label="Testimonio anterior"
           >
-            {expanded ? "Mostrar menos" : "Leer más"}
-            <ChevronDown
-              size={16}
-              className={`transition-transform duration-300 ${expanded ? "rotate-180" : ""}`}
-            />
+            <ChevronLeft size={24} />
           </button>
-        )}
-        <div className="flex items-center space-x-4 mt-auto">
-          <div className="bg-gradient-to-br from-primary-600 to-primary-700 w-12 h-12 rounded-full flex items-center justify-center shadow-lg flex-shrink-0">
-            <span className="text-white font-bold text-lg">
-              {testimonial.name.charAt(0)}
-            </span>
-          </div>
-          <div>
-            <div className="font-semibold text-gray-900">
-              {testimonial.name}
-            </div>
-            <div className="text-accent-600 text-sm font-medium">
-              {testimonial.career}
-            </div>
-          </div>
+          <button
+            onClick={nextTestimonial}
+            className="absolute right-2 sm:-right-5 top-1/2 -translate-y-1/2 bg-[#E53935] hover:bg-[#D32F2F] text-white p-3 sm:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20"
+            aria-label="Siguiente testimonio"
+          >
+            <ChevronRight size={24} />
+          </button>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
@@ -696,28 +718,7 @@ const Home: React.FC = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section
-        ref={testimonialsRef}
-        className="section-padding bg-white relative"
-      >
-        <div className="container-custom">
-          <div className="text-center mb-12">
-            <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
-              Estudiantes que ingresaron por{" "}
-              <span className="text-accent-900">CEPRUNSA</span>
-            </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Conoce las experiencias de quienes lograron ingresar a la UNSA a
-              través de la modalidad CEPRUNSA.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <TestimonialCard key={index} testimonial={testimonial} index={index} />
-            ))}
-          </div>
-        </div>
-      </section>
+      <TestimonialsSection testimonialsRef={testimonialsRef} />
 
       {/* CTA Section */}
       <section className="section-padding bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 text-white relative overflow-hidden">

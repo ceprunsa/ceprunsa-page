@@ -29,21 +29,24 @@ export const stats = [
 
 export const testimonials = [
   {
-    name: "María González",
-    career: "Ingeniería de Sistemas",
-    text: "CEPRUNSA me dio las herramientas necesarias para ingresar a la carrera de mis sueños. La metodología es excelente y los profesores muy preparados.",
+    name: "Ana Quispe",
+    career: "Derecho",
+    image: "/student_ana.jpg",
+    text: "La modalidad CEPRUNSA es la mejor opción para ingresar a la UNSA. Te preparan específicamente para tu propio examen de admisión.",
     rating: 5,
   },
   {
     name: "Carlos Mendoza",
     career: "Medicina Humana",
+    image: "/student_carlos.jpg",
     text: "Gracias a la preparación integral de CEPRUNSA logré ingresar a Medicina. El contenido está perfectamente alineado con el examen.",
     rating: 5,
   },
   {
-    name: "Ana Quispe",
-    career: "Derecho",
-    text: "La modalidad CEPRUNSA es la mejor opción para ingresar a la UNSA. Te preparan específicamente para tu propio examen de admisión.",
+    name: "María González",
+    career: "Ingeniería de Sistemas",
+    image: "/student_maria.jpg",
+    text: "CEPRUNSA me dio las herramientas necesarias para ingresar a la carrera de mis sueños. La metodología es excelente y los profesores muy preparados.",
     rating: 5,
   },
 ];

@@ -2,7 +2,7 @@
 
 import type React from "react";
 import { useEffect, useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Users, ExternalLink } from "lucide-react";
@@ -14,9 +14,21 @@ gsap.registerPlugin(ScrollTrigger);
 
 const About: React.FC = () => {
   const { getImageUrl } = useConfig();
+  const location = useLocation();
   const aboutRef = useRef<HTMLDivElement>(null);
   const valuesRef = useRef<HTMLDivElement>(null);
   const historyRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (location.hash === "#conoce-mas" || window.location.hash === "#conoce-mas") {
+      const el = document.getElementById("conoce-mas");
+      if (el) {
+        setTimeout(() => {
+          el.scrollIntoView({ behavior: "smooth" });
+        }, 150);
+      }
+    }
+  }, [location]);
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -173,7 +185,7 @@ const About: React.FC = () => {
       </section>
 
       {/* 3 Options Section */}
-      <section className="section-padding bg-white relative">
+      <section id="conoce-mas" className="section-padding bg-white relative">
         <div className="container-custom">
           <div className="text-center mb-12">
             <h2 className="font-heading text-3xl md:text-4xl font-bold text-primary-700 mb-4">
@@ -286,19 +298,18 @@ const About: React.FC = () => {
             <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6 text-white">
               Nuestros Logros
             </h2>
-            <p className="text-xl text-primary-100 max-w-2xl mx-auto">
-              Números que respaldan nuestra trayectoria y compromiso con la
-              modalidad CEPRUNSA
+            <p className="text-xl text-primary-100 max-w-3xl mx-auto">
+              La modalidad de ingreso más efectiva para acceder a la Universidad Nacional de San Agustín
             </p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {achievements.map((achievement, index) => (
-              <div key={index} className="text-center group">
-                <div className="bg-white rounded-2xl p-8 hover:scale-105 transition-all duration-300 border border-gray-100 shadow-md">
-                  <div className="bg-accent-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div key={index} className="text-center group h-full">
+                <div className="bg-white rounded-2xl p-8 hover:scale-105 transition-all duration-300 border border-gray-100 shadow-md h-full flex flex-col justify-center">
+                  <div className="bg-accent-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 flex-shrink-0">
                     <achievement.icon className="text-accent-700" size={28} />
                   </div>
-                  <div className="text-4xl md:text-5xl font-bold text-accent-700 mb-3">
+                  <div className="text-4xl md:text-5xl font-bold text-accent-700 mb-3 tabular-nums">
                     {achievement.number}
                   </div>
                   <div className="text-primary-700 font-semibold text-lg">
