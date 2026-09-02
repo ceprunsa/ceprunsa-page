@@ -98,9 +98,9 @@ export const values = [
 ];
 
 export const achievements = [
-  { icon: Users, number: "20000+", label: "Postulantes preparados anualmente" },
-  { icon: Award, number: "27", label: "Años de Experiencia" },
-  { icon: Trophy, number: "2000+", label: "Vacantes ofertadas para la UNSA" },
+  { icon: Users, number: "+20000", label: "Postulantes preparados anualmente" },
+  { icon: Award, number: "+27", label: "Años de Experiencia" },
+  { icon: Trophy, number: "+2000", label: "Vacantes ofertadas para la UNSA" },
 ];
 
 export const teamMembers = [

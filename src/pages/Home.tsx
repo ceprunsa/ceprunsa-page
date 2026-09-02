@@ -6,14 +6,12 @@ import { Link } from "react-router-dom";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import {
-  Award,
   GraduationCap,
   ChevronLeft,
   ChevronRight,
   Calendar,
   Clock,
   ArrowRight,
-  CheckCircle,
 } from "lucide-react";
 import { stats, testimonials } from "../data";
 import { useConfig } from "../context/ConfigContext";
@@ -82,13 +80,14 @@ const AnimatedStat: React.FC<{ stat: { number: string; label: string }; shouldAn
   shouldAnimate,
 }) => {
   const numericPart = parseInt(stat.number.replace(/[^0-9]/g, ""), 10) || 0;
-  const suffix = stat.number.replace(/[0-9]/g, "");
+  const prefix = stat.number.startsWith("+") ? "+" : "";
+  const suffix = stat.number.endsWith("+") ? "+" : "";
   const count = useCountUp(numericPart, 2000, shouldAnimate);
   return (
     <div className="stat-item text-center group h-full">
       <div className="bg-white rounded-2xl p-8 group-hover:scale-105 transition-all duration-300 border border-gray-100 shadow-md cursor-default h-full flex flex-col justify-center">
         <div className="text-4xl md:text-5xl font-bold text-accent-700 mb-3 transition-colors tabular-nums">
-          {shouldAnimate ? `${count}${suffix}` : stat.number}
+          {shouldAnimate ? `${prefix}${count}${suffix}` : stat.number}
         </div>
         <div className="text-primary-700 font-semibold text-lg">{stat.label}</div>
       </div>
@@ -477,27 +476,6 @@ const Home: React.FC = () => {
   const [statsVisible, setStatsVisible] = useState(false);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    // Hero animations
-    const tl = gsap.timeline();
-    tl.fromTo(
-      ".hero-title",
-      { opacity: 0, y: 50 },
-      { opacity: 1, y: 0, duration: 1, ease: "power2.out" },
-    )
-      .fromTo(
-        ".hero-subtitle",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-        "-=0.5",
-      )
-      .fromTo(
-        ".hero-buttons",
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: "power2.out" },
-        "-=0.3",
-      );
-
     // Quick links animation
     gsap.fromTo(
       ".quick-link-card",
@@ -553,7 +531,6 @@ const Home: React.FC = () => {
     );
 
     return () => {
-      tl.kill();
       ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
     };
   }, []);
@@ -563,69 +540,11 @@ const Home: React.FC = () => {
       {/* Hero Section */}
       <section
         ref={heroRef}
-        className="relative bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden flex flex-col"
+        className="relative bg-gray-900 overflow-hidden flex flex-col"
       >
-        {/* Background Pattern */}
-        <div className="absolute inset-0 bg-pattern opacity-5 pointer-events-none"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-accent-100 to-transparent rounded-full blur-3xl opacity-30 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-primary-100 to-transparent rounded-full blur-3xl opacity-30 pointer-events-none"></div>
-
         {/* Full Width Carousel */}
-        <div className="hero-carousel w-full relative z-10 shadow-2xl order-1">
+        <div className="hero-carousel w-full relative z-10 shadow-2xl">
           <HeroCarousel />
-        </div>
-
-        <div className="container-custom relative pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20 z-10 text-center order-2">
-          <div className="max-w-4xl mx-auto space-y-6 lg:space-y-8">
-            <div className="inline-flex items-center bg-white/80 backdrop-blur-sm px-4 py-2 lg:px-6 lg:py-3 rounded-full shadow-soft border border-primary-200 hover:shadow-medium hover:border-primary-300 transition-all duration-300 mx-auto cursor-default">
-              <Award className="text-accent-600 mr-2 lg:mr-3" size={18} />
-              <span className="text-xs lg:text-sm font-semibold text-gray-700">
-                Modalidad Oficial de Ingreso UNSA
-              </span>
-            </div>
-            <h1 className="hero-title font-heading text-4xl sm:text-5xl lg:text-6xl font-bold text-primary-700 leading-tight">
-              Ingresa a la{" "}
-              <span className="text-accent-900 relative">UNSA</span> por{" "}
-              <span className="text-accent-900 relative">CEPRUNSA</span>
-            </h1>
-            <p className="hero-subtitle text-base sm:text-lg lg:text-xl text-secondary-600 leading-relaxed max-w-3xl mx-auto">
-              Modalidad oficial de ingreso directo con preparación integral en
-              10 semanas, 15 cursos especializados y tu propio examen de
-              admisión.
-            </p>
-
-            {/* Dual CTA Buttons */}
-            <div className="hero-buttons flex flex-col sm:flex-row justify-center gap-4 mt-6">
-
-              <Link
-                to="/contacto"
-                className="btn-secondary text-sm sm:text-base group inline-flex items-center justify-center"
-              >
-                Inscríbete Ahora
-                <ArrowRight
-                  className="ml-2 group-hover:translate-x-1 transition-transform"
-                  size={20}
-                />
-              </Link>
-            </div>
-
-            {/* Trust indicators */}
-            <div className="flex flex-wrap justify-center gap-4 mt-2">
-              {[
-                "85% de ingresantes",
-                "24 años de experiencia",
-                "500+ estudiantes/año",
-              ].map((item) => (
-                <div
-                  key={item}
-                  className="flex items-center gap-1.5 text-sm text-secondary-600 font-medium"
-                >
-                  <CheckCircle size={15} className="text-accent-600 flex-shrink-0" />
-                  {item}
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 

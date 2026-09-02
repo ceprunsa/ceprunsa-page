@@ -22,9 +22,9 @@ export const features = [
 ];
 
 export const stats = [
-  { number: "20000+", label: "Postulantes preparados anualmente" },
-  { number: "27", label: "Años de Experiencia" },
-  { number: "2000+", label: "Vacantes ofertadas para la UNSA" },
+  { number: "+20000", label: "Postulantes preparados anualmente" },
+  { number: "+27", label: "Años de Experiencia" },
+  { number: "+2000", label: "Vacantes ofertadas para la UNSA" },
 ];
 
 export const testimonials = [
