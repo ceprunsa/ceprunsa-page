@@ -551,14 +551,21 @@ const Home: React.FC = () => {
       {/* Te preparamos para la UNSA Section */}
       <section className="section-padding bg-white relative overflow-hidden">
         <div className="container-custom max-w-5xl mx-auto">
-          {/* Header */}
+          {/* Header matching image */}
           <div className="text-center mb-10 md:mb-14">
-            <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-primary-900 tracking-tight leading-tight">
-              Te preparamos para la
-              <span className="block text-5xl sm:text-6xl md:text-7xl font-black tracking-normal mt-2 sm:mt-3">
-                <span className="text-[#595959]">UNS</span>
-                <span className="text-[#7A1A2B]">A</span>
-              </span>
+            <div className="inline-flex items-center gap-2.5 px-5 py-2 sm:px-6 sm:py-2.5 rounded-full border border-slate-300 bg-white text-slate-700 text-xs sm:text-sm font-semibold mb-6 shadow-xs mx-auto cursor-default transition-shadow hover:shadow-sm">
+              <svg className="w-4 h-4 text-[#6A1B29] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/>
+                <path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12"/>
+              </svg>
+              <span>Modalidad Oficial de Ingreso UNSA</span>
+            </div>
+
+            <h2 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight leading-tight">
+              <span className="text-[#0E2F56]">Ingresa a la </span>
+              <span className="text-[#6A1B29]">UNSA </span>
+              <span className="text-[#0E2F56]">por </span>
+              <span className="text-[#6A1B29]">CEPRUNSA</span>
             </h2>
           </div>
 
