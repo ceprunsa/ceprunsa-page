@@ -201,9 +201,6 @@ const Processes: React.FC = () => {
             </div>
           ) : (
             <div className="text-center max-w-3xl mx-auto">
-              <span className="inline-block px-4 py-1.5 rounded-full bg-white/10 text-yellow-300 font-semibold text-xs uppercase tracking-wider mb-4 border border-white/15 backdrop-blur-sm">
-                Modalidad Oficial Virtual - Ingreso Directo UNSA
-              </span>
               <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
                 Catálogo de Procesos <span className="text-yellow-400">CEPRUNSA</span>
               </h1>
@@ -239,11 +236,10 @@ const Processes: React.FC = () => {
                     <button
                       key={option.id}
                       onClick={() => handleFilterChange(option.id as AudienceFilter)}
-                      className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${
-                        isActive
+                      className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-200 ${isActive
                           ? "bg-primary-900 text-white shadow-md scale-[1.02]"
                           : "bg-slate-100 hover:bg-slate-200/80 text-slate-700 border border-slate-200/60"
-                      }`}
+                        }`}
                     >
                       {option.label}
                     </button>
@@ -381,17 +377,15 @@ const Processes: React.FC = () => {
                         <button
                           key={tab.id}
                           onClick={() => handleNavClick(tab.id as TabType)}
-                          className={`w-full text-left px-5 py-4 flex items-center justify-between transition-all duration-200 ${
-                            isActive
+                          className={`w-full text-left px-5 py-4 flex items-center justify-between transition-all duration-200 ${isActive
                               ? "bg-primary-50 text-primary-950 border-l-4 border-primary-800 pl-4 font-bold shadow-inner"
                               : "text-slate-600 hover:bg-slate-50 hover:text-primary-800"
-                          }`}
+                            }`}
                         >
                           <span className="flex items-center gap-4">
                             <span
-                              className={`font-heading font-black text-2xl sm:text-3xl tracking-tight transition-colors ${
-                                isActive ? "text-accent-700" : "text-slate-300"
-                              }`}
+                              className={`font-heading font-black text-2xl sm:text-3xl tracking-tight transition-colors ${isActive ? "text-accent-700" : "text-slate-300"
+                                }`}
                             >
                               {tab.number}
                             </span>
@@ -405,9 +399,8 @@ const Processes: React.FC = () => {
                           </span>
                           <ChevronRight
                             size={18}
-                            className={`transition-transform ${
-                              isActive ? "text-primary-800 translate-x-1" : "text-slate-300"
-                            }`}
+                            className={`transition-transform ${isActive ? "text-primary-800 translate-x-1" : "text-slate-300"
+                              }`}
                           />
                         </button>
                       );
