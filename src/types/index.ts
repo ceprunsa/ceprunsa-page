@@ -25,6 +25,11 @@ export interface Processes {
   // Detailed view data (4 tabs only: general, beneficios, cronograma, preparacion)
   details: {
     inversion: string;
+    inversionBreakdown?: {
+      colegio: string;
+      monto: string;
+      cuotas: string;
+    }[];
     ultimoDiaPago: string;
     modalidad: string;
     inicioClases: string;

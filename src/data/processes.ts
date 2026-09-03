@@ -1,6 +1,24 @@
 import type { Processes } from "../types";
 import { siteConfig } from "./config";
 
+export const officialInversionBreakdown = [
+  {
+    colegio: "I.E. Nacional",
+    monto: "S/ 841.57",
+    cuotas: "Una cuota de S/ 281.57 y dos cuotas de S/ 280.00",
+  },
+  {
+    colegio: "I.E. Parroquial - Paraestatal",
+    monto: "S/ 986.68",
+    cuotas: "Una cuota de S/ 328.68 y dos cuotas de S/ 329.00",
+  },
+  {
+    colegio: "I.E. Particular",
+    monto: "S/ 1,181.79",
+    cuotas: "Una cuota de S/ 393.79 y dos cuotas de S/ 394.00",
+  },
+];
+
 export const processesOptions: string[] = [
   "CEPRUNSA I Fase",
   "CEPRUNSA Ciclo Quintos",
@@ -45,7 +63,8 @@ export const processes: Processes[] = [
     ],
     recommended: siteConfig.nextProcessToStart === 1,
     details: {
-      inversion: "S/ 1,470.00",
+      inversion: "Según tipo de colegio (I.E. Nacional S/ 841.57 | Parroquial S/ 986.68 | Particular S/ 1,181.79)",
+      inversionBreakdown: officialInversionBreakdown,
       ultimoDiaPago: "17 de abril de 2026",
       modalidad: "Virtual",
       inicioClases: "27 de abril de 2026",
@@ -119,7 +138,8 @@ export const processes: Processes[] = [
     ],
     recommended: siteConfig.nextProcessToStart === 2,
     details: {
-      inversion: "S/ 1,470.00",
+      inversion: "Según tipo de colegio (I.E. Nacional S/ 841.57 | Parroquial S/ 986.68 | Particular S/ 1,181.79)",
+      inversionBreakdown: officialInversionBreakdown,
       ultimoDiaPago: "14 de agosto de 2026",
       modalidad: "Virtual",
       inicioClases: "24 de agosto de 2026",
@@ -193,7 +213,8 @@ export const processes: Processes[] = [
     ],
     recommended: siteConfig.nextProcessToStart === 3,
     details: {
-      inversion: "S/ 1,470.00",
+      inversion: "Según tipo de colegio (I.E. Nacional S/ 841.57 | Parroquial S/ 986.68 | Particular S/ 1,181.79)",
+      inversionBreakdown: officialInversionBreakdown,
       ultimoDiaPago: "06 de noviembre de 2026",
       modalidad: "Virtual",
       inicioClases: "16 de noviembre de 2026",
@@ -266,7 +287,8 @@ export const processes: Processes[] = [
     ],
     recommended: siteConfig.nextProcessToStart === 4,
     details: {
-      inversion: "S/ 1,800.00",
+      inversion: "Según tipo de colegio (I.E. Nacional S/ 841.57 | Parroquial S/ 986.68 | Particular S/ 1,181.79)",
+      inversionBreakdown: officialInversionBreakdown,
       ultimoDiaPago: "27 de enero de 2027",
       modalidad: "Virtual",
       inicioClases: "01 de febrero de 2027",

@@ -476,9 +476,34 @@ const Processes: React.FC = () => {
                   <div className="divide-y divide-slate-100 text-sm">
                     <div className="grid grid-cols-1 sm:grid-cols-3 p-4 hover:bg-slate-50/50 transition-colors">
                       <span className="font-bold text-slate-900 sm:col-span-1">Inversión</span>
-                      <span className="text-slate-700 font-semibold text-primary-900 sm:col-span-2">
-                        {selectedProcess.details.inversion}
-                      </span>
+                      <div className="sm:col-span-2 space-y-3">
+                        {selectedProcess.details.inversionBreakdown ? (
+                          <div className="space-y-2">
+                            {selectedProcess.details.inversionBreakdown.map((item, idx) => (
+                              <div
+                                key={idx}
+                                className="bg-slate-50/90 p-3 rounded-xl border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2"
+                              >
+                                <div>
+                                  <span className="font-bold text-primary-900 block text-sm">
+                                    {item.colegio}
+                                  </span>
+                                  <span className="text-xs text-slate-500 font-medium block mt-0.5">
+                                    {item.cuotas}
+                                  </span>
+                                </div>
+                                <span className="font-extrabold text-accent-700 text-base flex-shrink-0">
+                                  {item.monto}
+                                </span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <span className="text-slate-700 font-semibold text-primary-900">
+                            {selectedProcess.details.inversion}
+                          </span>
+                        )}
+                      </div>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-3 p-4 hover:bg-slate-50/50 transition-colors bg-slate-50/30">
