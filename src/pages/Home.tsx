@@ -12,6 +12,7 @@ import {
   Calendar,
   Clock,
   ArrowRight,
+  BookOpen,
 } from "lucide-react";
 import { stats, testimonials } from "../data";
 import { useConfig } from "../context/ConfigContext";
@@ -403,28 +404,28 @@ const TestimonialsSection: React.FC<{
   return (
     <section
       ref={testimonialsRef}
-      className="py-16 md:py-24 bg-[#F5F7FA] relative overflow-hidden"
+      className="py-12 md:py-16 bg-[#F5F7FA] relative overflow-hidden"
     >
-      <div className="container-custom max-w-6xl mx-auto px-4">
+      <div className="container-custom max-w-5xl mx-auto px-4">
         {/* Title Header matching example image */}
-        <div className="text-center mb-12 md:mb-16">
-          <h2 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-[#0B2545] tracking-tight">
+        <div className="text-center mb-8 md:mb-10">
+          <h2 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-[#0B2545] tracking-tight">
             Conoce los
           </h2>
-          <span className="block font-heading text-4xl sm:text-5xl md:text-6xl font-extrabold text-[#0B2545] tracking-tight mt-1">
+          <span className="block font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold text-[#0B2545] tracking-tight mt-1">
             testimonios
           </span>
-          <div className="w-20 sm:w-24 h-1.5 bg-[#FF8A00] rounded-full mx-auto mt-4"></div>
+          <div className="w-16 sm:w-20 h-1 bg-[#FF8A00] rounded-full mx-auto mt-3"></div>
         </div>
 
         {/* Featured Testimonial Card */}
-        <div className="relative bg-white rounded-3xl shadow-xl border border-gray-100 p-6 sm:p-10 md:p-14 min-h-[420px] flex items-center transition-all duration-500">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-center w-full">
+        <div className="testimonial-card relative bg-white rounded-3xl shadow-xl border border-gray-100 p-5 sm:p-6 md:p-8 min-h-[250px] md:min-h-[270px] flex items-center transition-all duration-500">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-8 items-center w-full">
             {/* Image on Left with custom right rounded arch */}
-            <div className="md:col-span-5 flex justify-center">
+            <div className="md:col-span-4 flex justify-center">
               <div
-                className="relative w-full max-w-[320px] sm:max-w-[360px] h-[320px] sm:h-[380px] md:h-[420px] overflow-hidden shadow-xl bg-gray-100 transition-all duration-500 flex-shrink-0"
-                style={{ borderRadius: "0px 160px 160px 0px" }}
+                className="relative w-full max-w-[220px] sm:max-w-[240px] md:max-w-[260px] h-[200px] sm:h-[230px] md:h-[250px] overflow-hidden shadow-md bg-gray-100 transition-all duration-500 flex-shrink-0"
+                style={{ borderRadius: "0px 125px 125px 0px" }}
               >
                 <img
                   src={getImageUrl((current as any).image || "/student_maria.jpg")}
@@ -435,13 +436,13 @@ const TestimonialsSection: React.FC<{
             </div>
 
             {/* Content on Right */}
-            <div className="md:col-span-7 flex flex-col justify-center text-left space-y-4 md:space-y-6 md:pr-6">
-              <h3 className="font-heading text-xl sm:text-2xl md:text-3xl font-bold text-[#5B50E6] leading-tight">
+            <div className="md:col-span-8 flex flex-col justify-center text-left space-y-3 md:space-y-4 md:pr-4">
+              <h3 className="font-heading text-lg sm:text-xl md:text-2xl font-bold text-[#5B50E6] leading-tight">
                 {current.name} -{" "}
                 <span className="text-[#5B50E6] font-semibold">{current.career}</span>
               </h3>
 
-              <p className="text-gray-700 text-base sm:text-lg md:text-xl leading-relaxed font-normal">
+              <p className="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed font-normal">
                 "{current.text}"
               </p>
             </div>
@@ -450,17 +451,17 @@ const TestimonialsSection: React.FC<{
           {/* Navigation Arrows */}
           <button
             onClick={prevTestimonial}
-            className="absolute left-2 sm:-left-5 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-[#0B2545] p-3 sm:p-4 rounded-full shadow-lg border border-gray-200 transition-all duration-300 hover:scale-110 z-20"
+            className="absolute left-2 sm:-left-5 top-1/2 -translate-y-1/2 bg-white hover:bg-gray-100 text-[#0B2545] p-2.5 sm:p-3 rounded-full shadow-lg border border-gray-200 transition-all duration-300 hover:scale-110 z-20"
             aria-label="Testimonio anterior"
           >
-            <ChevronLeft size={24} />
+            <ChevronLeft size={22} />
           </button>
           <button
             onClick={nextTestimonial}
-            className="absolute right-2 sm:-right-5 top-1/2 -translate-y-1/2 bg-[#E53935] hover:bg-[#D32F2F] text-white p-3 sm:p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20"
+            className="absolute right-2 sm:-right-5 top-1/2 -translate-y-1/2 bg-[#E53935] hover:bg-[#D32F2F] text-white p-2.5 sm:p-3 rounded-full shadow-lg transition-all duration-300 hover:scale-110 z-20"
             aria-label="Siguiente testimonio"
           >
-            <ChevronRight size={24} />
+            <ChevronRight size={22} />
           </button>
         </div>
       </div>
@@ -555,8 +556,8 @@ const Home: React.FC = () => {
           <div className="text-center mb-10 md:mb-14">
             <div className="inline-flex items-center gap-2.5 px-5 py-2 sm:px-6 sm:py-2.5 rounded-full border border-slate-300 bg-white text-slate-700 text-xs sm:text-sm font-semibold mb-6 shadow-xs mx-auto cursor-default transition-shadow hover:shadow-sm">
               <svg className="w-4 h-4 text-[#6A1B29] flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z"/>
-                <path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12"/>
+                <path d="M12 15a6 6 0 1 0 0-12 6 6 0 0 0 0 12Z" />
+                <path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12" />
               </svg>
               <span>Modalidad Oficial de Ingreso UNSA</span>
             </div>
@@ -653,13 +654,23 @@ const Home: React.FC = () => {
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-primary-400/20 to-transparent rounded-full blur-3xl"></div>
         <div className="container-custom text-center relative">
           <h2 className="font-heading text-3xl md:text-4xl font-bold mb-4 text-white">
-            ¿Listo para ingresar a la UNSA por CEPRUNSA?
+            ¿Listo para ingresar a la UNSA?
           </h2>
           <p className="text-xl mb-10 opacity-90 max-w-2xl mx-auto">
             Aprovecha esta modalidad oficial de ingreso directo con preparación
             especializada y tu propio examen.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <Link
+              to="/carreras"
+              className="inline-flex items-center justify-center bg-white/15 hover:bg-white/25 border border-white/30 hover:border-white/50 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 hover:scale-105 backdrop-blur-sm group"
+            >
+              <BookOpen
+                className="mr-2 group-hover:scale-110 transition-transform"
+                size={20}
+              />
+              Conoce nuestras carreras
+            </Link>
             <Link
               to="/contacto"
               className="inline-flex items-center justify-center bg-gradient-to-r from-accent-500 to-accent-600 hover:from-accent-600 hover:to-accent-700 text-white font-semibold py-4 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl group"

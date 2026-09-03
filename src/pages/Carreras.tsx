@@ -106,33 +106,82 @@ const Carreras: React.FC = () => {
 
   return (
     <div>
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-primary-50 via-white to-accent-50 overflow-hidden flex flex-col">
-        {/* Full Width Image */}
-        <div className="w-full relative z-10 shadow-2xl order-1 h-[300px] sm:h-[400px] md:h-[500px] lg:h-[60vh]">
-          <img
-            src="/home_image.jpeg"
-            alt="Carreras UNSA"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
-        </div>
+      {/* Dynamic Header Section matching Processes.tsx */}
+      <section className="relative bg-gradient-to-br from-primary-900 via-primary-800 to-accent-900 text-white pt-10 pb-16 overflow-hidden">
+        <div className="absolute inset-0 bg-pattern opacity-10 pointer-events-none" />
+        <div className="absolute -top-24 -right-24 w-96 h-96 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none" />
 
-        <div className="absolute inset-0 bg-pattern opacity-5 pointer-events-none"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-accent-100 to-transparent rounded-full blur-3xl opacity-30 pointer-events-none"></div>
-        <div className="container-custom relative pt-8 pb-12 sm:pt-12 sm:pb-16 lg:pt-16 lg:pb-20 z-10 text-center order-2">
-          <div className="text-center">
-            <h1 className="font-heading text-4xl md:text-5xl font-bold text-primary-700 mb-6">
-              Descubre tu{" "}
-              <span className="text-accent-900 relative">Vocación</span>
+        <div className="container-custom relative z-10">
+          <div className="text-center max-w-3xl mx-auto">
+            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+              Descubre tu <span className="text-yellow-400">Vocación</span>
             </h1>
-            <p className="text-xl text-secondary-600 max-w-3xl mx-auto leading-relaxed">
-              Explora las diferentes carreras profesionales que la Universidad
-              Nacional de San Agustín tiene para ofrecerte.
+            <p className="text-primary-100 text-base sm:text-lg leading-relaxed">
+              Explora las diferentes carreras profesionales que la Universidad Nacional de San Agustín tiene para ofrecerte.
             </p>
           </div>
         </div>
       </section>
+
+      {/* ConoceT Mobile App Floating Card */}
+      <div className="container-custom relative z-20 -mt-8 sm:-mt-10 max-w-5xl mb-8">
+        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-gray-100 shadow-2xl transition-all duration-300">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6 lg:gap-8">
+            {/* Left: App Icon (Reduced size) */}
+            <div className="flex-shrink-0">
+              <div className="w-28 h-28 sm:w-36 sm:h-36 bg-white rounded-3xl shadow-lg border border-gray-100 p-3 flex items-center justify-center hover:scale-105 transition-transform duration-300">
+                <img
+                  src="/images/conocet-app-logo.png"
+                  alt="ConoceT App Icon"
+                  className="w-full h-full object-contain rounded-xl"
+                />
+              </div>
+            </div>
+
+            {/* Middle: Content */}
+            <div className="space-y-3 max-w-xl text-left flex-1">
+
+
+              <div>
+                <h2 className="text-xl sm:text-2xl font-extrabold text-[#0B2545] tracking-tight mb-2">
+                  ¿Aún no sabes qué carrera elegir?
+                </h2>
+                <p className="text-[#FF8A00] font-semibold text-xs sm:text-sm italic mt-2">
+                  "Descubre tu camino, construye tu futuro"
+                </p>
+              </div>
+
+              <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">
+                Prueba <strong>ConoceT</strong>, la app oficial desarrollada por CEPRUNSA para brindarte orientación vocacional. Evalúa tus aptitudes, preferencias y dimensiones de personalidad para ayudarte a identificar las carreras profesionales que mejor se ajustan a tu perfil.
+              </p>
+            </div>
+
+            {/* Right: Google Play Button */}
+            <div className="flex-shrink-0 pt-2 lg:pt-0">
+              <a
+                href="https://play.google.com/store/apps/details?id=com.ceprunsa.conocet&hl=es"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 bg-[#0A0E1A] hover:bg-black text-white px-5 py-3 rounded-2xl border border-gray-700/70 shadow-xl hover:scale-105 transition-all duration-300 group"
+              >
+                <svg className="w-8 h-8 flex-shrink-0" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <g>
+                    <path d="M19.7,19.2L4.3,35.3c0,0,0,0,0,0c0.5,1.7,2.1,3,4,3c0.8,0,1.5-0.2,2.1-0.6l0,0l17.4-9.9L19.7,19.2z" fill="#EA4335" />
+                    <path d="M35.3,16.4L35.3,16.4l-7.5-4.3l-8.4,7.4l8.5,8.3l7.5-4.2c1.3-0.7,2.2-2.1,2.2-3.6C37.5,18.5,36.6,17.1,35.3,16.4z" fill="#FBBC04" />
+                    <path d="M4.3,4.7C4.2,5,4.2,5.4,4.2,5.8v28.5c0,0.4,0,0.7,0.1,1.1l16-15.7L4.3,4.7z" fill="#4285F4" />
+                    <path d="M19.8,20l8-7.9L10.5,2.3C9.9,1.9,9.1,1.7,8.3,1.7c-1.9,0-3.6,1.3-4,3c0,0,0,0,0,0L19.8,20z" fill="#34A853" />
+                  </g>
+                </svg>
+                <div className="flex flex-col text-left leading-tight">
+                  <span className="text-[9px] sm:text-[10px] font-bold text-gray-300 uppercase tracking-widest">DISPONIBLE EN</span>
+                  <span className="text-base sm:text-lg font-extrabold text-white tracking-tight font-sans">Google Play</span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Buscador y Filtros */}
       <section
@@ -141,6 +190,14 @@ const Carreras: React.FC = () => {
       >
         <div className="absolute inset-0 bg-pattern opacity-5"></div>
         <div className="container-custom relative">
+          {/* Title above filters */}
+          <div className="text-center mb-8">
+            <h2 className="font-heading text-3xl sm:text-4xl font-bold text-primary-700 tracking-tight">
+              Revisa nuestras <span className="text-accent-900">carreras</span>
+            </h2>
+            <div className="w-16 sm:w-20 h-1 bg-accent-600 rounded-full mx-auto mt-3"></div>
+          </div>
+
           {/* Buscador y Filtros */}
           <div className="bg-white p-6 rounded-2xl shadow-soft border border-gray-100 mb-12 max-w-5xl mx-auto">
             <div className="flex flex-col md:flex-row gap-4 items-center">

@@ -126,9 +126,9 @@ const Header: React.FC = () => {
                 to={item.path}
                 end={item.path === "/"}
                 className={({ isActive }) =>
-                  `rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors ${
+                  `rounded-lg px-3.5 py-2 text-sm font-bold transition-all duration-200 ${
                     isActive
-                      ? "bg-primary-800 text-white"
+                      ? "bg-[#7a1a2b] text-white shadow-md shadow-[#7a1a2b]/30"
                       : "text-primary-100 hover:bg-primary-600 hover:text-white"
                   }`
                 }
@@ -141,9 +141,9 @@ const Header: React.FC = () => {
             <div ref={dropdownRef} className="relative" data-header-item>
               <button
                 onClick={() => setIsZonaOpen((o) => !o)}
-                className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-semibold transition-colors ${
+                className={`flex items-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-bold transition-all duration-200 ${
                   isZonaActive
-                    ? "bg-primary-800 text-white"
+                    ? "bg-[#7a1a2b] text-white shadow-md shadow-[#7a1a2b]/30"
                     : "text-primary-100 hover:bg-primary-600 hover:text-white"
                 }`}
                 aria-expanded={isZonaOpen}
@@ -161,13 +161,19 @@ const Header: React.FC = () => {
                 <div className="absolute top-full left-0 mt-2 w-52 bg-white rounded-2xl shadow-large border border-gray-100 overflow-hidden z-50 animate-fade-in">
                   <div className="p-2 space-y-0.5">
                     {zonaSubItems.map((sub) => (
-                      <Link
+                      <NavLink
                         key={sub.path}
                         to={sub.path}
-                        className="block px-4 py-2.5 rounded-xl hover:bg-primary-50 text-sm font-semibold text-gray-800 hover:text-primary-700 transition-colors"
+                        className={({ isActive }) =>
+                          `block px-4 py-2.5 rounded-xl text-sm font-semibold transition-colors ${
+                            isActive
+                              ? "bg-[#7a1a2b] text-white"
+                              : "text-gray-800 hover:bg-primary-50 hover:text-[#7a1a2b]"
+                          }`
+                        }
                       >
                         {sub.name}
-                      </Link>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
@@ -237,7 +243,7 @@ const Header: React.FC = () => {
               end={item.path === "/"}
               className={({ isActive }) =>
                 `block rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
-                  isActive ? "bg-primary-800 text-white" : "text-primary-100 hover:bg-primary-600"
+                  isActive ? "bg-[#7a1a2b] text-white shadow-md" : "text-primary-100 hover:bg-primary-600"
                 }`
               }
             >
@@ -250,7 +256,7 @@ const Header: React.FC = () => {
             <button
               onClick={() => setIsMobileZonaOpen((o) => !o)}
               className={`w-full flex items-center justify-between rounded-xl px-4 py-3 text-sm font-semibold transition-colors ${
-                isZonaActive ? "bg-primary-800 text-white" : "text-primary-100 hover:bg-primary-600"
+                isZonaActive ? "bg-[#7a1a2b] text-white shadow-md" : "text-primary-100 hover:bg-primary-600"
               }`}
             >
               Zona del Postulante
@@ -269,7 +275,7 @@ const Header: React.FC = () => {
                     className={({ isActive }) =>
                       `block rounded-lg px-4 py-2.5 text-xs font-semibold transition-colors ${
                         isActive
-                          ? "bg-primary-900 text-white"
+                          ? "bg-[#7a1a2b] text-white"
                           : "text-primary-200 hover:bg-primary-600 hover:text-white"
                       }`
                     }
