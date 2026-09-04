@@ -1208,7 +1208,11 @@ const Admin: React.FC = () => {
                             >
                               <div className="flex items-center gap-4 min-w-0">
                                 {/* Thumbnail preview with replace dropzone */}
-                                <div className="relative w-20 h-20 shrink-0 bg-slate-100 border border-slate-200 rounded-xl overflow-hidden flex items-center justify-center p-1 group">
+                                <div
+                                  onClick={() => openReplaceModal(item)}
+                                  title="Haz clic para reemplazar la imagen"
+                                  className="relative w-20 h-20 shrink-0 bg-slate-100 border border-slate-200 rounded-xl overflow-hidden flex items-center justify-center p-1 group cursor-pointer"
+                                >
                                   <img
                                     src={currentUrl}
                                     alt={item.name}
@@ -1217,21 +1221,9 @@ const Admin: React.FC = () => {
                                       (e.target as HTMLElement).style.display = "none";
                                     }}
                                   />
-                                  <label
-                                    title="Haz clic para reemplazar la imagen"
-                                    className="absolute inset-0 bg-slate-900/80 backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer"
-                                  >
+                                  <div className="absolute inset-0 bg-slate-900/80 backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition">
                                     <UploadCloud size={22} className="text-white" />
-                                    <input
-                                      type="file"
-                                      accept="image/*"
-                                      onChange={(e) => {
-                                        const file = e.target.files?.[0];
-                                        if (file) handleReplaceFile(item.path, file);
-                                      }}
-                                      className="hidden"
-                                    />
-                                  </label>
+                                  </div>
                                 </div>
 
                                 {/* Text info */}
@@ -1243,7 +1235,7 @@ const Admin: React.FC = () => {
                                     <span className="px-2 py-0.5 rounded-md bg-accent-50 border border-accent-200 text-accent-800 text-[10px] font-semibold">
                                       {item.section}
                                     </span>
-                                    <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider truncate">{item.name}</h3>
+                                    <h3 className="text-[11px] font-semibold text-slate-800 truncate">{item.name}</h3>
                                     {isOverridden ? (
                                       <span className="px-2 py-0.5 rounded-md bg-amber-100 border border-amber-300 text-amber-800 text-[10px] font-bold">
                                         Modificada
@@ -1365,7 +1357,7 @@ const Admin: React.FC = () => {
                                 </div>
 
                                 <div>
-                                  <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">{item.name}</h3>
+                                  <h3 className="text-[11px] font-semibold text-slate-800">{item.name}</h3>
                                   <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">{item.description}</p>
                                 </div>
 
@@ -1384,6 +1376,7 @@ const Admin: React.FC = () => {
 
                               {/* Image Preview & Dropzone */}
                               <div
+                                onClick={() => openReplaceModal(item)}
                                 onDragOver={(e) => {
                                   e.preventDefault();
                                   setDragOverPath(item.path);
@@ -1415,19 +1408,9 @@ const Admin: React.FC = () => {
                                     className={`mb-2 ${isHovered ? "text-emerald-400 animate-bounce" : "text-white"}`}
                                   />
                                   <span className="text-xs font-semibold text-white">
-                                    {isHovered ? "¡Suelta la imagen aquí!" : "Haz clic o arrastra para reemplazar"}
+                                    {isHovered ? "¡Suelta la imagen aquí!" : "Haz clic para reemplazar la imagen"}
                                   </span>
-                                  <span className="text-[10px] text-slate-300 mt-1">Reemplaza {item.path}</span>
-
-                                  <input
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={(e) => {
-                                      const file = e.target.files?.[0];
-                                      if (file) handleReplaceFile(item.path, file);
-                                    }}
-                                    className="absolute inset-0 opacity-0 cursor-pointer"
-                                  />
+                                  <span className="text-[10px] text-slate-300 mt-1">Escoge de public/ o sube un archivo</span>
                                 </div>
                               </div>
 
