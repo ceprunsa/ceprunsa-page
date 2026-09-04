@@ -363,7 +363,6 @@ const Admin: React.FC = () => {
     uploadImage,
     setCustomImageOverride,
     resetImage,
-    resetAllImages,
     getImageUrl,
     imageOverrides,
     fetchPublicImages,
@@ -400,7 +399,7 @@ const Admin: React.FC = () => {
 
   // Presets tab filter state & view mode
   const [presetImages, setPresetImages] = useState<ImageItem[]>(SITE_IMAGES);
-  const [selectedPresetPage, setSelectedPresetPage] = useState<string>("all");
+  const [selectedPresetPage, setSelectedPresetPage] = useState<string>("home");
   const [selectedPresetSection, setSelectedPresetSection] = useState<string>("all");
   const [presetSearch, setPresetSearch] = useState("");
   const [presetViewMode, setPresetViewMode] = useState<"grid" | "list">("grid");
@@ -692,26 +691,26 @@ const Admin: React.FC = () => {
   // ----------------------------------------------------
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-slate-900 text-slate-100 flex items-center justify-center p-4">
-        <div className="w-full max-w-md bg-slate-800/90 backdrop-blur-xl border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden p-8 space-y-6">
+      <div className="min-h-screen bg-slate-100 text-slate-800 flex items-center justify-center p-4">
+        <div className="w-full max-w-md bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden p-8 space-y-6">
           <div className="text-center space-y-2">
-            <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-tr from-primary-800 to-primary-600 shadow-lg text-white mb-2">
+            <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-accent-700 shadow-md text-white mb-2">
               <Lock size={32} />
             </div>
-            <h1 className="text-2xl font-bold text-white tracking-tight">Acceso Administrativo</h1>
-            <p className="text-sm text-slate-400">Ingresa tus credenciales para administrar CEPRUNSA</p>
+            <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Acceso Administrativo</h1>
+            <p className="text-sm text-slate-500">Ingresa tus credenciales para administrar CEPRUNSA</p>
           </div>
 
           {loginError && (
-            <div className="flex items-center gap-3 p-3.5 bg-red-500/10 border border-red-500/30 rounded-xl text-red-300 text-sm animate-fade-in">
-              <AlertCircle size={18} className="shrink-0 text-red-400" />
+            <div className="flex items-center gap-3 p-3.5 bg-red-50 border border-red-200 rounded-xl text-red-700 text-sm animate-fade-in">
+              <AlertCircle size={18} className="shrink-0 text-red-600" />
               <span>{loginError}</span>
             </div>
           )}
 
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
                 Usuario
               </label>
               <div className="relative">
@@ -724,13 +723,13 @@ const Admin: React.FC = () => {
                   value={usernameInput}
                   onChange={(e) => setUsernameInput(e.target.value)}
                   placeholder="Usuario"
-                  className="w-full bg-slate-900/80 border border-slate-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 text-white text-sm rounded-xl pl-10 pr-4 py-3 outline-none transition"
+                  className="w-full bg-slate-50 border border-slate-300 focus:border-accent-700 focus:ring-2 focus:ring-accent-700/20 text-slate-900 text-sm rounded-xl pl-10 pr-4 py-3 outline-none transition"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
                 Contraseña
               </label>
               <div className="relative">
@@ -743,12 +742,12 @@ const Admin: React.FC = () => {
                   value={passwordInput}
                   onChange={(e) => setPasswordInput(e.target.value)}
                   placeholder="Contraseña"
-                  className="w-full bg-slate-900/80 border border-slate-700 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 text-white text-sm rounded-xl pl-10 pr-10 py-3 outline-none transition"
+                  className="w-full bg-slate-50 border border-slate-300 focus:border-accent-700 focus:ring-2 focus:ring-accent-700/20 text-slate-900 text-sm rounded-xl pl-10 pr-10 py-3 outline-none transition"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-200 transition"
+                  className="absolute inset-y-0 right-0 flex items-center pr-3.5 text-slate-400 hover:text-slate-700 transition"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -757,13 +756,13 @@ const Admin: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full py-3.5 px-4 bg-gradient-to-r from-primary-700 to-primary-600 hover:from-primary-600 hover:to-primary-500 text-white font-semibold rounded-xl shadow-lg hover:shadow-primary-700/30 transition-all duration-200 cursor-pointer text-sm"
+              className="w-full py-3.5 px-4 bg-accent-700 hover:bg-accent-800 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer text-sm"
             >
               Iniciar Sesión
             </button>
           </form>
 
-          <div className="text-center text-xs text-slate-500 pt-2 border-t border-slate-700/50">
+          <div className="text-center text-xs text-slate-400 pt-2 border-t border-slate-200">
             CEPRUNSA &copy; Panel de Administración Privado
           </div>
         </div>
@@ -775,42 +774,42 @@ const Admin: React.FC = () => {
   // ADMIN DASHBOARD (When authenticated)
   // ----------------------------------------------------
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-800 flex flex-col font-sans">
       {/* Toast Notification */}
       {toastMessage && (
         <div
           className={`fixed top-5 right-5 z-50 flex items-center gap-3 px-4 py-3 rounded-xl shadow-2xl border text-sm font-medium animate-bounce ${toastMessage.type === "success"
-              ? "bg-emerald-900/90 border-emerald-500/50 text-emerald-200"
-              : "bg-red-900/90 border-red-500/50 text-red-200"
+            ? "bg-emerald-50 border-emerald-300 text-emerald-800"
+            : "bg-red-50 border-red-300 text-red-800"
             }`}
         >
-          {toastMessage.type === "success" ? <CheckCircle2 size={18} /> : <AlertCircle size={18} />}
+          {toastMessage.type === "success" ? <CheckCircle2 size={18} className="text-emerald-600" /> : <AlertCircle size={18} className="text-red-600" />}
           <span>{toastMessage.text}</span>
         </div>
       )}
 
       {/* Admin Top Navigation Header */}
-      <header className="sticky top-0 z-40 bg-slate-900/90 border-b border-slate-800 backdrop-blur-md px-6 py-4">
+      <header className="sticky top-0 z-40 bg-white/95 border-b border-slate-200 backdrop-blur-md px-6 py-4 shadow-xs">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary-700 to-primary-900 flex items-center justify-center text-white font-bold shadow-md">
+            <div className="h-10 w-10 rounded-xl bg-accent-700 flex items-center justify-center text-white font-bold shadow-sm">
               A
             </div>
             <div>
-              <h1 className="text-lg font-bold text-white leading-tight">Panel de Administración</h1>
-              <p className="text-xs text-slate-400">Gestión de CEPRUNSA - Configuración e Imágenes `public/`</p>
+              <h1 className="text-lg font-bold text-slate-900 leading-tight">Panel de Administración</h1>
+              <p className="text-xs text-slate-500">Gestión de CEPRUNSA - Configuración e Imágenes `public/`</p>
             </div>
           </div>
 
           <div className="flex items-center gap-4">
-            <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 bg-slate-800 border border-slate-700 rounded-full text-xs text-emerald-400 font-medium">
-              <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
+            <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full text-xs text-emerald-700 font-medium">
+              <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
               Administrador Activo
             </span>
 
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 text-sm font-medium transition cursor-pointer"
+              className="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-sm font-medium transition cursor-pointer"
             >
               <LogOut size={16} />
               <span>Cerrar sesión</span>
@@ -822,19 +821,18 @@ const Admin: React.FC = () => {
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 space-y-6">
         {/* Navigation Tabs */}
-        <div className="flex flex-wrap gap-2 border-b border-slate-800 pb-2">
+        <div className="flex flex-wrap gap-2 border-b border-slate-200 pb-2">
           <button
             onClick={() => setActiveTab("presets")}
-            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl font-semibold text-sm transition cursor-pointer ${
-              activeTab === "presets"
-                ? "bg-primary-700 text-white shadow-lg shadow-primary-900/40"
-                : "bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-800"
-            }`}
+            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl font-semibold text-sm transition cursor-pointer ${activeTab === "presets"
+                ? "bg-accent-700 text-white shadow-md shadow-accent-950/20"
+                : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200"
+              }`}
           >
             <ImageIcon size={18} />
             <span>Imágenes Clave del Sitio Web por Página</span>
             {Object.keys(imageOverrides).length > 0 && (
-              <span className="px-2 py-0.5 rounded-full text-xs bg-amber-500/20 border border-amber-500/40 text-amber-300 font-bold">
+              <span className="px-2 py-0.5 rounded-full text-xs bg-amber-100 border border-amber-300 text-amber-800 font-bold">
                 {Object.keys(imageOverrides).length} editadas
               </span>
             )}
@@ -842,11 +840,10 @@ const Admin: React.FC = () => {
 
           <button
             onClick={() => setActiveTab("config")}
-            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl font-semibold text-sm transition cursor-pointer ${
-              activeTab === "config"
-                ? "bg-primary-700 text-white shadow-lg shadow-primary-900/40"
-                : "bg-slate-900/80 text-slate-400 hover:text-white hover:bg-slate-800"
-            }`}
+            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl font-semibold text-sm transition cursor-pointer ${activeTab === "config"
+                ? "bg-accent-700 text-white shadow-md shadow-accent-950/20"
+                : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200"
+              }`}
           >
             <Settings size={18} />
             <span>Configuración Global (config.ts)</span>
@@ -860,14 +857,14 @@ const Admin: React.FC = () => {
         {/* ---------------------------------------------------- */}
         {activeTab === "config" && (
           <form onSubmit={handleSaveConfig} className="space-y-6">
-            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 space-y-6 shadow-xl">
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 space-y-6 shadow-sm">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                    <FileCode className="text-primary-400" size={22} />
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <FileCode className="text-accent-700" size={22} />
                     Editar Parámetros de `src/data/config.ts`
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">
+                  <p className="text-xs text-slate-500 mt-1">
                     Los cambios guardados aquí actualizarán los contactos y estados en todo el sitio web al instante.
                   </p>
                 </div>
@@ -876,7 +873,7 @@ const Admin: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleResetConfig}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold border border-slate-700 transition cursor-pointer"
+                    className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold border border-slate-200 transition cursor-pointer"
                   >
                     <RotateCcw size={14} />
                     Restablecer
@@ -884,7 +881,7 @@ const Admin: React.FC = () => {
                   <button
                     type="submit"
                     disabled={isSaving}
-                    className="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-primary-700 to-primary-600 hover:from-primary-600 hover:to-primary-500 text-white rounded-xl text-xs font-semibold shadow-lg shadow-primary-900/50 transition cursor-pointer disabled:opacity-50"
+                    className="flex items-center gap-2 px-5 py-2.5 bg-accent-700 hover:bg-accent-800 text-white rounded-xl text-xs font-semibold shadow-md shadow-accent-950/20 transition cursor-pointer disabled:opacity-50"
                   >
                     <Save size={16} />
                     {isSaving ? "Guardando..." : "Guardar Cambios"}
@@ -894,19 +891,19 @@ const Admin: React.FC = () => {
 
               {/* Grid Section 1: Process & Psychological Service */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-5 space-y-3">
-                  <div className="flex items-center gap-2 text-primary-400 font-semibold text-sm">
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3">
+                  <div className="flex items-center gap-2 text-accent-700 font-bold text-sm">
                     <Building size={18} />
                     <span>Proceso Académico Prioritario (nextProcessToStart)</span>
                   </div>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500">
                     Define cuál proceso de admisión se resalta como "Próximo a iniciar" en el banner de Inicio.
                   </p>
 
                   <select
                     value={formConfig.nextProcessToStart}
                     onChange={(e) => handleConfigChange("nextProcessToStart", Number(e.target.value))}
-                    className="w-full bg-slate-900 border border-slate-700 text-white text-sm rounded-xl px-4 py-3 focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition"
+                    className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-4 py-3 focus:border-accent-700 focus:ring-1 focus:ring-accent-700 outline-none transition"
                   >
                     <option value={1}>1 - CEPRUNSA I Fase</option>
                     <option value={2}>2 - CEPRUNSA Ciclo Quintos</option>
@@ -915,12 +912,12 @@ const Admin: React.FC = () => {
                   </select>
                 </div>
 
-                <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-5 space-y-3">
-                  <div className="flex items-center gap-2 text-primary-400 font-semibold text-sm">
+                <div className="bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-3">
+                  <div className="flex items-center gap-2 text-accent-700 font-bold text-sm">
                     <HelpCircle size={18} />
                     <span>Estado del Consultorio Psicológico (psychologyServiceActive)</span>
                   </div>
-                  <p className="text-xs text-slate-400">
+                  <p className="text-xs text-slate-500">
                     Habilita o deshabilita la atención y botones de reserva del Consultorio Psicológico.
                   </p>
 
@@ -930,7 +927,7 @@ const Admin: React.FC = () => {
                       onClick={() =>
                         handleConfigChange("psychologyServiceActive", !formConfig.psychologyServiceActive)
                       }
-                      className={`relative inline-flex h-7 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${formConfig.psychologyServiceActive ? "bg-emerald-600" : "bg-slate-700"
+                      className={`relative inline-flex h-7 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none ${formConfig.psychologyServiceActive ? "bg-emerald-600" : "bg-slate-300"
                         }`}
                     >
                       <span
@@ -940,7 +937,7 @@ const Admin: React.FC = () => {
                     </button>
 
                     <span
-                      className={`text-sm font-semibold ${formConfig.psychologyServiceActive ? "text-emerald-400" : "text-slate-400"
+                      className={`text-sm font-semibold ${formConfig.psychologyServiceActive ? "text-emerald-700" : "text-slate-500"
                         }`}
                     >
                       {formConfig.psychologyServiceActive ? "Servicio Activo" : "Servicio Inactivo"}
@@ -950,94 +947,94 @@ const Admin: React.FC = () => {
               </div>
 
               {/* Grid Section 2: Contact Numbers */}
-              <div className="space-y-4 pt-4 border-t border-slate-800">
-                <h3 className="text-base font-semibold text-white flex items-center gap-2">
-                  <Phone size={18} className="text-primary-400" />
+              <div className="space-y-4 pt-4 border-t border-slate-200">
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Phone size={18} className="text-accent-700" />
                   <span>Números de Contacto</span>
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                   <div>
-                    <label className="block text-xs text-slate-300 font-medium mb-1.5">
+                    <label className="block text-xs text-slate-700 font-semibold mb-1.5">
                       WhatsApp Atención Principal
                     </label>
                     <input
                       type="text"
                       value={formConfig.whatsappNumber}
                       onChange={(e) => handleConfigChange("whatsappNumber", e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-3.5 py-2.5 focus:border-primary-500 outline-none"
+                      className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs text-slate-300 font-medium mb-1.5">
+                    <label className="block text-xs text-slate-700 font-semibold mb-1.5">
                       WhatsApp Psicología
                     </label>
                     <input
                       type="text"
                       value={formConfig.whatsappPsychologyNumber}
                       onChange={(e) => handleConfigChange("whatsappPsychologyNumber", e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-3.5 py-2.5 focus:border-primary-500 outline-none"
+                      className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs text-slate-300 font-medium mb-1.5">Teléfono Fijo Oficina</label>
+                    <label className="block text-xs text-slate-700 font-semibold mb-1.5">Teléfono Fijo Oficina</label>
                     <input
                       type="text"
                       value={formConfig.phoneNumber}
                       onChange={(e) => handleConfigChange("phoneNumber", e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-3.5 py-2.5 focus:border-primary-500 outline-none font-mono"
+                      className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none font-mono"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs text-slate-300 font-medium mb-1.5">Anexo Telefónico</label>
+                    <label className="block text-xs text-slate-700 font-semibold mb-1.5">Anexo Telefónico</label>
                     <input
                       type="text"
                       value={formConfig.phoneAnnex}
                       onChange={(e) => handleConfigChange("phoneAnnex", e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-3.5 py-2.5 focus:border-primary-500 outline-none font-mono"
+                      className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none font-mono"
                     />
                   </div>
                 </div>
               </div>
 
               {/* Grid Section 3: Email Addresses */}
-              <div className="space-y-4 pt-4 border-t border-slate-800">
-                <h3 className="text-base font-semibold text-white flex items-center gap-2">
-                  <Mail size={18} className="text-primary-400" />
+              <div className="space-y-4 pt-4 border-t border-slate-200">
+                <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                  <Mail size={18} className="text-accent-700" />
                   <span>Correos Electrónicos</span>
                 </h3>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <div>
-                    <label className="block text-xs text-slate-300 font-medium mb-1.5">Correo Institucional</label>
+                    <label className="block text-xs text-slate-700 font-semibold mb-1.5">Correo Institucional</label>
                     <input
                       type="email"
                       value={formConfig.emailInstitutional}
                       onChange={(e) => handleConfigChange("emailInstitutional", e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-3.5 py-2.5 focus:border-primary-500 outline-none"
+                      className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs text-slate-300 font-medium mb-1.5">Atención al Cliente</label>
+                    <label className="block text-xs text-slate-700 font-semibold mb-1.5">Atención al Cliente</label>
                     <input
                       type="email"
                       value={formConfig.emailClientQuery}
                       onChange={(e) => handleConfigChange("emailClientQuery", e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-3.5 py-2.5 focus:border-primary-500 outline-none"
+                      className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs text-slate-300 font-medium mb-1.5">Atención al Postulante</label>
+                    <label className="block text-xs text-slate-700 font-semibold mb-1.5">Atención al Postulante</label>
                     <input
                       type="email"
                       value={formConfig.emailApplicantQuery}
                       onChange={(e) => handleConfigChange("emailApplicantQuery", e.target.value)}
-                      className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-3.5 py-2.5 focus:border-primary-500 outline-none"
+                      className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none"
                     />
                   </div>
                 </div>
@@ -1051,74 +1048,43 @@ const Admin: React.FC = () => {
         {/* ---------------------------------------------------- */}
         {activeTab === "presets" && (
           <div className="space-y-6">
-            <div className="bg-slate-900/80 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-4">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
               <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-xl font-bold text-white flex items-center gap-2">
-                    <ImageIcon className="text-primary-400" size={22} />
-                    Accesos Rápidos: Imágenes Clave por Página del Sitio Web
+                  <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+                    <ImageIcon className="text-accent-700" size={22} />
+                    Gestión de Imágenes por Página
                   </h2>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Gestión integral de imágenes destacadas por página (Inicio, Nosotros, Procesos, Guías y Logos) con cambio de nombre, reemplazo y eliminación.
+                  <p className="text-xs text-slate-500 mt-1">
+                    Administra, reemplaza, renombra y elimina las imágenes de cada sección del sitio web.
                   </p>
-                </div>
-
-                <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    onClick={() => {
-                      setNewImageFolder("/images/carreras");
-                      setUploadModalOpen(true);
-                    }}
-                    className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-semibold shadow-md transition cursor-pointer"
-                  >
-                    <Plus size={15} />
-                    <span>Subir Imagen de Carrera</span>
-                  </button>
-
-                  {Object.keys(imageOverrides).length > 0 && (
-                    <button
-                      onClick={() => {
-                        if (window.confirm("¿Deseas restablecer TODAS las imágenes reemplazadas a sus versiones originales?")) {
-                          resetAllImages();
-                          showToast("Todas las imágenes fueron restablecidas.");
-                        }
-                      }}
-                      className="flex items-center gap-2 px-4 py-2 bg-red-950/60 hover:bg-red-900 border border-red-800 text-red-300 rounded-xl text-xs font-semibold transition cursor-pointer"
-                    >
-                      <RotateCcw size={14} />
-                      Restablecer Todas
-                    </button>
-                  )}
                 </div>
               </div>
 
               {/* Page Filter Tabs, Search Bar & View Mode Toggle */}
-              <div className="space-y-3 pt-2 border-t border-slate-800">
+              <div className="space-y-3 pt-2 border-t border-slate-200">
                 <div className="flex flex-col lg:flex-row gap-3">
                   <div className="flex flex-wrap gap-1.5">
                     {[
-                      { id: "all", label: "Todas las Páginas", badge: allPresets.length },
-                      { id: "home", label: "🏠 Inicio", badge: allPresets.filter((i) => i.page === "home").length },
-                      { id: "nosotros", label: "👥 Nosotros", badge: allPresets.filter((i) => i.page === "nosotros").length },
-                      { id: "carreras", label: "🎓 Carreras", badge: allPresets.filter((i) => i.page === "carreras").length },
-                      { id: "procesos", label: "📚 Procesos", badge: allPresets.filter((i) => i.page === "procesos").length },
-                      { id: "guias", label: "📖 Guías", badge: allPresets.filter((i) => i.page === "guias").length },
-                      { id: "global", label: "🌐 Global / Logos", badge: allPresets.filter((i) => i.page === "global").length },
+                      { id: "home", label: "Inicio", badge: allPresets.filter((i) => i.page === "home").length },
+                      { id: "nosotros", label: "Nosotros", badge: allPresets.filter((i) => i.page === "nosotros").length },
+                      { id: "carreras", label: "Carreras", badge: allPresets.filter((i) => i.page === "carreras").length },
+                      { id: "procesos", label: "Procesos", badge: allPresets.filter((i) => i.page === "procesos").length },
+                      { id: "guias", label: "Guías", badge: allPresets.filter((i) => i.page === "guias").length },
+                      { id: "global", label: "Global / Logos", badge: allPresets.filter((i) => i.page === "global").length },
                     ].map((pageTab) => (
                       <button
                         key={pageTab.id}
                         onClick={() => handlePresetPageChange(pageTab.id)}
-                        className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
-                          selectedPresetPage === pageTab.id
-                            ? "bg-primary-700 text-white shadow-md shadow-primary-900/40"
-                            : "bg-slate-800/80 text-slate-300 hover:bg-slate-700 hover:text-white border border-slate-700/50"
-                        }`}
+                        className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${selectedPresetPage === pageTab.id
+                            ? "bg-accent-700 text-white shadow-md shadow-accent-950/20"
+                            : "bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200"
+                          }`}
                       >
                         <span>{pageTab.label}</span>
                         <span
-                          className={`px-1.5 py-0.2 rounded-full text-[10px] ${
-                            selectedPresetPage === pageTab.id ? "bg-primary-900/80 text-primary-200" : "bg-slate-900 text-slate-400"
-                          }`}
+                          className={`px-1.5 py-0.2 rounded-full text-[10px] ${selectedPresetPage === pageTab.id ? "bg-accent-900/80 text-white" : "bg-slate-200 text-slate-600"
+                            }`}
                         >
                           {pageTab.badge}
                         </span>
@@ -1128,16 +1094,15 @@ const Admin: React.FC = () => {
 
                   <div className="lg:ml-auto flex items-center gap-2.5">
                     {/* View mode switcher */}
-                    <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 shrink-0">
+                    <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200 shrink-0">
                       <button
                         type="button"
                         onClick={() => setPresetViewMode("grid")}
                         title="Vista de Cuadrícula"
-                        className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg transition text-xs font-semibold cursor-pointer ${
-                          presetViewMode === "grid"
-                            ? "bg-primary-700 text-white shadow-sm"
-                            : "text-slate-400 hover:text-slate-200"
-                        }`}
+                        className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg transition text-xs font-semibold cursor-pointer ${presetViewMode === "grid"
+                            ? "bg-accent-700 text-white shadow-xs"
+                            : "text-slate-500 hover:text-slate-800"
+                          }`}
                       >
                         <Grid size={15} />
                         <span className="hidden sm:inline">Cuadrícula</span>
@@ -1146,11 +1111,10 @@ const Admin: React.FC = () => {
                         type="button"
                         onClick={() => setPresetViewMode("list")}
                         title="Vista de Lista"
-                        className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg transition text-xs font-semibold cursor-pointer ${
-                          presetViewMode === "list"
-                            ? "bg-primary-700 text-white shadow-sm"
-                            : "text-slate-400 hover:text-slate-200"
-                        }`}
+                        className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg transition text-xs font-semibold cursor-pointer ${presetViewMode === "list"
+                            ? "bg-accent-700 text-white shadow-xs"
+                            : "text-slate-500 hover:text-slate-800"
+                          }`}
                       >
                         <List size={15} />
                         <span className="hidden sm:inline">Lista</span>
@@ -1158,13 +1122,13 @@ const Admin: React.FC = () => {
                     </div>
 
                     <div className="relative w-full sm:w-60">
-                      <Search size={16} className="absolute left-3 top-2.5 text-slate-500" />
+                      <Search size={16} className="absolute left-3 top-2.5 text-slate-400" />
                       <input
                         type="text"
                         placeholder="Buscar por nombre, sección o ruta..."
                         value={presetSearch}
                         onChange={(e) => setPresetSearch(e.target.value)}
-                        className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-xs rounded-xl pl-9 pr-3 py-2 focus:border-primary-500 outline-none"
+                        className="w-full bg-white border border-slate-300 text-slate-800 text-xs rounded-xl pl-9 pr-3 py-2 focus:border-accent-700 focus:ring-1 focus:ring-accent-700 outline-none"
                       />
                     </div>
                   </div>
@@ -1172,16 +1136,15 @@ const Admin: React.FC = () => {
 
                 {/* Section Filter Pills */}
                 {availablePresetSections.length > 1 && (
-                  <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-800/80">
-                    <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">Sección de Página:</span>
+                  <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-slate-200">
+                    <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mr-1">Sección de Página:</span>
                     <button
                       type="button"
                       onClick={() => setSelectedPresetSection("all")}
-                      className={`px-3 py-1 rounded-xl text-xs font-semibold transition cursor-pointer ${
-                        selectedPresetSection === "all"
-                          ? "bg-slate-700 text-white shadow-sm"
-                          : "bg-slate-950 text-slate-400 hover:bg-slate-800 hover:text-slate-200 border border-slate-800"
-                      }`}
+                      className={`px-3 py-1 rounded-xl text-xs font-semibold transition cursor-pointer ${selectedPresetSection === "all"
+                          ? "bg-slate-800 text-white shadow-xs"
+                          : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
+                        }`}
                     >
                       Todas ({allPresets.filter((i) => selectedPresetPage === "all" || i.page === selectedPresetPage).length})
                     </button>
@@ -1194,14 +1157,13 @@ const Admin: React.FC = () => {
                           key={secName}
                           type="button"
                           onClick={() => setSelectedPresetSection(secName)}
-                          className={`px-3 py-1 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 ${
-                            selectedPresetSection === secName
-                              ? "bg-primary-600 text-white shadow-sm shadow-primary-900/50"
-                              : "bg-slate-950 text-slate-400 hover:bg-slate-800 hover:text-slate-200 border border-slate-800"
-                          }`}
+                          className={`px-3 py-1 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 ${selectedPresetSection === secName
+                              ? "bg-accent-700 text-white shadow-sm shadow-accent-950/20"
+                              : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
+                            }`}
                         >
                           <span>{secName}</span>
-                          <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-900 text-slate-300">{count}</span>
+                          <span className="px-1.5 py-0.2 rounded-full text-[10px] bg-slate-200/80 text-slate-700">{count}</span>
                         </button>
                       );
                     })}
@@ -1212,21 +1174,21 @@ const Admin: React.FC = () => {
 
             {/* Content Display: Grouped by Section */}
             {filteredPresets.length === 0 ? (
-              <div className="bg-slate-900/60 border border-slate-800 rounded-2xl p-12 text-center text-slate-400">
-                <FileImage size={40} className="mx-auto mb-3 text-slate-600" />
-                <p className="text-sm font-semibold">No se encontraron imágenes en esta sección</p>
-                <p className="text-xs text-slate-500 mt-1">Prueba seleccionando otra sección, otra página o borrando el filtro de búsqueda.</p>
+              <div className="bg-white border border-slate-200 rounded-2xl p-12 text-center text-slate-500 shadow-sm">
+                <FileImage size={40} className="mx-auto mb-3 text-slate-400" />
+                <p className="text-sm font-semibold text-slate-700">No se encontraron imágenes en esta sección</p>
+                <p className="text-xs text-slate-400 mt-1">Prueba seleccionando otra sección, otra página o borrando el filtro de búsqueda.</p>
               </div>
             ) : (
               <div className="space-y-8">
                 {Object.entries(groupedPresets).map(([sectionTitle, items]) => (
                   <div key={sectionTitle} className="space-y-4">
                     {/* Section Header Banner */}
-                    <div className="flex items-center justify-between bg-slate-900/90 border border-slate-800 rounded-xl px-4 py-2.5 shadow-md">
+                    <div className="flex items-center justify-between bg-white border border-slate-200 rounded-xl px-4 py-2.5 shadow-xs">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-2.5 h-5 bg-primary-500 rounded-full"></div>
-                        <h3 className="text-sm font-bold text-white tracking-wide">{sectionTitle}</h3>
-                        <span className="px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 text-xs font-semibold border border-slate-700">
+                        <div className="w-2.5 h-5 bg-accent-700 rounded-full"></div>
+                        <h3 className="text-sm font-bold text-slate-900 tracking-wide">{sectionTitle}</h3>
+                        <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 text-xs font-semibold border border-slate-200">
                           {items.length} {items.length === 1 ? "imagen" : "imágenes"}
                         </span>
                       </div>
@@ -1234,32 +1196,19 @@ const Admin: React.FC = () => {
 
                     {presetViewMode === "list" ? (
                       /* LIST VIEW FOR SECTION */
-                      <div className="bg-slate-900 border border-slate-800 rounded-2xl overflow-hidden divide-y divide-slate-800/80 shadow-xl">
+                      <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden divide-y divide-slate-200 shadow-xs">
                         {items.map((item) => {
                           const currentUrl = getImageUrl(item.path);
                           const isOverridden = !!imageOverrides[item.path];
 
-                          const pageBadgeStyle =
-                            item.page === "home"
-                              ? "bg-blue-500/20 text-blue-300 border-blue-500/40"
-                              : item.page === "nosotros"
-                                ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
-                                : item.page === "carreras"
-                                  ? "bg-teal-500/20 text-teal-300 border-teal-500/40"
-                                  : item.page === "procesos"
-                                    ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
-                                    : item.page === "guias"
-                                      ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                                      : "bg-indigo-500/20 text-indigo-300 border-indigo-500/40";
-
                           return (
                             <div
                               key={item.id}
-                              className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-850/50 transition"
+                              className="p-4 flex flex-col md:flex-row md:items-center justify-between gap-4 hover:bg-slate-50/80 transition"
                             >
                               <div className="flex items-center gap-4 min-w-0">
                                 {/* Thumbnail preview with replace dropzone */}
-                                <div className="relative w-20 h-20 shrink-0 bg-slate-950 border border-slate-800 rounded-xl overflow-hidden flex items-center justify-center p-1 group">
+                                <div className="relative w-20 h-20 shrink-0 bg-slate-100 border border-slate-200 rounded-xl overflow-hidden flex items-center justify-center p-1 group">
                                   <img
                                     src={currentUrl}
                                     alt={item.name}
@@ -1270,9 +1219,9 @@ const Admin: React.FC = () => {
                                   />
                                   <label
                                     title="Haz clic para reemplazar la imagen"
-                                    className="absolute inset-0 bg-slate-950/85 backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer"
+                                    className="absolute inset-0 bg-slate-900/80 backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition cursor-pointer"
                                   >
-                                    <UploadCloud size={22} className="text-primary-400" />
+                                    <UploadCloud size={22} className="text-white" />
                                     <input
                                       type="file"
                                       accept="image/*"
@@ -1288,37 +1237,37 @@ const Admin: React.FC = () => {
                                 {/* Text info */}
                                 <div className="space-y-1 min-w-0">
                                   <div className="flex flex-wrap items-center gap-2">
-                                    <span className={`px-2 py-0.5 rounded-md border text-[10px] font-bold uppercase tracking-wide ${pageBadgeStyle}`}>
+                                    <span className="px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-bold uppercase tracking-wide">
                                       {item.pageName}
                                     </span>
-                                    <span className="px-2 py-0.5 rounded-md bg-primary-950/80 border border-primary-800/80 text-primary-300 text-[10px] font-bold">
+                                    <span className="px-2 py-0.5 rounded-md bg-accent-50 border border-accent-200 text-accent-800 text-[10px] font-semibold">
                                       {item.section}
                                     </span>
-                                    <h3 className="text-xs font-bold text-white uppercase tracking-wider truncate">{item.name}</h3>
+                                    <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider truncate">{item.name}</h3>
                                     {isOverridden ? (
-                                      <span className="px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] font-bold">
+                                      <span className="px-2 py-0.5 rounded-md bg-amber-100 border border-amber-300 text-amber-800 text-[10px] font-bold">
                                         Modificada
                                       </span>
                                     ) : (
-                                      <span className="px-2 py-0.5 rounded-md bg-slate-800 border border-slate-700 text-slate-400 text-[10px]">
+                                      <span className="px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-500 text-[10px]">
                                         Original
                                       </span>
                                     )}
                                   </div>
 
-                                  <p className="text-[11px] text-slate-400 line-clamp-1">{item.description}</p>
+                                  <p className="text-[11px] text-slate-500 line-clamp-1">{item.description}</p>
 
                                   <div className="flex items-center gap-2">
-                                    <code className="text-[10px] text-slate-400 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 truncate max-w-md">
+                                    <code className="text-[10px] text-slate-600 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 truncate max-w-md">
                                       public{item.path}
                                     </code>
                                     <button
                                       type="button"
                                       onClick={() => copyToClipboard(item.path)}
                                       title="Copiar ruta"
-                                      className="text-slate-400 hover:text-slate-200 transition cursor-pointer p-0.5"
+                                      className="text-slate-400 hover:text-slate-700 transition cursor-pointer p-0.5"
                                     >
-                                      {copiedPath === item.path ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                                      {copiedPath === item.path ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
                                     </button>
                                   </div>
                                 </div>
@@ -1330,7 +1279,7 @@ const Admin: React.FC = () => {
                                   type="button"
                                   onClick={() => openReplaceModal(item)}
                                   title="Reemplazar imagen escogiendo de public/ o subiendo archivo"
-                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-primary-700/80 hover:bg-primary-600 text-white text-[11px] font-semibold rounded-xl transition cursor-pointer"
+                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-accent-700 hover:bg-accent-800 text-white text-[11px] font-semibold rounded-xl shadow-xs transition cursor-pointer"
                                 >
                                   <UploadCloud size={13} />
                                   <span>Reemplazar</span>
@@ -1340,9 +1289,9 @@ const Admin: React.FC = () => {
                                   type="button"
                                   onClick={() => openRenameModalForPreset(item)}
                                   title="Cambiar nombre de la imagen"
-                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-medium rounded-xl border border-slate-700 transition cursor-pointer"
+                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-[11px] font-medium rounded-xl border border-slate-200 transition cursor-pointer"
                                 >
-                                  <Edit3 size={13} className="text-amber-400" />
+                                  <Edit3 size={13} className="text-amber-600" />
                                   <span>Renombrar</span>
                                 </button>
 
@@ -1350,7 +1299,7 @@ const Admin: React.FC = () => {
                                   type="button"
                                   onClick={() => openDeleteModalForPreset(item)}
                                   title="Eliminar archivo de imagen"
-                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-red-950/40 hover:bg-red-900/60 text-red-300 text-[11px] font-medium rounded-xl border border-red-900/60 transition cursor-pointer"
+                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-[11px] font-medium rounded-xl border border-red-200 transition cursor-pointer"
                                 >
                                   <Trash2 size={13} />
                                   <span>Borrar</span>
@@ -1364,7 +1313,7 @@ const Admin: React.FC = () => {
                                       showToast(`Imagen ${item.name} restablecida a la versión original.`);
                                     }}
                                     title="Restablecer a versión original"
-                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-300 text-[11px] font-medium rounded-xl border border-slate-700 transition cursor-pointer"
+                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-[11px] font-medium rounded-xl border border-amber-200 transition cursor-pointer"
                                   >
                                     <RotateCcw size={12} />
                                     <span>Restablecer</span>
@@ -1383,66 +1332,52 @@ const Admin: React.FC = () => {
                           const isOverridden = !!imageOverrides[item.path];
                           const isHovered = dragOverPath === item.path;
 
-                          const pageBadgeStyle =
-                            item.page === "home"
-                              ? "bg-blue-500/20 text-blue-300 border-blue-500/40"
-                              : item.page === "nosotros"
-                                ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
-                                : item.page === "carreras"
-                                  ? "bg-teal-500/20 text-teal-300 border-teal-500/40"
-                                  : item.page === "procesos"
-                                    ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
-                                    : item.page === "guias"
-                                      ? "bg-amber-500/20 text-amber-300 border-amber-500/40"
-                                      : "bg-indigo-500/20 text-indigo-300 border-indigo-500/40";
-
                           return (
                             <div
                               key={item.id}
-                              className={`bg-slate-900 border rounded-2xl overflow-hidden transition-all duration-200 flex flex-col justify-between ${
-                                isHovered
-                                  ? "border-primary-500 ring-2 ring-primary-500/40 bg-slate-800"
+                              className={`bg-white border rounded-2xl overflow-hidden transition-all duration-200 flex flex-col justify-between shadow-xs ${isHovered
+                                  ? "border-accent-700 ring-2 ring-accent-700/20 bg-accent-50/10"
                                   : isOverridden
-                                    ? "border-amber-500/60 bg-slate-900 shadow-amber-900/10 shadow-lg"
-                                    : "border-slate-800"
-                              }`}
+                                    ? "border-amber-300 bg-amber-50/10 shadow-sm"
+                                    : "border-slate-200 hover:border-slate-300 hover:shadow-md"
+                                }`}
                             >
                               {/* Top Info Header */}
-                              <div className="p-4 space-y-2 border-b border-slate-800/80">
+                              <div className="p-4 space-y-2 border-b border-slate-100">
                                 <div className="flex items-center justify-between gap-2">
                                   <div className="flex flex-wrap items-center gap-1.5">
-                                    <span className={`px-2 py-0.5 rounded-md border text-[10px] font-bold uppercase tracking-wide ${pageBadgeStyle}`}>
+                                    <span className="px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-700 text-[10px] font-bold uppercase tracking-wide">
                                       {item.pageName}
                                     </span>
-                                    <span className="px-2 py-0.5 rounded-md bg-primary-950/80 border border-primary-800/80 text-primary-300 text-[10px] font-bold">
+                                    <span className="px-2 py-0.5 rounded-md bg-accent-50 border border-accent-200 text-accent-800 text-[10px] font-semibold">
                                       {item.section}
                                     </span>
                                   </div>
                                   {isOverridden ? (
-                                    <span className="px-2 py-0.5 rounded-md bg-amber-500/20 border border-amber-500/40 text-amber-300 text-[10px] font-bold shrink-0">
+                                    <span className="px-2 py-0.5 rounded-md bg-amber-100 border border-amber-300 text-amber-800 text-[10px] font-bold shrink-0">
                                       Modificada
                                     </span>
                                   ) : (
-                                    <span className="px-2 py-0.5 rounded-md bg-slate-800 border border-slate-700 text-slate-400 text-[10px] shrink-0">
+                                    <span className="px-2 py-0.5 rounded-md bg-slate-100 border border-slate-200 text-slate-500 text-[10px] shrink-0">
                                       Original
                                     </span>
                                   )}
                                 </div>
 
                                 <div>
-                                  <h3 className="text-xs font-bold text-white uppercase tracking-wider">{item.name}</h3>
-                                  <p className="text-[11px] text-slate-400 mt-0.5 line-clamp-2">{item.description}</p>
+                                  <h3 className="text-xs font-bold text-slate-900 uppercase tracking-wider">{item.name}</h3>
+                                  <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">{item.description}</p>
                                 </div>
 
-                                <div className="flex items-center justify-between gap-2 bg-slate-950 px-2 py-1.5 rounded-lg border border-slate-800">
-                                  <code className="text-[10px] text-slate-400 truncate">public{item.path}</code>
+                                <div className="flex items-center justify-between gap-2 bg-slate-50 px-2 py-1.5 rounded-lg border border-slate-200">
+                                  <code className="text-[10px] text-slate-600 truncate">public{item.path}</code>
                                   <button
                                     type="button"
                                     onClick={() => copyToClipboard(item.path)}
                                     title="Copiar ruta"
-                                    className="text-slate-400 hover:text-slate-200 transition cursor-pointer p-0.5"
+                                    className="text-slate-400 hover:text-slate-700 transition cursor-pointer p-0.5"
                                   >
-                                    {copiedPath === item.path ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+                                    {copiedPath === item.path ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
                                   </button>
                                 </div>
                               </div>
@@ -1460,30 +1395,29 @@ const Admin: React.FC = () => {
                                   const file = e.dataTransfer.files?.[0];
                                   if (file) handleReplaceFile(item.path, file);
                                 }}
-                                className="relative h-44 bg-slate-950 flex flex-col items-center justify-center p-3 text-center group cursor-pointer border-b border-slate-800"
+                                className="relative h-44 bg-slate-100 flex flex-col items-center justify-center p-3 text-center group cursor-pointer border-b border-slate-200"
                               >
                                 <img
                                   src={currentUrl}
                                   alt={item.name}
-                                  className="max-h-full max-w-full object-contain rounded-lg shadow-md"
+                                  className="max-h-full max-w-full object-contain rounded-lg shadow-sm"
                                   onError={(e) => {
                                     (e.target as HTMLElement).style.display = "none";
                                   }}
                                 />
 
                                 <div
-                                  className={`absolute inset-0 bg-slate-950/85 backdrop-blur-xs flex flex-col items-center justify-center p-4 transition-opacity ${
-                                    isHovered ? "opacity-100" : "opacity-0 group-hover:opacity-100"
-                                  }`}
+                                  className={`absolute inset-0 bg-slate-900/85 backdrop-blur-xs flex flex-col items-center justify-center p-4 transition-opacity ${isHovered ? "opacity-100" : "opacity-0 group-hover:opacity-100"
+                                    }`}
                                 >
                                   <UploadCloud
                                     size={32}
-                                    className={`mb-2 ${isHovered ? "text-emerald-400 animate-bounce" : "text-primary-400"}`}
+                                    className={`mb-2 ${isHovered ? "text-emerald-400 animate-bounce" : "text-white"}`}
                                   />
                                   <span className="text-xs font-semibold text-white">
                                     {isHovered ? "¡Suelta la imagen aquí!" : "Haz clic o arrastra para reemplazar"}
                                   </span>
-                                  <span className="text-[10px] text-slate-400 mt-1">Reemplaza {item.path}</span>
+                                  <span className="text-[10px] text-slate-300 mt-1">Reemplaza {item.path}</span>
 
                                   <input
                                     type="file"
@@ -1498,13 +1432,13 @@ const Admin: React.FC = () => {
                               </div>
 
                               {/* Bottom Actions */}
-                              <div className="p-3 bg-slate-950/60 flex flex-wrap items-center justify-between gap-1.5">
+                              <div className="p-3 bg-slate-50/80 flex flex-wrap items-center justify-between gap-1.5">
                                 <div className="flex items-center gap-1.5">
                                   <button
                                     type="button"
                                     onClick={() => openReplaceModal(item)}
                                     title="Reemplazar imagen escogiendo de public/ o subiendo archivo"
-                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-primary-700/80 hover:bg-primary-600 text-white text-[11px] font-semibold rounded-lg transition cursor-pointer"
+                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-accent-700 hover:bg-accent-800 text-white text-[11px] font-semibold rounded-lg shadow-xs transition cursor-pointer"
                                   >
                                     <UploadCloud size={12} />
                                     <span>Cambiar</span>
@@ -1514,9 +1448,9 @@ const Admin: React.FC = () => {
                                     type="button"
                                     onClick={() => openRenameModalForPreset(item)}
                                     title="Cambiar nombre"
-                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-[11px] font-medium rounded-lg border border-slate-700 transition cursor-pointer"
+                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-[11px] font-medium rounded-lg border border-slate-200 transition cursor-pointer"
                                   >
-                                    <Edit3 size={12} className="text-amber-400" />
+                                    <Edit3 size={12} className="text-amber-600" />
                                     <span>Renombrar</span>
                                   </button>
 
@@ -1524,7 +1458,7 @@ const Admin: React.FC = () => {
                                     type="button"
                                     onClick={() => openDeleteModalForPreset(item)}
                                     title="Borrar imagen"
-                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-red-950/40 hover:bg-red-900/60 text-red-300 text-[11px] font-medium rounded-lg border border-red-900/60 transition cursor-pointer"
+                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-[11px] font-medium rounded-lg border border-red-200 transition cursor-pointer"
                                   >
                                     <Trash2 size={12} />
                                     <span>Borrar</span>
@@ -1539,7 +1473,7 @@ const Admin: React.FC = () => {
                                       showToast(`Imagen ${item.name} restablecida a la versión original.`);
                                     }}
                                     title="Restablecer"
-                                    className="flex items-center gap-1 px-2 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 text-[10px] font-medium rounded-lg transition cursor-pointer"
+                                    className="flex items-center gap-1 px-2 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-[10px] font-medium rounded-lg border border-amber-200 transition cursor-pointer"
                                   >
                                     <RotateCcw size={11} />
                                     <span>Restablecer</span>
@@ -1561,37 +1495,36 @@ const Admin: React.FC = () => {
         {/* REPLACE IMAGE MODAL (Select from public/ or Upload)   */}
         {/* ---------------------------------------------------- */}
         {replaceModalItem && (
-          <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4">
-            <div className="bg-slate-900 border border-slate-700/80 rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+          <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="bg-white border border-slate-200 rounded-3xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
               {/* Modal Header */}
-              <div className="p-6 border-b border-slate-800 flex items-center justify-between">
+              <div className="p-6 border-b border-slate-200 flex items-center justify-between bg-white">
                 <div>
-                  <h3 className="text-lg font-bold text-white flex items-center gap-2">
-                    <UploadCloud className="text-primary-400" size={22} />
-                    Reemplazar Imagen: <span className="text-primary-300">{replaceModalItem.name}</span>
+                  <h3 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <UploadCloud className="text-accent-700" size={22} />
+                    Reemplazar Imagen: <span className="text-accent-700 font-semibold">{replaceModalItem.name}</span>
                   </h3>
-                  <p className="text-xs text-slate-400 mt-1">
-                    Selecciona una imagen existente de la carpeta <code className="text-slate-300 bg-slate-950 px-1.5 py-0.5 rounded">public/</code> o sube un archivo nuevo.
+                  <p className="text-xs text-slate-500 mt-1">
+                    Selecciona una imagen existente de la carpeta <code className="text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">public/</code> o sube un archivo nuevo.
                   </p>
                 </div>
                 <button
                   onClick={() => setReplaceModalItem(null)}
-                  className="text-slate-400 hover:text-white p-2 rounded-xl bg-slate-800/80 hover:bg-slate-700 transition cursor-pointer"
+                  className="text-slate-400 hover:text-slate-800 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition cursor-pointer"
                 >
                   <X size={18} />
                 </button>
               </div>
 
               {/* Mode Tabs */}
-              <div className="flex border-b border-slate-800 bg-slate-950/60 px-6 pt-3 gap-2">
+              <div className="flex border-b border-slate-200 bg-slate-50 px-6 pt-3 gap-2">
                 <button
                   type="button"
                   onClick={() => setReplaceModalTab("picker")}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-semibold border-b-2 transition cursor-pointer ${
-                    replaceModalTab === "picker"
-                      ? "border-primary-500 bg-slate-900 text-white"
-                      : "border-transparent text-slate-400 hover:text-slate-200"
-                  }`}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-semibold border-b-2 transition cursor-pointer ${replaceModalTab === "picker"
+                      ? "border-accent-700 bg-white text-accent-700 shadow-xs"
+                      : "border-transparent text-slate-500 hover:text-slate-800"
+                    }`}
                 >
                   <Folder size={15} />
                   <span>Escoger de la Carpeta public/</span>
@@ -1599,11 +1532,10 @@ const Admin: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setReplaceModalTab("upload")}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-semibold border-b-2 transition cursor-pointer ${
-                    replaceModalTab === "upload"
-                      ? "border-primary-500 bg-slate-900 text-white"
-                      : "border-transparent text-slate-400 hover:text-slate-200"
-                  }`}
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-semibold border-b-2 transition cursor-pointer ${replaceModalTab === "upload"
+                      ? "border-accent-700 bg-white text-accent-700 shadow-xs"
+                      : "border-transparent text-slate-500 hover:text-slate-800"
+                    }`}
                 >
                   <UploadCloud size={15} />
                   <span>Subir Archivo desde tu Equipo</span>
@@ -1611,7 +1543,7 @@ const Admin: React.FC = () => {
               </div>
 
               {/* Modal Body */}
-              <div className="p-6 overflow-y-auto flex-1 space-y-4">
+              <div className="p-6 overflow-y-auto flex-1 space-y-4 bg-white">
                 {replaceModalTab === "picker" ? (
                   /* TAB 1: PICK FROM PUBLIC/ FOLDER */
                   <div className="space-y-4">
@@ -1623,11 +1555,10 @@ const Admin: React.FC = () => {
                             key={fld}
                             type="button"
                             onClick={() => setPickerFolder(fld)}
-                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer ${
-                              pickerFolder === fld
-                                ? "bg-primary-700 text-white"
-                                : "bg-slate-800 text-slate-400 hover:text-slate-200"
-                            }`}
+                            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer ${pickerFolder === fld
+                                ? "bg-accent-700 text-white font-semibold shadow-xs"
+                                : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
+                              }`}
                           >
                             {fld === "all" ? "Todas las Carpetas" : fld}
                           </button>
@@ -1635,13 +1566,13 @@ const Admin: React.FC = () => {
                       </div>
 
                       <div className="sm:ml-auto relative w-full sm:w-60">
-                        <Search size={15} className="absolute left-3 top-2.5 text-slate-500" />
+                        <Search size={15} className="absolute left-3 top-2.5 text-slate-400" />
                         <input
                           type="text"
                           placeholder="Buscar imagen..."
                           value={pickerSearch}
                           onChange={(e) => setPickerSearch(e.target.value)}
-                          className="w-full bg-slate-950 border border-slate-800 text-slate-200 text-xs rounded-xl pl-9 pr-3 py-2 focus:border-primary-500 outline-none"
+                          className="w-full bg-white border border-slate-300 text-slate-800 text-xs rounded-xl pl-9 pr-3 py-2 focus:border-accent-700 focus:ring-1 focus:ring-accent-700/20 outline-none"
                         />
                       </div>
                     </div>
@@ -1669,13 +1600,12 @@ const Admin: React.FC = () => {
                                 key={img.relativePath}
                                 type="button"
                                 onClick={() => setSelectedPublicImagePath(img.relativePath)}
-                                className={`relative group bg-slate-950 border rounded-xl overflow-hidden p-2 text-left transition cursor-pointer flex flex-col justify-between h-36 ${
-                                  isSelected
-                                    ? "border-primary-500 ring-2 ring-primary-500/50 bg-primary-950/20"
-                                    : "border-slate-800 hover:border-slate-700"
-                                }`}
+                                className={`relative group bg-white border rounded-xl overflow-hidden p-2 text-left transition cursor-pointer flex flex-col justify-between h-36 ${isSelected
+                                    ? "border-accent-700 ring-2 ring-accent-700/30 bg-accent-50/50 shadow-md"
+                                    : "border-slate-200 hover:border-slate-300 hover:shadow-xs"
+                                  }`}
                               >
-                                <div className="h-20 w-full flex items-center justify-center bg-slate-900 rounded-lg overflow-hidden">
+                                <div className="h-20 w-full flex items-center justify-center bg-slate-100 rounded-lg border border-slate-200 overflow-hidden">
                                   <img
                                     src={img.relativePath}
                                     alt={img.name}
@@ -1686,11 +1616,11 @@ const Admin: React.FC = () => {
                                   />
                                 </div>
                                 <div className="mt-1.5 space-y-0.5">
-                                  <p className="text-[11px] font-semibold text-slate-200 truncate">{img.name}</p>
+                                  <p className="text-[11px] font-semibold text-slate-800 truncate">{img.name}</p>
                                   <p className="text-[9px] text-slate-500 truncate">public{img.relativePath}</p>
                                 </div>
                                 {isSelected && (
-                                  <div className="absolute top-2 right-2 bg-primary-600 text-white rounded-full p-1 shadow-md">
+                                  <div className="absolute top-2 right-2 bg-accent-700 text-white rounded-full p-1 shadow-md">
                                     <Check size={12} />
                                   </div>
                                 )}
@@ -1715,11 +1645,11 @@ const Admin: React.FC = () => {
                           setReplaceModalItem(null);
                         }
                       }}
-                      className="border-2 border-dashed border-slate-700 hover:border-primary-500 rounded-2xl p-10 text-center bg-slate-950/60 transition cursor-pointer group"
+                      className="border-2 border-dashed border-slate-300 hover:border-accent-700 rounded-2xl p-10 text-center bg-slate-50 hover:bg-slate-100/50 transition cursor-pointer group"
                     >
-                      <UploadCloud size={40} className="mx-auto mb-3 text-primary-400 group-hover:scale-110 transition" />
-                      <p className="text-sm font-semibold text-white">Haz clic o arrastra un archivo desde tu equipo</p>
-                      <p className="text-xs text-slate-400 mt-1">Formatos soportados: PNG, JPG, WEBP, SVG</p>
+                      <UploadCloud size={40} className="mx-auto mb-3 text-accent-700 group-hover:scale-110 transition" />
+                      <p className="text-sm font-semibold text-slate-900">Haz clic o arrastra un archivo desde tu equipo</p>
+                      <p className="text-xs text-slate-500 mt-1">Formatos soportados: PNG, JPG, WEBP, SVG</p>
 
                       <input
                         type="file"
@@ -1736,7 +1666,7 @@ const Admin: React.FC = () => {
                       />
                       <label
                         htmlFor="replace-modal-file-input"
-                        className="mt-4 inline-block px-4 py-2 bg-primary-700 hover:bg-primary-600 text-white text-xs font-semibold rounded-xl transition cursor-pointer"
+                        className="mt-4 inline-block px-4 py-2 bg-accent-700 hover:bg-accent-800 text-white text-xs font-semibold rounded-xl transition cursor-pointer shadow-xs"
                       >
                         Examinar Archivos
                       </label>
@@ -1746,10 +1676,10 @@ const Admin: React.FC = () => {
               </div>
 
               {/* Modal Footer */}
-              <div className="p-4 border-t border-slate-800 bg-slate-950/60 flex items-center justify-between gap-3">
-                <span className="text-xs text-slate-400">
+              <div className="p-4 border-t border-slate-200 bg-slate-50 flex items-center justify-between gap-3">
+                <span className="text-xs text-slate-500">
                   {selectedPublicImagePath ? (
-                    <span className="text-emerald-400 font-medium truncate max-w-md block">
+                    <span className="text-emerald-700 font-semibold truncate max-w-md block">
                       Seleccionado: public{selectedPublicImagePath}
                     </span>
                   ) : (
@@ -1761,7 +1691,7 @@ const Admin: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setReplaceModalItem(null)}
-                    className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white bg-slate-800 hover:bg-slate-700 transition cursor-pointer"
+                    className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-700 bg-slate-200/80 hover:bg-slate-200 transition cursor-pointer"
                   >
                     Cancelar
                   </button>
@@ -1777,7 +1707,7 @@ const Admin: React.FC = () => {
                           setReplaceModalItem(null);
                         }
                       }}
-                      className="px-5 py-2 rounded-xl text-xs font-semibold text-white bg-primary-600 hover:bg-primary-500 disabled:opacity-50 disabled:cursor-not-allowed transition cursor-pointer shadow-lg shadow-primary-900/30"
+                      className="px-5 py-2 rounded-xl text-xs font-semibold text-white bg-accent-700 hover:bg-accent-800 disabled:opacity-50 disabled:cursor-not-allowed transition cursor-pointer shadow-md shadow-accent-950/20"
                     >
                       Aplicar Reemplazo
                     </button>
@@ -1793,23 +1723,23 @@ const Admin: React.FC = () => {
       {/* MODAL 1: EDIT IMAGE NAME (RENOMBRAR)                 */}
       {/* ---------------------------------------------------- */}
       {renameModalItem && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-fade-in">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Edit3 size={18} className="text-sky-400" />
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-fade-in">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Edit3 size={18} className="text-accent-700" />
                 Renombrar Archivo de Imagen
               </h3>
               <button
                 onClick={() => setRenameModalItem(null)}
-                className="text-slate-400 hover:text-white transition"
+                className="text-slate-400 hover:text-slate-700 transition"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <div className="flex items-center gap-3 p-3 bg-slate-950 border border-slate-800 rounded-xl">
-              <div className="h-14 w-14 bg-slate-900 rounded border border-slate-800 flex items-center justify-center overflow-hidden shrink-0">
+            <div className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
+              <div className="h-14 w-14 bg-white rounded border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
                 <img
                   src={getImageUrl(renameModalItem.relativePath)}
                   alt={renameModalItem.name}
@@ -1817,15 +1747,15 @@ const Admin: React.FC = () => {
                 />
               </div>
               <div className="overflow-hidden">
-                <span className="text-xs font-semibold text-slate-300 truncate block">Nombre actual:</span>
-                <code className="text-xs text-amber-300 font-mono block truncate">{renameModalItem.name}</code>
+                <span className="text-xs font-semibold text-slate-500 block">Nombre actual:</span>
+                <code className="text-xs text-accent-800 font-mono font-semibold block truncate">{renameModalItem.name}</code>
                 <span className="text-[10px] text-slate-500 block truncate">Carpeta: public{renameModalItem.folder}</span>
               </div>
             </div>
 
             <form onSubmit={handleRenameSubmit} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
                   Nuevo Nombre del Archivo
                 </label>
                 <input
@@ -1834,14 +1764,14 @@ const Admin: React.FC = () => {
                   value={renameInput}
                   onChange={(e) => setRenameInput(e.target.value)}
                   placeholder="ejemplo: mi-imagen-actualizada.png"
-                  className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-4 py-3 focus:border-sky-500 focus:ring-1 focus:ring-sky-500 outline-none font-mono"
+                  className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-4 py-3 focus:border-accent-700 focus:ring-2 focus:ring-accent-700/20 outline-none font-mono"
                 />
               </div>
 
-              <div className="p-3 bg-sky-950/30 border border-sky-900/50 rounded-xl text-sky-200 text-xs flex items-start gap-2">
-                <AlertCircle size={16} className="text-sky-400 shrink-0 mt-0.5" />
+              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs flex items-start gap-2">
+                <AlertCircle size={16} className="text-amber-600 shrink-0 mt-0.5" />
                 <span>
-                  El archivo se renombrará físicamente en el disco dentro de <code className="text-amber-300">public{renameModalItem.folder}</code>. Conserva la extensión del archivo.
+                  El archivo se renombrará físicamente en el disco dentro de <code className="text-amber-800 font-semibold">public{renameModalItem.folder}</code>. Conserva la extensión del archivo.
                 </span>
               </div>
 
@@ -1849,7 +1779,7 @@ const Admin: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setRenameModalItem(null)}
-                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition"
+                  className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
                 >
                   Cancelar
                 </button>
@@ -1857,7 +1787,7 @@ const Admin: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isRenaming}
-                  className="px-5 py-2.5 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold shadow-lg transition disabled:opacity-50 flex items-center gap-2"
+                  className="px-5 py-2.5 bg-accent-700 hover:bg-accent-800 text-white rounded-xl text-xs font-semibold shadow-md transition disabled:opacity-50 flex items-center gap-2"
                 >
                   {isRenaming && <RefreshCw size={14} className="animate-spin" />}
                   <span>{isRenaming ? "Renombrando..." : "Guardar Nuevo Nombre"}</span>
@@ -1872,24 +1802,24 @@ const Admin: React.FC = () => {
       {/* MODAL 2: DELETE IMAGE CONFIRMATION (BORRAR)          */}
       {/* ---------------------------------------------------- */}
       {deleteModalItem && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-fade-in">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <AlertTriangle size={18} className="text-red-400" />
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-fade-in">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <AlertTriangle size={18} className="text-red-500" />
                 ¿Eliminar Imagen de public/?
               </h3>
               <button
                 onClick={() => setDeleteModalItem(null)}
-                className="text-slate-400 hover:text-white transition"
+                className="text-slate-400 hover:text-slate-700 transition"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <div className="p-4 bg-red-950/30 border border-red-900/50 rounded-xl space-y-3">
+            <div className="p-4 bg-red-50 border border-red-200 rounded-xl space-y-3">
               <div className="flex items-center gap-3">
-                <div className="h-16 w-16 bg-slate-950 rounded border border-red-900/40 flex items-center justify-center overflow-hidden shrink-0">
+                <div className="h-16 w-16 bg-white rounded border border-red-200 flex items-center justify-center overflow-hidden shrink-0">
                   <img
                     src={getImageUrl(deleteModalItem.relativePath)}
                     alt={deleteModalItem.name}
@@ -1897,13 +1827,13 @@ const Admin: React.FC = () => {
                   />
                 </div>
                 <div className="overflow-hidden">
-                  <span className="text-xs font-bold text-white truncate block">{deleteModalItem.name}</span>
-                  <code className="text-xs text-red-300 font-mono block truncate">public{deleteModalItem.relativePath}</code>
-                  <span className="text-[10px] text-slate-400 block">{formatBytes(deleteModalItem.size)}</span>
+                  <span className="text-xs font-bold text-slate-900 truncate block">{deleteModalItem.name}</span>
+                  <code className="text-xs text-red-700 font-mono font-semibold block truncate">public{deleteModalItem.relativePath}</code>
+                  <span className="text-[10px] text-slate-500 block">{formatBytes(deleteModalItem.size)}</span>
                 </div>
               </div>
 
-              <p className="text-xs text-red-200 leading-relaxed">
+              <p className="text-xs text-red-800 leading-relaxed font-medium">
                 ⚠️ **Esta acción es irreversible**. El archivo se eliminará de forma permanente del disco duro en el servidor.
               </p>
             </div>
@@ -1912,7 +1842,7 @@ const Admin: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setDeleteModalItem(null)}
-                className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition"
+                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
               >
                 Cancelar
               </button>
@@ -1921,7 +1851,7 @@ const Admin: React.FC = () => {
                 type="button"
                 onClick={handleDeleteSubmit}
                 disabled={isDeleting}
-                className="px-5 py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-xl text-xs font-semibold shadow-lg shadow-red-900/40 transition disabled:opacity-50 flex items-center gap-2"
+                className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-red-900/20 transition disabled:opacity-50 flex items-center gap-2"
               >
                 {isDeleting && <RefreshCw size={14} className="animate-spin" />}
                 <span>{isDeleting ? "Eliminando..." : "Eliminar Definitivamente"}</span>
@@ -1935,16 +1865,16 @@ const Admin: React.FC = () => {
       {/* MODAL 3: UPLOAD NEW IMAGE (SUBIR NUEVA IMAGEN)       */}
       {/* ---------------------------------------------------- */}
       {uploadModalOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl animate-fade-in">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-3">
-              <h3 className="text-base font-bold text-white flex items-center gap-2">
-                <Plus size={18} className="text-primary-400" />
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-2xl max-w-lg w-full p-6 space-y-5 shadow-2xl animate-fade-in">
+            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
+              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
+                <Plus size={18} className="text-accent-700" />
                 Subir Nueva Imagen a public/
               </h3>
               <button
                 onClick={() => setUploadModalOpen(false)}
-                className="text-slate-400 hover:text-white transition"
+                className="text-slate-400 hover:text-slate-700 transition"
               >
                 <X size={18} />
               </button>
@@ -1953,13 +1883,13 @@ const Admin: React.FC = () => {
             <form onSubmit={handleUploadNewSubmit} className="space-y-4">
               {/* Folder Selector */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
                   Carpeta de Destino en public/
                 </label>
                 <select
                   value={newImageFolder}
                   onChange={(e) => setNewImageFolder(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-4 py-3 outline-none focus:border-primary-500"
+                  className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-4 py-3 outline-none focus:border-accent-700 focus:ring-2 focus:ring-accent-700/20"
                 >
                   <option value="/">/ (Directorio Raíz de public)</option>
                   {availableFolders.filter((f) => f !== "/").map((folder) => (
@@ -1972,7 +1902,7 @@ const Admin: React.FC = () => {
 
               {/* Custom Filename (Optional) */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
                   Nombre Personalizado del Archivo (Opcional)
                 </label>
                 <input
@@ -1980,19 +1910,19 @@ const Admin: React.FC = () => {
                   placeholder="ejemplo: mi-nueva-foto.png (Si se deja vacío usará el nombre original)"
                   value={newImageCustomName}
                   onChange={(e) => setNewImageCustomName(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700 text-white text-sm rounded-xl px-4 py-2.5 outline-none focus:border-primary-500 font-mono text-xs"
+                  className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-4 py-2.5 outline-none focus:border-accent-700 focus:ring-2 focus:ring-accent-700/20 font-mono text-xs"
                 />
               </div>
 
               {/* File Dropzone */}
               <div>
-                <label className="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">
+                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
                   Seleccionar Archivo de Imagen
                 </label>
                 <div
                   className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition ${newImageFile
-                      ? "border-emerald-500/80 bg-emerald-950/20"
-                      : "border-slate-700 hover:border-primary-500 bg-slate-950/50"
+                    ? "border-emerald-500 bg-emerald-50"
+                    : "border-slate-300 hover:border-accent-700 bg-slate-50 hover:bg-slate-100/50"
                     }`}
                   onClick={() => fileInputRef.current?.click()}
                 >
@@ -2009,26 +1939,26 @@ const Admin: React.FC = () => {
 
                   {newImageFile ? (
                     <div className="space-y-2">
-                      <CheckCircle2 size={36} className="mx-auto text-emerald-400" />
-                      <span className="block text-xs font-bold text-white">{newImageFile.name}</span>
-                      <span className="block text-[10px] text-emerald-300">{formatBytes(newImageFile.size)}</span>
-                      <span className="inline-block text-[10px] text-slate-400 underline">Haz clic para cambiar de archivo</span>
+                      <CheckCircle2 size={36} className="mx-auto text-emerald-600" />
+                      <span className="block text-xs font-bold text-slate-900">{newImageFile.name}</span>
+                      <span className="block text-[10px] text-emerald-700 font-semibold">{formatBytes(newImageFile.size)}</span>
+                      <span className="inline-block text-[10px] text-slate-500 underline">Haz clic para cambiar de archivo</span>
                     </div>
                   ) : (
                     <div className="space-y-2">
-                      <UploadCloud size={36} className="mx-auto text-primary-400" />
-                      <span className="block text-xs font-semibold text-white">Haz clic o arrastra una imagen aquí</span>
-                      <span className="block text-[10px] text-slate-400">PNG, JPG, WEBP, SVG, GIF (máx. 10MB)</span>
+                      <UploadCloud size={36} className="mx-auto text-accent-700" />
+                      <span className="block text-xs font-semibold text-slate-900">Haz clic o arrastra una imagen aquí</span>
+                      <span className="block text-[10px] text-slate-500">PNG, JPG, WEBP, SVG, GIF (máx. 10MB)</span>
                     </div>
                   )}
                 </div>
               </div>
 
-              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-800">
+              <div className="flex items-center justify-end gap-3 pt-3 border-t border-slate-200">
                 <button
                   type="button"
                   onClick={() => setUploadModalOpen(false)}
-                  className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl text-xs font-semibold transition"
+                  className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
                 >
                   Cancelar
                 </button>
@@ -2036,7 +1966,7 @@ const Admin: React.FC = () => {
                 <button
                   type="submit"
                   disabled={isUploadingNew || !newImageFile}
-                  className="px-5 py-2.5 bg-primary-700 hover:bg-primary-600 text-white rounded-xl text-xs font-semibold shadow-lg shadow-primary-900/40 transition disabled:opacity-50 flex items-center gap-2"
+                  className="px-5 py-2.5 bg-accent-700 hover:bg-accent-800 text-white rounded-xl text-xs font-semibold shadow-md shadow-accent-950/20 transition disabled:opacity-50 flex items-center gap-2"
                 >
                   {isUploadingNew && <RefreshCw size={14} className="animate-spin" />}
                   <span>{isUploadingNew ? "Subiendo..." : "Subir a public/"}</span>
