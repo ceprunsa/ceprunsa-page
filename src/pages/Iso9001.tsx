@@ -1,27 +1,35 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { ArrowLeft, ShieldCheck, CheckCircle2, Award, FileCheck, RefreshCw, Users, Star } from "lucide-react";
+import { useConfig } from "../context/ConfigContext";
 
 const Iso9001: React.FC = () => {
+  const { getImageUrl } = useConfig();
   return (
     <div className="bg-slate-50 min-h-screen pb-16">
-      {/* Hero Header */}
-      <div className="relative bg-gradient-to-r from-primary-900 via-primary-800 to-accent-900 text-white py-16 sm:py-20 overflow-hidden">
-        <div className="absolute inset-0 bg-pattern opacity-10 pointer-events-none" />
-        <div className="container-custom relative z-10">
+      {/* Hero Image Header */}
+      <div className="relative w-full h-[280px] sm:h-[380px] md:h-[460px] overflow-hidden shadow-xl">
+        <img
+          src={getImageUrl("/images/nosotros/iso-9001.jpg")}
+          alt="Certificación ISO 9001 CEPRUNSA"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent" />
+        
+        <div className="absolute bottom-8 left-0 right-0 container-custom z-10 text-white">
           <Link
             to="/nosotros#conoce-mas"
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-semibold mb-6 transition-colors backdrop-blur-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-semibold mb-3 transition-colors backdrop-blur-sm"
           >
             <ArrowLeft size={16} /> Volver a Nosotros
           </Link>
-          <div className="inline-block px-3 py-1 rounded-md bg-yellow-400 text-slate-900 font-extrabold text-xs uppercase tracking-widest mb-3">
+          <div className="inline-block px-3 py-1 rounded-md bg-yellow-400 text-slate-900 font-extrabold text-xs uppercase tracking-widest mb-3 shadow">
             Calidad Garantizada
           </div>
-          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-3">
+          <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight mb-2 drop-shadow-md">
             Certificación <span className="text-yellow-400">ISO 9001:2015</span>
           </h1>
-          <p className="text-primary-100 max-w-2xl text-base sm:text-lg">
+          <p className="text-primary-100 max-w-2xl text-base sm:text-lg drop-shadow">
             Compromiso institucional con los más altos estándares internacionales en la gestión de servicios educativos preuniversitarios.
           </p>
         </div>

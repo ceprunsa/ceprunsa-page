@@ -33,28 +33,28 @@ const carouselItems: CarouselItem[] = [
     title: "Preparación que se vive en equipo",
     description:
       "Aprendizaje activo, acompañamiento docente y objetivos claros.",
-    image: "/ceprunsa-estudiantes-demo.jpg",
+    image: "/images/home/ceprunsa-estudiantes-demo.jpg",
   },
   {
     type: "image",
     title: "Estudiantes CEPRUNSA",
     description:
       "Preparándose para el examen de ingreso a la UNSA",
-    image: "/home_image.jpeg",
+    image: "/images/home/home_image.jpeg",
   },
   {
     type: "image",
     title: "Conoce CEPRUNSA",
     description:
       "Un espacio de preparación conectado con la comunidad universitaria.",
-    image: "/ceprunsa_local.jpeg",
+    image: "/images/home/ceprunsa_local.jpeg",
   },
   {
     type: "image",
     title: "Ciclo Quintos",
     description:
       "Una alternativa pensada para estudiantes de quinto de secundaria.",
-    image: "/ceprunsa_ciclo_quintos.png",
+    image: "/images/procesos/ceprunsa_ciclo_quintos.png",
   },
 ];
 
@@ -134,7 +134,7 @@ const CountdownTimer: React.FC<{
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
-          src={getImageUrl(backgroundImage || "/ceprunsa_ciclo_quintos.png")}
+          src={getImageUrl(backgroundImage || "/images/procesos/ceprunsa_ciclo_quintos.png")}
           alt="Inscripciones CEPRUNSA"
           className="w-full h-full object-cover"
         />
@@ -316,7 +316,7 @@ const HeroCarousel: React.FC = () => {
               ) : (
                 <div className="w-full h-full relative overflow-hidden">
                   <img
-                    src={getImageUrl(item.image || "/home_image.jpeg")}
+                    src={getImageUrl(item.image || "/images/home/home_image.jpeg")}
                     alt={item.title}
                     loading={index === 0 ? "eager" : "lazy"}
                     fetchPriority={index === 0 ? "high" : "auto"}
@@ -428,7 +428,7 @@ const TestimonialsSection: React.FC<{
                 style={{ borderRadius: "0px 125px 125px 0px" }}
               >
                 <img
-                  src={getImageUrl((current as any).image || "/student_maria.jpg")}
+                  src={getImageUrl((current as any).image || "/images/home/student_maria.jpg")}
                   alt={current.name}
                   className="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-700"
                 />
@@ -579,7 +579,7 @@ const Home: React.FC = () => {
             >
               <div className="relative h-72 sm:h-80 md:h-96 w-full overflow-hidden bg-gray-100">
                 <img
-                  src={getImageUrl("/ceprunsa_ciclo_quintos.png")}
+                  src={getImageUrl("/images/procesos/ceprunsa_ciclo_quintos.png")}
                   alt="¿Estás en quinto de secundaria?"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />
@@ -598,7 +598,7 @@ const Home: React.FC = () => {
             >
               <div className="relative h-72 sm:h-80 md:h-96 w-full overflow-hidden bg-gray-100">
                 <img
-                  src={getImageUrl("/ceprunsa-estudiantes-demo.jpg")}
+                  src={getImageUrl("/images/home/ceprunsa-estudiantes-demo.jpg")}
                   alt="¿Terminaste el colegio?"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                 />

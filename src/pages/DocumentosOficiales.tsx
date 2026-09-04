@@ -15,7 +15,7 @@ const DocumentosOficiales: React.FC = () => {
         {/* Full Width Image */}
         <div className="w-full relative z-10 shadow-2xl order-1 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[50vh]">
           <img
-            src={getImageUrl("/documentos-oficiales-header.png")}
+            src={getImageUrl("/images/guias/documentos-oficiales-header.png")}
             alt="Documentos Oficiales CEPRUNSA"
             className="w-full h-full object-cover"
           />

@@ -132,7 +132,7 @@ const Carreras: React.FC = () => {
             <div className="flex-shrink-0">
               <div className="w-28 h-28 sm:w-36 sm:h-36 bg-white rounded-3xl shadow-lg border border-gray-100 p-3 flex items-center justify-center hover:scale-105 transition-transform duration-300">
                 <img
-                  src="/images/conocet-app-logo.png"
+                  src="/images/global/conocet-app-logo.png"
                   alt="ConoceT App Icon"
                   className="w-full h-full object-contain rounded-xl"
                 />

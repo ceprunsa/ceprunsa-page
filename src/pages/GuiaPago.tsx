@@ -57,7 +57,7 @@ const GuiaPago: React.FC = () => {
         {/* Full Width Image */}
         <div className="w-full relative z-10 shadow-2xl order-1 h-[250px] sm:h-[350px] md:h-[450px] lg:h-[50vh]">
           <img
-            src={getImageUrl("/pago-cuotas-header.png")}
+            src={getImageUrl("/images/guias/pago-cuotas-header.png")}
             alt="Pago de Cuotas CEPRUNSA"
             className="w-full h-full object-cover"
           />

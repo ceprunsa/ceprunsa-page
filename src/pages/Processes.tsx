@@ -413,7 +413,7 @@ const Processes: React.FC = () => {
                   <div className="absolute -top-10 -left-10 w-32 h-32 bg-white/10 rounded-full blur-xl pointer-events-none" />
                   <div className="w-32 h-32 mb-4 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center p-2 shadow-inner">
                     <img
-                      src={getImageUrl("/ceprunsa_estudiantes_demo.jpg")}
+                      src={getImageUrl("/images/home/ceprunsa-estudiantes-demo.jpg")}
                       alt="CEPRUNSA Estudiante"
                       className="w-full h-full object-cover rounded-full"
                       onError={(e) => {

@@ -13,6 +13,14 @@ export interface SiteConfigType {
   emailApplicantQuery: string;
 }
 
+export interface PublicImageItem {
+  name: string;
+  relativePath: string;
+  folder: string;
+  size: number;
+  mtime: number;
+}
+
 interface ImageOverrides {
   [originalPath: string]: string; // originalPath -> custom Data URL or relative URL in public
 }
@@ -23,9 +31,13 @@ interface ConfigContextType {
   updateConfig: (newConfig: Partial<SiteConfigType>) => Promise<boolean>;
   resetConfig: () => Promise<boolean>;
   uploadImage: (targetPath: string, file: File) => Promise<boolean>;
+  setCustomImageOverride: (targetPath: string, sourcePath: string) => void;
   resetImage: (targetPath: string) => void;
   resetAllImages: () => void;
   getImageUrl: (path: string) => string;
+  fetchPublicImages: () => Promise<PublicImageItem[]>;
+  renamePublicImage: (oldPath: string, newName: string) => Promise<{ success: boolean; newPath?: string; error?: string }>;
+  deletePublicImage: (targetPath: string) => Promise<{ success: boolean; error?: string }>;
 }
 
 const CONFIG_STORAGE_KEY = "ceprunsa_site_config_v1";
@@ -160,6 +172,13 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     });
   };
 
+  const setCustomImageOverride = (targetPath: string, sourcePath: string) => {
+    setImageOverrides((prev) => ({
+      ...prev,
+      [targetPath]: sourcePath,
+    }));
+  };
+
   const resetImage = (targetPath: string) => {
     setImageOverrides((prev) => {
       const next = { ...prev };
@@ -178,6 +197,68 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     return imageOverrides[path] || path;
   };
 
+  const fetchPublicImages = async (): Promise<PublicImageItem[]> => {
+    try {
+      const res = await fetch("/api/admin/list-public-images");
+      if (res.ok) {
+        const data = await res.json();
+        if (data.success && Array.isArray(data.images)) {
+          return data.images;
+        }
+      }
+    } catch (err) {
+      console.warn("Could not fetch public images from server API:", err);
+    }
+    return [];
+  };
+
+  const renamePublicImage = async (
+    oldPath: string,
+    newName: string
+  ): Promise<{ success: boolean; newPath?: string; error?: string }> => {
+    try {
+      const res = await fetch("/api/admin/rename-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ oldPath, newName }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setImageOverrides((prev) => {
+          if (!prev[oldPath]) return prev;
+          const next = { ...prev };
+          next[data.newPath] = next[oldPath];
+          delete next[oldPath];
+          return next;
+        });
+        return { success: true, newPath: data.newPath };
+      }
+      return { success: false, error: data.error || "Failed to rename" };
+    } catch (err) {
+      console.error("Error calling rename-image API:", err);
+      return { success: false, error: "Network error" };
+    }
+  };
+
+  const deletePublicImage = async (targetPath: string): Promise<{ success: boolean; error?: string }> => {
+    try {
+      const res = await fetch("/api/admin/delete-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ targetPath }),
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        resetImage(targetPath);
+        return { success: true };
+      }
+      return { success: false, error: data.error || "Failed to delete" };
+    } catch (err) {
+      console.error("Error calling delete-image API:", err);
+      return { success: false, error: "Network error" };
+    }
+  };
+
   return (
     <ConfigContext.Provider
       value={{
@@ -186,9 +267,13 @@ export const ConfigProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         updateConfig,
         resetConfig,
         uploadImage,
+        setCustomImageOverride,
         resetImage,
         resetAllImages,
         getImageUrl,
+        fetchPublicImages,
+        renamePublicImage,
+        deletePublicImage,
       }}
     >
       {children}

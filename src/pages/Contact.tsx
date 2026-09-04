@@ -201,7 +201,7 @@ const Contact: React.FC = () => {
                   </div>
                 </a>
 
-                        {/* Teléfono */}
+                {/* Teléfono */}
                 <a
                   href={`tel:+51${config.phoneNumber.replace(/[^0-9]/g, "")}`}
                   className="group flex items-center gap-4 bg-gray-50 hover:bg-blue-50 border border-gray-100 hover:border-blue-200 p-5 rounded-2xl transition-all duration-300 hover:shadow-soft hover:-translate-y-0.5"
@@ -315,7 +315,7 @@ const Contact: React.FC = () => {
                 className="group relative mt-6 block h-64 overflow-hidden rounded-2xl shadow-soft sm:h-72"
                 aria-label="Buscar la ubicación de CEPRUNSA en Google Maps"
               >
-                <img src="/ceprunsa_local.jpeg" alt="Sede de CEPRUNSA" width="848" height="355" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <img src="/images/home/ceprunsa_local.jpeg" alt="Sede de CEPRUNSA" width="848" height="355" loading="lazy" className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
                 <div className="absolute inset-0 bg-gradient-to-t from-primary-950/80 via-primary-900/10 to-transparent" />
                 <div className="absolute bottom-0 left-0 p-5 text-white flex items-end gap-3 w-full">
                   <div className="flex-shrink-0 w-12 h-12 rounded-full bg-accent-600/80 backdrop-blur-sm flex items-center justify-center shadow-lg">

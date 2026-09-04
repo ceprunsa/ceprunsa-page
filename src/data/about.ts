@@ -109,7 +109,7 @@ export const teamMembers = [
     role: "Directora",
     description:
       "Doctora en Psicología (UCM, España), experta en Psicoterapia Breve y Gestión Educativa.",
-    image: "/DRA-MARIA-ELENA-2.jpg",
+    image: "/images/nosotros/DRA-MARIA-ELENA-2.jpg",
     cvLink:
       "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=20316",
   },
@@ -118,7 +118,7 @@ export const teamMembers = [
     role: "Coordinador Académico",
     description:
       "Mg. en Docencia Universitaria y Gestión Educativa. Licenciado en Filosofía (UNSA).",
-    image: "/DR-ARNALDO.jpg",
+    image: "/images/nosotros/DR-ARNALDO.jpg",
     cvLink:
       "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=63640",
   },
@@ -127,7 +127,7 @@ export const teamMembers = [
     role: "Coordinador Administrativo",
     description:
       "Mg. en Biología Funcional y Molecular (UNICAMP). Lic. en Ciencias Biológicas e Ing. Ambiental (UNSA).",
-    image: "/DR-JOSE.jpg",
+    image: "/images/nosotros/DR-JOSE.jpg",
     cvLink:
       "https://dina.concytec.gob.pe/appDirectorioCTI/VerDatosInvestigador.do?id_investigador=150092",
   },

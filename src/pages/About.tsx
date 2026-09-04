@@ -87,8 +87,8 @@ const About: React.FC = () => {
         {/* Full Width Image */}
         <div className="w-full relative z-10 shadow-2xl order-1 h-[300px] sm:h-[400px] md:h-[500px] lg:h-[60vh]">
           <img
-            src="/ceprunsa_local.jpeg"
-            alt="CEPRUNSA Local"
+            src={getImageUrl("/images/nosotros/ceprunsa-local.jpg")}
+            alt="CEPRUNSA Local Campus"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
@@ -154,7 +154,7 @@ const About: React.FC = () => {
               <div className="rounded-2xl bg-white p-3 shadow-large border border-primary-100 sm:p-4">
                 <div className="relative h-[300px] overflow-hidden rounded-xl sm:h-[400px] group">
                   <img
-                    src="/ceprunsa_local.jpeg"
+                    src={getImageUrl("/images/nosotros/ceprunsa-local.jpg")}
                     alt="Instalaciones de CEPRUNSA en Arequipa"
                     width="848"
                     height="355"
@@ -203,7 +203,7 @@ const About: React.FC = () => {
               className="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 block h-72 sm:h-80 lg:h-96 border border-slate-100"
             >
               <img
-                src={getImageUrl("/nosotros_opciones.jpg")}
+                src={getImageUrl("/images/nosotros/mision-vision.jpg")}
                 alt="Nuestra Misión y Visión"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
@@ -224,7 +224,7 @@ const About: React.FC = () => {
               className="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 block h-72 sm:h-80 lg:h-96 border border-slate-100"
             >
               <img
-                src={getImageUrl("/ceprunsa_local.jpeg")}
+                src={getImageUrl("/images/nosotros/iso-9001.jpg")}
                 alt="Certificación ISO 9001:2015"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />
@@ -245,7 +245,7 @@ const About: React.FC = () => {
               className="group relative rounded-3xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 block h-72 sm:h-80 lg:h-96 border border-slate-100"
             >
               <img
-                src={getImageUrl("/acceso-clases-header.png")}
+                src={getImageUrl("/images/nosotros/metodologia.jpg")}
                 alt="Nuestra Metodología"
                 className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               />

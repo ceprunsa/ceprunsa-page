@@ -114,7 +114,7 @@ const Header: React.FC = () => {
       >
         <div className="container-custom flex h-[72px] items-center justify-between">
           <Link data-header-item to="/" className="flex items-center" aria-label="CEPRUNSA, inicio">
-            <img src={getImageUrl("/logo-ceprunsa-white.png")} alt="CEPRUNSA" className="h-9 w-auto sm:h-10" />
+            <img src={getImageUrl("/images/global/logo-ceprunsa-white.png")} alt="CEPRUNSA" className="h-9 w-auto sm:h-10" />
           </Link>
 
           {/* Desktop nav */}

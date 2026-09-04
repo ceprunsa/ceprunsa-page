@@ -33,7 +33,7 @@ export const processes: Processes[] = [
     shortTitle: "I Fase",
     badge: "MARZO - JULIO",
     targetAudience: "5° de Secundaria y Secundaria Completa",
-    image: "/ceprunsa_i_fase.jpg",
+    image: "/images/procesos/ceprunsa_i_fase.jpg",
     duration: "10 semanas",
     schedule: "Primera oportunidad anual",
     description:
@@ -111,7 +111,7 @@ export const processes: Processes[] = [
     shortTitle: "Ciclo Quintos",
     badge: "JULIO - NOVIEMBRE",
     targetAudience: "Exclusivo 5° de Secundaria en 2026",
-    image: "/ceprunsa_ciclo_quintos.png",
+    image: "/images/procesos/ceprunsa_ciclo_quintos.png",
     duration: "10 semanas",
     schedule: "Exclusivo para estudiantes de 5to año",
     description:
@@ -185,7 +185,7 @@ export const processes: Processes[] = [
     shortTitle: "II Fase",
     badge: "OCTUBRE - ENERO",
     targetAudience: "5° de Secundaria y Secundaria Completa",
-    image: "/ceprunsa_ii_fase.jpg",
+    image: "/images/procesos/ceprunsa_ii_fase.jpg",
     duration: "10 semanas",
     schedule: "Segunda oportunidad anual",
     description:
@@ -261,7 +261,7 @@ export const processes: Processes[] = [
     shortTitle: "Extraordinario",
     badge: "ENERO - FEBRERO",
     targetAudience: "Secundaria Completa",
-    image: "/proceso_extraordinario.jpg",
+    image: "/images/procesos/proceso_extraordinario.jpg",
     duration: "3 semanas",
     schedule: "Modalidad Intensiva",
     description:

@@ -20,7 +20,7 @@ const Footer: React.FC = () => {
       <div className="container-custom relative py-12 md:py-14">
         <div className="grid gap-10 border-b border-white/10 pb-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-5 md:col-span-2">
-            <img src={getImageUrl("/logo-ceprunsa-white.png")} alt="CEPRUNSA" className="h-10 w-auto" />
+            <img src={getImageUrl("/images/global/logo-ceprunsa-white.png")} alt="CEPRUNSA" className="h-10 w-auto" />
             <p className="max-w-lg text-sm leading-6 text-primary-200">
               Centro Preuniversitario de la Universidad Nacional de San Agustín de Arequipa. Preparación académica orientada a los procesos de ingreso UNSA.
             </p>
