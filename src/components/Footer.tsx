@@ -48,7 +48,7 @@ const Footer: React.FC = () => {
                 <img
                   src={getImageUrl("/images/global/libro-reclamaciones.png")}
                   alt="Libro de Reclamaciones Digital"
-                  className="h-12 w-auto object-contain md:h-14"
+                  className="h-16 w-auto object-contain md:h-20"
                 />
               </a>
             </div>
