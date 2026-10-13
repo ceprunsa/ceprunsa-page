@@ -19,7 +19,7 @@ module.exports = {
 
         // Paleta institucional UNSA
         primary: {
-          DEFAULT: "#1a2855",
+          DEFAULT: "#26335E",
           foreground: "#ffffff",
           50: "#f4f6fb",
           100: "#e6eaf4",
@@ -28,10 +28,10 @@ module.exports = {
           400: "#7485b1",
           500: "#3a4875",
           600: "#263865",
-          700: "#1a2855",
-          800: "#141f43",
-          900: "#0f1733",
-          950: "#080d1f",
+          700: "#26335E",
+          800: "#1b2444",
+          900: "#131a33",
+          950: "#090d19",
         },
 
         // Rojo granate/guinda como color de acento

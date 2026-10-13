@@ -11,6 +11,8 @@ const quickLinks: NavItem[] = [
   { name: "Contacto", path: "/contacto" },
 ];
 
+const RECLAMOS_URL = "https://reclamos.servicios.gob.pe/?institution_id=244";
+
 const Footer: React.FC = () => {
   const { config, getImageUrl } = useConfig();
 
@@ -24,14 +26,32 @@ const Footer: React.FC = () => {
             <p className="max-w-lg text-sm leading-6 text-primary-200">
               Centro Preuniversitario de la Universidad Nacional de San Agustín de Arequipa. Preparación académica orientada a los procesos de ingreso UNSA.
             </p>
-            <a
-              href="https://sisadmision.unsa.edu.pe/pregrado/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-accent-400"
-            >
-              Portal de admisión <ArrowUpRight size={16} />
-            </a>
+            <div className="flex flex-wrap items-center gap-4">
+              <a
+                href="https://sisadmision.unsa.edu.pe/pregrado/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-accent-400"
+              >
+                Portal de admisión <ArrowUpRight size={16} />
+              </a>
+            </div>
+
+            <div className="pt-2">
+              <a
+                href={RECLAMOS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block transition-transform duration-200 hover:scale-105"
+                title="Libro de Reclamaciones Digital"
+              >
+                <img
+                  src={getImageUrl("/images/global/libro-reclamaciones.png")}
+                  alt="Libro de Reclamaciones Digital"
+                  className="h-12 w-auto object-contain md:h-14"
+                />
+              </a>
+            </div>
           </div>
 
           <div>
@@ -63,7 +83,7 @@ const Footer: React.FC = () => {
                   </a>
                 </div>
               </div>
-              
+
               <div className="flex items-start gap-3">
                 <Phone className="mt-1 shrink-0 text-accent-400" size={17} />
                 <div>
@@ -92,9 +112,12 @@ const Footer: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="flex flex-col gap-2 pt-6 text-xs text-primary-300 sm:flex-row sm:items-center sm:justify-between">
-          <p>© {new Date().getFullYear()} CEPRUNSA. Todos los derechos reservados.</p>
-          <p>Universidad Nacional de San Agustín de Arequipa</p>
+        <div className="pt-6 text-xs text-primary-300">
+          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1 text-center">
+            <p>© {new Date().getFullYear()} CEPRUNSA. Todos los derechos reservados.</p>
+            <span className="hidden text-white/20 sm:inline">•</span>
+            <p>Universidad Nacional de San Agustín de Arequipa</p>
+          </div>
         </div>
       </div>
     </footer>
