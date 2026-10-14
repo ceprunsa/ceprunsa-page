@@ -16,6 +16,7 @@ import {
 } from "lucide-react";
 import { stats, testimonials } from "../data";
 import { useConfig } from "../context/ConfigContext";
+import FlyerModal from "../components/FlyerModal";
 gsap.registerPlugin(ScrollTrigger);
 
 interface CarouselItem {
@@ -538,6 +539,9 @@ const Home: React.FC = () => {
 
   return (
     <div>
+      {/* Flyer Popup Modal */}
+      <FlyerModal />
+
       {/* Hero Section */}
       <section
         ref={heroRef}
