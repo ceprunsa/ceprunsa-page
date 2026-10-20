@@ -11,7 +11,7 @@ interface FlyerModalProps {
 }
 
 export const FlyerModal: React.FC<FlyerModalProps> = ({
-  imagePath = "/images/procesos/flyer/ceprunsa-segunda-fase-flyer.jpg",
+  imagePath = "/images/procesos/flyer/ceprunsa-segunda-fase-flyer1.jpg",
   targetUrl = "/procesos?proceso=ceprunsa-2",
   altText = "Flyer informativo CEPRUNSA II Fase - Clic para ver detalles",
 }) => {

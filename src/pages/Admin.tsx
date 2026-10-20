@@ -3,7 +3,6 @@ import {
   Lock,
   User,
   Save,
-  RotateCcw,
   UploadCloud,
   CheckCircle2,
   AlertCircle,
@@ -13,13 +12,10 @@ import {
   Eye,
   EyeOff,
   Search,
-  FileCode,
   Building,
   Phone,
   Mail,
   HelpCircle,
-  Edit3,
-  Trash2,
   RefreshCw,
   Folder,
   Grid,
@@ -29,9 +25,9 @@ import {
   Copy,
   Check,
   FileImage,
-  AlertTriangle,
+  ArrowRight,
 } from "lucide-react";
-import { useConfig, type PublicImageItem } from "../context/ConfigContext";
+import { useConfig, type PublicImageItem, type ReplacementPreviewData } from "../context/ConfigContext";
 
 // Target image definitions categorized by Page for Admin Quick Reference
 export type PageCategory = "home" | "nosotros" | "carreras" | "procesos" | "guias" | "global";
@@ -86,6 +82,15 @@ const SITE_IMAGES: ImageItem[] = [
   },
 
   // 🏠 INICIO (HOME)
+  {
+    id: "home-flyer-modal",
+    name: "Flyer Emergente (Pop-up Principal)",
+    page: "home",
+    pageName: "Inicio",
+    section: "Ventana Emergente (Pop-up Flyer)",
+    path: "/images/procesos/flyer/ceprunsa-segunda-fase-flyer1.jpg",
+    description: "Afiche publicitario emergente que se abre automáticamente al entrar al sitio",
+  },
   {
     id: "home-hero",
     name: "Carrusel Slide 1 - Estudiantes UNSA",
@@ -359,15 +364,14 @@ const Admin: React.FC = () => {
   const {
     config,
     updateConfig,
-    resetConfig,
     uploadImage,
+    prepareUploadReplacement,
+    commitReplacement,
+    cancelReplacement,
     setCustomImageOverride,
-    resetImage,
     getImageUrl,
     imageOverrides,
     fetchPublicImages,
-    renamePublicImage,
-    deletePublicImage,
   } = useConfig();
 
   // Local config form state
@@ -378,12 +382,6 @@ const Admin: React.FC = () => {
   const [publicImages, setPublicImages] = useState<PublicImageItem[]>([]);
 
   // Modals state
-  const [renameModalItem, setRenameModalItem] = useState<PublicImageItem | null>(null);
-  const [renameInput, setRenameInput] = useState("");
-  const [isRenaming, setIsRenaming] = useState(false);
-
-  const [deleteModalItem, setDeleteModalItem] = useState<PublicImageItem | null>(null);
-  const [isDeleting, setIsDeleting] = useState(false);
 
   const [uploadModalOpen, setUploadModalOpen] = useState(false);
   const [newImageFolder, setNewImageFolder] = useState("/");
@@ -398,7 +396,7 @@ const Admin: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Presets tab filter state & view mode
-  const [presetImages, setPresetImages] = useState<ImageItem[]>(SITE_IMAGES);
+  const presetImages = SITE_IMAGES;
   const [selectedPresetPage, setSelectedPresetPage] = useState<string>("home");
   const [selectedPresetSection, setSelectedPresetSection] = useState<string>("all");
   const [presetSearch, setPresetSearch] = useState("");
@@ -415,6 +413,11 @@ const Admin: React.FC = () => {
   const [pickerFolder, setPickerFolder] = useState<string>("all");
   const [pickerSearch, setPickerSearch] = useState<string>("");
   const [selectedPublicImagePath, setSelectedPublicImagePath] = useState<string | null>(null);
+
+  // Replacement Confirmation Preview Modal state
+  const [confirmPreview, setConfirmPreview] = useState<ReplacementPreviewData | null>(null);
+  const [isConfirming, setIsConfirming] = useState(false);
+  const [isCancelling, setIsCancelling] = useState(false);
 
   const openReplaceModal = (item: ImageItem) => {
     setReplaceModalItem(item);
@@ -433,7 +436,7 @@ const Admin: React.FC = () => {
       const images = await fetchPublicImages();
       setPublicImages(images);
     } catch (err) {
-      showToast("Error al cargar imágenes de public", "error");
+      showToast("Error al cargar imágenes", "error");
     }
   };
 
@@ -482,97 +485,84 @@ const Admin: React.FC = () => {
     }
   };
 
-  const handleResetConfig = async () => {
-    if (window.confirm("¿Deseas restablecer toda la configuración a los valores por defecto?")) {
-      await resetConfig();
-      showToast("Configuración restablecida por defecto.");
+  // Helper to extract clean file name from path or Supabase URL
+  const getFileName = (pathOrUrl: string) => {
+    if (!pathOrUrl) return "";
+    const clean = pathOrUrl.split("?")[0];
+    const filename = clean.split("/").pop() || clean;
+    try {
+      return decodeURIComponent(filename);
+    } catch {
+      return filename;
     }
   };
 
-  // Replace image handler
-  const handleReplaceFile = async (targetPath: string, file: File) => {
+  // Replace image handler (prepares upload and displays comparison preview popup)
+  const handleReplaceFile = async (targetPath: string, file: File, itemName?: string) => {
     if (!file.type.startsWith("image/")) {
       showToast("Por favor selecciona un archivo de imagen válido (.png, .jpg, .webp, .svg, etc.)", "error");
       return;
     }
 
-    showToast(`Reemplazando imagen ${targetPath}...`);
-    const success = await uploadImage(targetPath, file);
-    if (success) {
-      showToast(`Imagen reemplazada correctamente en public${targetPath}`);
-      await loadPublicImages();
+    showToast(`Preparando previsualización de ${file.name}...`);
+    const res = await prepareUploadReplacement(targetPath, file, itemName);
+    if (res.success && res.preview) {
+      setConfirmPreview(res.preview);
+      setReplaceModalItem(null);
     } else {
-      showToast("Error al reemplazar la imagen.", "error");
+      showToast(res.error || "Error al subir la imagen para previsualización.", "error");
     }
   };
 
-  // Rename modal submit
-  const handleRenameSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!renameModalItem || !renameInput.trim()) return;
-
-    setIsRenaming(true);
-    const result = await renamePublicImage(renameModalItem.relativePath, renameInput.trim());
-    setIsRenaming(false);
-
-    if (result.success) {
-      const newPath = result.newPath || renameInput.trim();
-      showToast(`Imagen renombrada a "${newPath}"`);
-      setPresetImages((prev) =>
-        prev.map((item) => (item.path === renameModalItem.relativePath ? { ...item, path: newPath } : item))
-      );
-      setRenameModalItem(null);
-      setRenameInput("");
-      await loadPublicImages();
-    } else {
-      showToast(`Error al renombrar: ${result.error || "No se pudo cambiar el nombre"}`, "error");
+  // Confirm replacement action
+  const handleConfirmReplacement = async () => {
+    if (!confirmPreview) return;
+    setIsConfirming(true);
+    try {
+      if (confirmPreview.isTempUploaded) {
+        const res = await commitReplacement(confirmPreview);
+        if (res.success) {
+          showToast(`Imagen reemplazada correctamente con ${confirmPreview.newFileName}.`);
+          setConfirmPreview(null);
+          await loadPublicImages();
+        } else {
+          showToast(res.error || "Error al confirmar el reemplazo.", "error");
+        }
+      } else {
+        // Selected from gallery
+        setCustomImageOverride(confirmPreview.targetPath, confirmPreview.newImageUrl);
+        showToast(`Imagen actualizada correctamente.`);
+        setConfirmPreview(null);
+        await loadPublicImages();
+      }
+    } catch (err: any) {
+      showToast(err.message || "Error al confirmar el reemplazo.", "error");
+    } finally {
+      setIsConfirming(false);
     }
   };
 
-  // Delete modal submit
-  const handleDeleteSubmit = async () => {
-    if (!deleteModalItem) return;
-
-    setIsDeleting(true);
-    const result = await deletePublicImage(deleteModalItem.relativePath);
-    setIsDeleting(false);
-
-    if (result.success) {
-      showToast(`Imagen "${deleteModalItem.name}" eliminada de public/`);
-      setPresetImages((prev) => prev.filter((item) => item.path !== deleteModalItem.relativePath));
-      setDeleteModalItem(null);
+  // Cancel replacement action
+  const handleCancelReplacement = async () => {
+    if (!confirmPreview) return;
+    setIsCancelling(true);
+    try {
+      if (confirmPreview.isTempUploaded) {
+        await cancelReplacement(confirmPreview);
+        showToast("Reemplazo cancelado. La nueva imagen fue eliminada y se mantiene la anterior.", "success");
+      } else {
+        showToast("Reemplazo cancelado. Se mantiene la imagen anterior.");
+      }
+      setConfirmPreview(null);
       await loadPublicImages();
-    } else {
-      showToast(`Error al eliminar: ${result.error || "No se pudo eliminar la imagen"}`, "error");
+    } catch (err: any) {
+      showToast("Error al cancelar el reemplazo.", "error");
+    } finally {
+      setIsCancelling(false);
     }
   };
 
-  // Helper to open rename modal for preset item
-  const openRenameModalForPreset = (item: ImageItem) => {
-    const filename = item.path.split("/").pop() || item.name;
-    const folder = item.path.substring(0, item.path.lastIndexOf("/")) || "/";
-    setRenameModalItem({
-      relativePath: item.path,
-      name: filename,
-      folder: folder,
-      size: 0,
-      mtime: Date.now(),
-    });
-    setRenameInput(filename);
-  };
 
-  // Helper to open delete modal for preset item
-  const openDeleteModalForPreset = (item: ImageItem) => {
-    const filename = item.path.split("/").pop() || item.name;
-    const folder = item.path.substring(0, item.path.lastIndexOf("/")) || "/";
-    setDeleteModalItem({
-      relativePath: item.path,
-      name: filename,
-      folder: folder,
-      size: 0,
-      mtime: Date.now(),
-    });
-  };
 
   // Upload new image modal submit
   const handleUploadNewSubmit = async (e: React.FormEvent) => {
@@ -591,7 +581,7 @@ const Admin: React.FC = () => {
     setIsUploadingNew(false);
 
     if (success) {
-      showToast(`Nueva imagen subida correctamente en public${targetPath}`);
+      showToast(`Nueva imagen subida correctamente.`);
       setUploadModalOpen(false);
       setNewImageFile(null);
       setNewImageCustomName("");
@@ -604,7 +594,7 @@ const Admin: React.FC = () => {
   const copyToClipboard = (text: string) => {
     navigator.clipboard.writeText(text);
     setCopiedPath(text);
-    showToast(`Ruta copiada: ${text}`);
+    showToast(`Copiado: ${text}`);
     setTimeout(() => setCopiedPath(null), 3000);
   };
 
@@ -797,13 +787,17 @@ const Admin: React.FC = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold text-slate-900 leading-tight">Panel de Administración</h1>
-              <p className="text-xs text-slate-500">Gestión de CEPRUNSA - Configuración e Imágenes `public/`</p>
+              <p className="text-xs text-slate-500">Gestión de CEPRUNSA - Configuración e Imágenes</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-3">
             <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 border border-emerald-200 rounded-full text-xs text-emerald-700 font-medium">
               <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+              Sistema en Línea
+            </span>
+
+            <span className="hidden md:inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 rounded-full text-xs text-slate-700 font-medium">
               Administrador Activo
             </span>
 
@@ -825,8 +819,8 @@ const Admin: React.FC = () => {
           <button
             onClick={() => setActiveTab("presets")}
             className={`flex items-center gap-2.5 px-5 py-3 rounded-xl font-semibold text-sm transition cursor-pointer ${activeTab === "presets"
-                ? "bg-accent-700 text-white shadow-md shadow-accent-950/20"
-                : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200"
+              ? "bg-accent-700 text-white shadow-md shadow-accent-950/20"
+              : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200"
               }`}
           >
             <ImageIcon size={18} />
@@ -841,19 +835,19 @@ const Admin: React.FC = () => {
           <button
             onClick={() => setActiveTab("config")}
             className={`flex items-center gap-2.5 px-5 py-3 rounded-xl font-semibold text-sm transition cursor-pointer ${activeTab === "config"
-                ? "bg-accent-700 text-white shadow-md shadow-accent-950/20"
-                : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200"
+              ? "bg-accent-700 text-white shadow-md shadow-accent-950/20"
+              : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200"
               }`}
           >
             <Settings size={18} />
-            <span>Configuración Global (config.ts)</span>
+            <span>Configuración y Variables</span>
           </button>
         </div>
 
 
 
         {/* ---------------------------------------------------- */}
-        {/* TAB 2: CONFIGURATION EDITOR (config.ts)              */}
+        {/* TAB 2: CONFIGURATION EDITOR                          */}
         {/* ---------------------------------------------------- */}
         {activeTab === "config" && (
           <form onSubmit={handleSaveConfig} className="space-y-6">
@@ -861,23 +855,15 @@ const Admin: React.FC = () => {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
                 <div>
                   <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-                    <FileCode className="text-accent-700" size={22} />
-                    Editar Parámetros de `src/data/config.ts`
+                    <Settings className="text-accent-700" size={22} />
+                    Configuración y Variables Globales
                   </h2>
                   <p className="text-xs text-slate-500 mt-1">
-                    Los cambios guardados aquí actualizarán los contactos y estados en todo el sitio web al instante.
+                    Los cambios guardados aquí actualizarán los contactos y estados en todo el sitio web en tiempo real.
                   </p>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <button
-                    type="button"
-                    onClick={handleResetConfig}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold border border-slate-200 transition cursor-pointer"
-                  >
-                    <RotateCcw size={14} />
-                    Restablecer
-                  </button>
                   <button
                     type="submit"
                     disabled={isSaving}
@@ -1077,8 +1063,8 @@ const Admin: React.FC = () => {
                         key={pageTab.id}
                         onClick={() => handlePresetPageChange(pageTab.id)}
                         className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${selectedPresetPage === pageTab.id
-                            ? "bg-accent-700 text-white shadow-md shadow-accent-950/20"
-                            : "bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200"
+                          ? "bg-accent-700 text-white shadow-md shadow-accent-950/20"
+                          : "bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200"
                           }`}
                       >
                         <span>{pageTab.label}</span>
@@ -1100,8 +1086,8 @@ const Admin: React.FC = () => {
                         onClick={() => setPresetViewMode("grid")}
                         title="Vista de Cuadrícula"
                         className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg transition text-xs font-semibold cursor-pointer ${presetViewMode === "grid"
-                            ? "bg-accent-700 text-white shadow-xs"
-                            : "text-slate-500 hover:text-slate-800"
+                          ? "bg-accent-700 text-white shadow-xs"
+                          : "text-slate-500 hover:text-slate-800"
                           }`}
                       >
                         <Grid size={15} />
@@ -1112,8 +1098,8 @@ const Admin: React.FC = () => {
                         onClick={() => setPresetViewMode("list")}
                         title="Vista de Lista"
                         className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg transition text-xs font-semibold cursor-pointer ${presetViewMode === "list"
-                            ? "bg-accent-700 text-white shadow-xs"
-                            : "text-slate-500 hover:text-slate-800"
+                          ? "bg-accent-700 text-white shadow-xs"
+                          : "text-slate-500 hover:text-slate-800"
                           }`}
                       >
                         <List size={15} />
@@ -1125,7 +1111,7 @@ const Admin: React.FC = () => {
                       <Search size={16} className="absolute left-3 top-2.5 text-slate-400" />
                       <input
                         type="text"
-                        placeholder="Buscar por nombre, sección o ruta..."
+                        placeholder="Buscar por nombre, sección o archivo..."
                         value={presetSearch}
                         onChange={(e) => setPresetSearch(e.target.value)}
                         className="w-full bg-white border border-slate-300 text-slate-800 text-xs rounded-xl pl-9 pr-3 py-2 focus:border-accent-700 focus:ring-1 focus:ring-accent-700 outline-none"
@@ -1142,8 +1128,8 @@ const Admin: React.FC = () => {
                       type="button"
                       onClick={() => setSelectedPresetSection("all")}
                       className={`px-3 py-1 rounded-xl text-xs font-semibold transition cursor-pointer ${selectedPresetSection === "all"
-                          ? "bg-slate-800 text-white shadow-xs"
-                          : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
+                        ? "bg-slate-800 text-white shadow-xs"
+                        : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
                         }`}
                     >
                       Todas ({allPresets.filter((i) => selectedPresetPage === "all" || i.page === selectedPresetPage).length})
@@ -1158,8 +1144,8 @@ const Admin: React.FC = () => {
                           type="button"
                           onClick={() => setSelectedPresetSection(secName)}
                           className={`px-3 py-1 rounded-xl text-xs font-semibold transition cursor-pointer flex items-center gap-1.5 ${selectedPresetSection === secName
-                              ? "bg-accent-700 text-white shadow-sm shadow-accent-950/20"
-                              : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
+                            ? "bg-accent-700 text-white shadow-sm shadow-accent-950/20"
+                            : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
                             }`}
                         >
                           <span>{secName}</span>
@@ -1250,16 +1236,17 @@ const Admin: React.FC = () => {
                                   <p className="text-[11px] text-slate-500 line-clamp-1">{item.description}</p>
 
                                   <div className="flex items-center gap-2">
-                                    <code className="text-[10px] text-slate-600 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 truncate max-w-md">
-                                      public{item.path}
+                                    <span className="text-[10px] text-slate-400 font-medium">Archivo:</span>
+                                    <code className="text-[10px] text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 truncate max-w-xs font-mono font-medium">
+                                      {getFileName(currentUrl || item.path)}
                                     </code>
                                     <button
                                       type="button"
-                                      onClick={() => copyToClipboard(item.path)}
-                                      title="Copiar ruta"
+                                      onClick={() => copyToClipboard(getFileName(currentUrl || item.path))}
+                                      title="Copiar nombre del archivo"
                                       className="text-slate-400 hover:text-slate-700 transition cursor-pointer p-0.5"
                                     >
-                                      {copiedPath === item.path ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
+                                      {copiedPath === getFileName(currentUrl || item.path) ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
                                     </button>
                                   </div>
                                 </div>
@@ -1270,47 +1257,12 @@ const Admin: React.FC = () => {
                                 <button
                                   type="button"
                                   onClick={() => openReplaceModal(item)}
-                                  title="Reemplazar imagen escogiendo de public/ o subiendo archivo"
+                                  title="Reemplazar imagen o subir archivo"
                                   className="flex items-center gap-1.5 px-3 py-1.5 bg-accent-700 hover:bg-accent-800 text-white text-[11px] font-semibold rounded-xl shadow-xs transition cursor-pointer"
                                 >
                                   <UploadCloud size={13} />
                                   <span>Reemplazar</span>
                                 </button>
-
-                                <button
-                                  type="button"
-                                  onClick={() => openRenameModalForPreset(item)}
-                                  title="Cambiar nombre de la imagen"
-                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-[11px] font-medium rounded-xl border border-slate-200 transition cursor-pointer"
-                                >
-                                  <Edit3 size={13} className="text-amber-600" />
-                                  <span>Renombrar</span>
-                                </button>
-
-                                <button
-                                  type="button"
-                                  onClick={() => openDeleteModalForPreset(item)}
-                                  title="Eliminar archivo de imagen"
-                                  className="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-[11px] font-medium rounded-xl border border-red-200 transition cursor-pointer"
-                                >
-                                  <Trash2 size={13} />
-                                  <span>Borrar</span>
-                                </button>
-
-                                {isOverridden && (
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      resetImage(item.path);
-                                      showToast(`Imagen ${item.name} restablecida a la versión original.`);
-                                    }}
-                                    title="Restablecer a versión original"
-                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-[11px] font-medium rounded-xl border border-amber-200 transition cursor-pointer"
-                                  >
-                                    <RotateCcw size={12} />
-                                    <span>Restablecer</span>
-                                  </button>
-                                )}
                               </div>
                             </div>
                           );
@@ -1328,10 +1280,10 @@ const Admin: React.FC = () => {
                             <div
                               key={item.id}
                               className={`bg-white border rounded-2xl overflow-hidden transition-all duration-200 flex flex-col justify-between shadow-xs ${isHovered
-                                  ? "border-accent-700 ring-2 ring-accent-700/20 bg-accent-50/10"
-                                  : isOverridden
-                                    ? "border-amber-300 bg-amber-50/10 shadow-sm"
-                                    : "border-slate-200 hover:border-slate-300 hover:shadow-md"
+                                ? "border-accent-700 ring-2 ring-accent-700/20 bg-accent-50/10"
+                                : isOverridden
+                                  ? "border-amber-300 bg-amber-50/10 shadow-sm"
+                                  : "border-slate-200 hover:border-slate-300 hover:shadow-md"
                                 }`}
                             >
                               {/* Top Info Header */}
@@ -1361,15 +1313,20 @@ const Admin: React.FC = () => {
                                   <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">{item.description}</p>
                                 </div>
 
-                                <div className="flex items-center justify-between gap-2 bg-slate-50 px-2 py-1.5 rounded-lg border border-slate-200">
-                                  <code className="text-[10px] text-slate-600 truncate">public{item.path}</code>
+                                <div className="flex items-center justify-between gap-2 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-200">
+                                  <div className="flex items-center gap-1.5 min-w-0">
+                                    <FileImage size={13} className="text-accent-700 shrink-0" />
+                                    <span className="text-[10px] text-slate-700 font-mono font-medium truncate" title={getFileName(currentUrl || item.path)}>
+                                      {getFileName(currentUrl || item.path)}
+                                    </span>
+                                  </div>
                                   <button
                                     type="button"
-                                    onClick={() => copyToClipboard(item.path)}
-                                    title="Copiar ruta"
-                                    className="text-slate-400 hover:text-slate-700 transition cursor-pointer p-0.5"
+                                    onClick={() => copyToClipboard(getFileName(currentUrl || item.path))}
+                                    title="Copiar nombre del archivo"
+                                    className="text-slate-400 hover:text-slate-700 transition cursor-pointer p-0.5 shrink-0"
                                   >
-                                    {copiedPath === item.path ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
+                                    {copiedPath === getFileName(currentUrl || item.path) ? <Check size={12} className="text-emerald-600" /> : <Copy size={12} />}
                                   </button>
                                 </div>
                               </div>
@@ -1386,7 +1343,7 @@ const Admin: React.FC = () => {
                                   e.preventDefault();
                                   setDragOverPath(null);
                                   const file = e.dataTransfer.files?.[0];
-                                  if (file) handleReplaceFile(item.path, file);
+                                  if (file) handleReplaceFile(item.path, file, item.name);
                                 }}
                                 className="relative h-44 bg-slate-100 flex flex-col items-center justify-center p-3 text-center group cursor-pointer border-b border-slate-200"
                               >
@@ -1410,7 +1367,7 @@ const Admin: React.FC = () => {
                                   <span className="text-xs font-semibold text-white">
                                     {isHovered ? "¡Suelta la imagen aquí!" : "Haz clic para reemplazar la imagen"}
                                   </span>
-                                  <span className="text-[10px] text-slate-300 mt-1">Escoge de public/ o sube un archivo</span>
+                                  <span className="text-[10px] text-slate-300 mt-1">Escoge de la galería o sube un archivo nuevo</span>
                                 </div>
                               </div>
 
@@ -1420,48 +1377,13 @@ const Admin: React.FC = () => {
                                   <button
                                     type="button"
                                     onClick={() => openReplaceModal(item)}
-                                    title="Reemplazar imagen escogiendo de public/ o subiendo archivo"
+                                    title="Reemplazar imagen o subir archivo"
                                     className="flex items-center gap-1 px-2.5 py-1.5 bg-accent-700 hover:bg-accent-800 text-white text-[11px] font-semibold rounded-lg shadow-xs transition cursor-pointer"
                                   >
                                     <UploadCloud size={12} />
                                     <span>Cambiar</span>
                                   </button>
-
-                                  <button
-                                    type="button"
-                                    onClick={() => openRenameModalForPreset(item)}
-                                    title="Cambiar nombre"
-                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-white hover:bg-slate-100 text-slate-700 text-[11px] font-medium rounded-lg border border-slate-200 transition cursor-pointer"
-                                  >
-                                    <Edit3 size={12} className="text-amber-600" />
-                                    <span>Renombrar</span>
-                                  </button>
-
-                                  <button
-                                    type="button"
-                                    onClick={() => openDeleteModalForPreset(item)}
-                                    title="Borrar imagen"
-                                    className="flex items-center gap-1 px-2.5 py-1.5 bg-red-50 hover:bg-red-100 text-red-700 text-[11px] font-medium rounded-lg border border-red-200 transition cursor-pointer"
-                                  >
-                                    <Trash2 size={12} />
-                                    <span>Borrar</span>
-                                  </button>
                                 </div>
-
-                                {isOverridden && (
-                                  <button
-                                    type="button"
-                                    onClick={() => {
-                                      resetImage(item.path);
-                                      showToast(`Imagen ${item.name} restablecida a la versión original.`);
-                                    }}
-                                    title="Restablecer"
-                                    className="flex items-center gap-1 px-2 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-800 text-[10px] font-medium rounded-lg border border-amber-200 transition cursor-pointer"
-                                  >
-                                    <RotateCcw size={11} />
-                                    <span>Restablecer</span>
-                                  </button>
-                                )}
                               </div>
                             </div>
                           );
@@ -1488,7 +1410,7 @@ const Admin: React.FC = () => {
                     Reemplazar Imagen: <span className="text-accent-700 font-semibold">{replaceModalItem.name}</span>
                   </h3>
                   <p className="text-xs text-slate-500 mt-1">
-                    Selecciona una imagen existente de la carpeta <code className="text-slate-700 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">public/</code> o sube un archivo nuevo.
+                    Selecciona una imagen existente en la galería o sube un archivo nuevo.
                   </p>
                 </div>
                 <button
@@ -1505,19 +1427,19 @@ const Admin: React.FC = () => {
                   type="button"
                   onClick={() => setReplaceModalTab("picker")}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-semibold border-b-2 transition cursor-pointer ${replaceModalTab === "picker"
-                      ? "border-accent-700 bg-white text-accent-700 shadow-xs"
-                      : "border-transparent text-slate-500 hover:text-slate-800"
+                    ? "border-accent-700 bg-white text-accent-700 shadow-xs"
+                    : "border-transparent text-slate-500 hover:text-slate-800"
                     }`}
                 >
                   <Folder size={15} />
-                  <span>Escoger de la Carpeta public/</span>
+                  <span>Galería de Imágenes</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setReplaceModalTab("upload")}
                   className={`flex items-center gap-2 px-4 py-2.5 rounded-t-xl text-xs font-semibold border-b-2 transition cursor-pointer ${replaceModalTab === "upload"
-                      ? "border-accent-700 bg-white text-accent-700 shadow-xs"
-                      : "border-transparent text-slate-500 hover:text-slate-800"
+                    ? "border-accent-700 bg-white text-accent-700 shadow-xs"
+                    : "border-transparent text-slate-500 hover:text-slate-800"
                     }`}
                 >
                   <UploadCloud size={15} />
@@ -1528,7 +1450,7 @@ const Admin: React.FC = () => {
               {/* Modal Body */}
               <div className="p-6 overflow-y-auto flex-1 space-y-4 bg-white">
                 {replaceModalTab === "picker" ? (
-                  /* TAB 1: PICK FROM PUBLIC/ FOLDER */
+                  /* TAB 1: PICK FROM SUPABASE */
                   <div className="space-y-4">
                     {/* Filters & Search */}
                     <div className="flex flex-col sm:flex-row gap-3">
@@ -1539,8 +1461,8 @@ const Admin: React.FC = () => {
                             type="button"
                             onClick={() => setPickerFolder(fld)}
                             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition cursor-pointer ${pickerFolder === fld
-                                ? "bg-accent-700 text-white font-semibold shadow-xs"
-                                : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
+                              ? "bg-accent-700 text-white font-semibold shadow-xs"
+                              : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
                               }`}
                           >
                             {fld === "all" ? "Todas las Carpetas" : fld}
@@ -1563,29 +1485,32 @@ const Admin: React.FC = () => {
                     {/* Image Grid Selector */}
                     {publicImages.length === 0 ? (
                       <div className="text-center py-12 text-slate-500 text-xs">
-                        Cargando imágenes de public/...
+                        Cargando imágenes...
                       </div>
                     ) : (
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 max-h-80 overflow-y-auto p-1">
                         {publicImages
                           .filter((img) => {
                             const matchFld = pickerFolder === "all" || img.folder === pickerFolder;
+                            const cleanFileName = getFileName(img.relativePath).toLowerCase();
+                            const query = pickerSearch.trim().toLowerCase();
                             const matchSrc =
-                              pickerSearch.trim() === "" ||
-                              img.name.toLowerCase().includes(pickerSearch.toLowerCase()) ||
-                              img.relativePath.toLowerCase().includes(pickerSearch.toLowerCase());
+                              query === "" ||
+                              img.name.toLowerCase().includes(query) ||
+                              cleanFileName.includes(query) ||
+                              img.folder.toLowerCase().includes(query);
                             return matchFld && matchSrc;
                           })
                           .map((img) => {
                             const isSelected = selectedPublicImagePath === img.relativePath;
                             return (
                               <button
-                                key={img.relativePath}
+                                key={`${img.relativePath}-${img.name}`}
                                 type="button"
                                 onClick={() => setSelectedPublicImagePath(img.relativePath)}
                                 className={`relative group bg-white border rounded-xl overflow-hidden p-2 text-left transition cursor-pointer flex flex-col justify-between h-36 ${isSelected
-                                    ? "border-accent-700 ring-2 ring-accent-700/30 bg-accent-50/50 shadow-md"
-                                    : "border-slate-200 hover:border-slate-300 hover:shadow-xs"
+                                  ? "border-accent-700 ring-2 ring-accent-700/30 bg-accent-50/50 shadow-md"
+                                  : "border-slate-200 hover:border-slate-300 hover:shadow-xs"
                                   }`}
                               >
                                 <div className="h-20 w-full flex items-center justify-center bg-slate-100 rounded-lg border border-slate-200 overflow-hidden">
@@ -1600,7 +1525,7 @@ const Admin: React.FC = () => {
                                 </div>
                                 <div className="mt-1.5 space-y-0.5">
                                   <p className="text-[11px] font-semibold text-slate-800 truncate">{img.name}</p>
-                                  <p className="text-[9px] text-slate-500 truncate">public{img.relativePath}</p>
+                                  <p className="text-[9px] text-slate-500 truncate font-mono">{getFileName(img.relativePath)}</p>
                                 </div>
                                 {isSelected && (
                                   <div className="absolute top-2 right-2 bg-accent-700 text-white rounded-full p-1 shadow-md">
@@ -1624,8 +1549,7 @@ const Admin: React.FC = () => {
                         e.preventDefault();
                         const file = e.dataTransfer.files?.[0];
                         if (file && replaceModalItem) {
-                          handleReplaceFile(replaceModalItem.path, file);
-                          setReplaceModalItem(null);
+                          handleReplaceFile(replaceModalItem.path, file, replaceModalItem.name);
                         }
                       }}
                       className="border-2 border-dashed border-slate-300 hover:border-accent-700 rounded-2xl p-10 text-center bg-slate-50 hover:bg-slate-100/50 transition cursor-pointer group"
@@ -1640,8 +1564,8 @@ const Admin: React.FC = () => {
                         onChange={(e) => {
                           const file = e.target.files?.[0];
                           if (file && replaceModalItem) {
-                            handleReplaceFile(replaceModalItem.path, file);
-                            setReplaceModalItem(null);
+                            handleReplaceFile(replaceModalItem.path, file, replaceModalItem.name);
+                            e.target.value = "";
                           }
                         }}
                         className="hidden"
@@ -1663,7 +1587,7 @@ const Admin: React.FC = () => {
                 <span className="text-xs text-slate-500">
                   {selectedPublicImagePath ? (
                     <span className="text-emerald-700 font-semibold truncate max-w-md block">
-                      Seleccionado: public{selectedPublicImagePath}
+                      Seleccionado: <span className="font-mono">{getFileName(selectedPublicImagePath)}</span>
                     </span>
                   ) : (
                     "Selecciona una imagen para continuar"
@@ -1685,14 +1609,26 @@ const Admin: React.FC = () => {
                       disabled={!selectedPublicImagePath}
                       onClick={() => {
                         if (replaceModalItem && selectedPublicImagePath) {
-                          setCustomImageOverride(replaceModalItem.path, selectedPublicImagePath);
-                          showToast(`Imagen ${replaceModalItem.name} reemplazada con public${selectedPublicImagePath}`);
+                          const oldUrl = getImageUrl(replaceModalItem.path);
+                          const oldName = getFileName(oldUrl) || getFileName(replaceModalItem.path);
+                          setConfirmPreview({
+                            targetPath: replaceModalItem.path,
+                            itemName: replaceModalItem.name,
+                            oldImageUrl: oldUrl,
+                            oldFileName: oldName,
+                            newImageUrl: selectedPublicImagePath,
+                            newFileName: getFileName(selectedPublicImagePath),
+                            newStoragePath: "",
+                            finalStoragePath: "",
+                            newRelPath: selectedPublicImagePath,
+                            isTempUploaded: false,
+                          });
                           setReplaceModalItem(null);
                         }
                       }}
                       className="px-5 py-2 rounded-xl text-xs font-semibold text-white bg-accent-700 hover:bg-accent-800 disabled:opacity-50 disabled:cursor-not-allowed transition cursor-pointer shadow-md shadow-accent-950/20"
                     >
-                      Aplicar Reemplazo
+                      Continuar a Previsualización
                     </button>
                   )}
                 </div>
@@ -1700,149 +1636,171 @@ const Admin: React.FC = () => {
             </div>
           </div>
         )}
-      </main>
 
-      {/* ---------------------------------------------------- */}
-      {/* MODAL 1: EDIT IMAGE NAME (RENOMBRAR)                 */}
-      {/* ---------------------------------------------------- */}
-      {renameModalItem && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-fade-in">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <Edit3 size={18} className="text-accent-700" />
-                Renombrar Archivo de Imagen
-              </h3>
-              <button
-                onClick={() => setRenameModalItem(null)}
-                className="text-slate-400 hover:text-slate-700 transition"
-              >
-                <X size={18} />
-              </button>
-            </div>
+        {/* ---------------------------------------------------- */}
+        {/* MODAL 2: CONFIRMAR REEMPLAZO DE IMAGEN (PREVIEW)   */}
+        {/* ---------------------------------------------------- */}
+        {confirmPreview && (
+          <div className="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-md flex items-center justify-center p-4">
+            <div className="bg-white border border-slate-200 rounded-3xl max-w-2xl w-full max-h-[95vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+              {/* Header */}
+              <div className="p-5 border-b border-slate-200 flex items-center justify-between bg-slate-50/90">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-700 shrink-0">
+                    <RefreshCw size={20} className={isConfirming || isCancelling ? "animate-spin" : ""} />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-bold text-slate-900">
+                      Confirmar Reemplazo de Imagen
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-0.5 flex items-center flex-wrap gap-1">
+                      {confirmPreview.itemName && (
+                        <span className="font-semibold text-slate-800 mr-1">{confirmPreview.itemName}:</span>
+                      )}
+                      <span className="font-mono text-amber-700 bg-amber-50 px-1.5 py-0.5 rounded border border-amber-200">{confirmPreview.oldFileName || getFileName(confirmPreview.targetPath)}</span>
+                      <ArrowRight size={12} className="text-slate-400" />
+                      <span className="font-mono text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200">{confirmPreview.newFileName}</span>
+                    </p>
+                  </div>
+                </div>
 
-            <div className="flex items-center gap-3 p-3 bg-slate-50 border border-slate-200 rounded-xl">
-              <div className="h-14 w-14 bg-white rounded border border-slate-200 flex items-center justify-center overflow-hidden shrink-0">
-                <img
-                  src={getImageUrl(renameModalItem.relativePath)}
-                  alt={renameModalItem.name}
-                  className="max-h-full max-w-full object-contain"
-                />
-              </div>
-              <div className="overflow-hidden">
-                <span className="text-xs font-semibold text-slate-500 block">Nombre actual:</span>
-                <code className="text-xs text-accent-800 font-mono font-semibold block truncate">{renameModalItem.name}</code>
-                <span className="text-[10px] text-slate-500 block truncate">Carpeta: public{renameModalItem.folder}</span>
-              </div>
-            </div>
-
-            <form onSubmit={handleRenameSubmit} className="space-y-4">
-              <div>
-                <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
-                  Nuevo Nombre del Archivo
-                </label>
-                <input
-                  type="text"
-                  required
-                  value={renameInput}
-                  onChange={(e) => setRenameInput(e.target.value)}
-                  placeholder="ejemplo: mi-imagen-actualizada.png"
-                  className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-4 py-3 focus:border-accent-700 focus:ring-2 focus:ring-accent-700/20 outline-none font-mono"
-                />
-              </div>
-
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-xs flex items-start gap-2">
-                <AlertCircle size={16} className="text-amber-600 shrink-0 mt-0.5" />
-                <span>
-                  El archivo se renombrará físicamente en el disco dentro de <code className="text-amber-800 font-semibold">public{renameModalItem.folder}</code>. Conserva la extensión del archivo.
-                </span>
-              </div>
-
-              <div className="flex items-center justify-end gap-3 pt-2">
                 <button
                   type="button"
-                  onClick={() => setRenameModalItem(null)}
-                  className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
+                  onClick={handleCancelReplacement}
+                  disabled={isConfirming || isCancelling}
+                  className="text-slate-400 hover:text-slate-700 p-2 rounded-xl bg-slate-100 hover:bg-slate-200 transition cursor-pointer disabled:opacity-50"
+                  title="Cerrar y descartar nueva imagen"
                 >
-                  Cancelar
+                  <X size={18} />
+                </button>
+              </div>
+
+              {/* Body */}
+              <div className="p-6 overflow-y-auto space-y-5 bg-white">
+                <div className="bg-blue-50/80 border border-blue-200/80 rounded-2xl p-3.5 flex items-start gap-3">
+                  <AlertCircle size={18} className="text-blue-700 shrink-0 mt-0.5" />
+                  <p className="text-xs text-blue-900 leading-relaxed">
+                    Compara visualmente la <strong className="font-semibold">imagen anterior</strong> con la <strong className="font-semibold">nueva imagen</strong>. Si decides confirmar, se aplicará el cambio en el sitio web. Si cancelas, la nueva imagen subida será eliminada permanentemente y se conservará la anterior.
+                  </p>
+                </div>
+
+                {/* Side by side cards */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {/* Left: Previous Image */}
+                  <div className="border border-slate-200 bg-slate-50/70 rounded-2xl p-4 flex flex-col justify-between space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-amber-100 text-amber-800 border border-amber-300">
+                        <span className="w-1.5 h-1.5 rounded-full bg-amber-600"></span>
+                        Imagen Anterior
+                      </span>
+                      <span className="text-[10px] text-slate-500 font-medium">Actual</span>
+                    </div>
+
+                    <div className="h-48 w-full bg-white rounded-xl border border-slate-200 flex items-center justify-center p-2 overflow-hidden shadow-inner">
+                      {confirmPreview.oldImageUrl ? (
+                        <img
+                          src={confirmPreview.oldImageUrl}
+                          alt="Imagen anterior"
+                          className="max-h-full max-w-full object-contain"
+                          onError={(e) => {
+                            (e.target as HTMLElement).style.display = "none";
+                          }}
+                        />
+                      ) : (
+                        <div className="text-center text-slate-400 text-xs">
+                          <FileImage size={32} className="mx-auto mb-1 opacity-50" />
+                          <span>Sin imagen previa</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="bg-white px-2.5 py-1.5 rounded-lg border border-slate-200">
+                      <span className="text-[10px] text-slate-500 block">Archivo actual:</span>
+                      <span className="text-xs font-mono font-medium text-slate-700 truncate block" title={confirmPreview.oldFileName}>
+                        {confirmPreview.oldFileName || getFileName(confirmPreview.targetPath)}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Right: New Image */}
+                  <div className="border border-emerald-200 bg-emerald-50/30 rounded-2xl p-4 flex flex-col justify-between space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[11px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-300">
+                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+                        Nueva Imagen
+                      </span>
+                      <span className="text-[10px] text-emerald-700 font-semibold">Por aplicar</span>
+                    </div>
+
+                    <div className="h-48 w-full bg-white rounded-xl border border-emerald-200 flex items-center justify-center p-2 overflow-hidden shadow-inner ring-2 ring-emerald-500/20">
+                      <img
+                        src={confirmPreview.newImageUrl}
+                        alt="Nueva imagen"
+                        className="max-h-full max-w-full object-contain"
+                        onError={(e) => {
+                          (e.target as HTMLElement).style.display = "none";
+                        }}
+                      />
+                    </div>
+
+                    <div className="bg-white px-2.5 py-1.5 rounded-lg border border-emerald-200">
+                      <span className="text-[10px] text-emerald-700 block font-medium">Archivo nuevo:</span>
+                      <span className="text-xs font-mono font-semibold text-slate-900 truncate block" title={confirmPreview.newFileName}>
+                        {confirmPreview.newFileName}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="p-4 border-t border-slate-200 bg-slate-50 flex flex-wrap items-center justify-between gap-3">
+                <button
+                  type="button"
+                  onClick={handleCancelReplacement}
+                  disabled={isConfirming || isCancelling}
+                  className="px-4 py-2.5 rounded-xl text-xs font-semibold text-rose-700 bg-rose-50 hover:bg-rose-100 border border-rose-200 transition cursor-pointer flex items-center gap-1.5 disabled:opacity-50"
+                >
+                  {isCancelling ? (
+                    <>
+                      <RefreshCw size={13} className="animate-spin" />
+                      <span>Cancelando y borrando nueva imagen...</span>
+                    </>
+                  ) : (
+                    <>
+                      <X size={15} />
+                      <span>Cancelar y Mantener Anterior</span>
+                    </>
+                  )}
                 </button>
 
                 <button
-                  type="submit"
-                  disabled={isRenaming}
-                  className="px-5 py-2.5 bg-accent-700 hover:bg-accent-800 text-white rounded-xl text-xs font-semibold shadow-md transition disabled:opacity-50 flex items-center gap-2"
+                  type="button"
+                  onClick={handleConfirmReplacement}
+                  disabled={isConfirming || isCancelling}
+                  className="px-5 py-2.5 rounded-xl text-xs font-semibold text-white bg-emerald-700 hover:bg-emerald-800 transition cursor-pointer shadow-md shadow-emerald-950/20 flex items-center gap-2 disabled:opacity-50"
                 >
-                  {isRenaming && <RefreshCw size={14} className="animate-spin" />}
-                  <span>{isRenaming ? "Renombrando..." : "Guardar Nuevo Nombre"}</span>
+                  {isConfirming ? (
+                    <>
+                      <RefreshCw size={14} className="animate-spin" />
+                      <span>Confirmando reemplazo...</span>
+                    </>
+                  ) : (
+                    <>
+                      <CheckCircle2 size={16} />
+                      <span>Confirmar y Reemplazar</span>
+                    </>
+                  )}
                 </button>
               </div>
-            </form>
-          </div>
-        </div>
-      )}
-
-      {/* ---------------------------------------------------- */}
-      {/* MODAL 2: DELETE IMAGE CONFIRMATION (BORRAR)          */}
-      {/* ---------------------------------------------------- */}
-      {deleteModalItem && (
-        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
-          <div className="bg-white border border-slate-200 rounded-2xl max-w-md w-full p-6 space-y-5 shadow-2xl animate-fade-in">
-            <div className="flex items-center justify-between border-b border-slate-200 pb-3">
-              <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
-                <AlertTriangle size={18} className="text-red-500" />
-                ¿Eliminar Imagen de public/?
-              </h3>
-              <button
-                onClick={() => setDeleteModalItem(null)}
-                className="text-slate-400 hover:text-slate-700 transition"
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            <div className="p-4 bg-red-50 border border-red-200 rounded-xl space-y-3">
-              <div className="flex items-center gap-3">
-                <div className="h-16 w-16 bg-white rounded border border-red-200 flex items-center justify-center overflow-hidden shrink-0">
-                  <img
-                    src={getImageUrl(deleteModalItem.relativePath)}
-                    alt={deleteModalItem.name}
-                    className="max-h-full max-w-full object-contain"
-                  />
-                </div>
-                <div className="overflow-hidden">
-                  <span className="text-xs font-bold text-slate-900 truncate block">{deleteModalItem.name}</span>
-                  <code className="text-xs text-red-700 font-mono font-semibold block truncate">public{deleteModalItem.relativePath}</code>
-                  <span className="text-[10px] text-slate-500 block">{formatBytes(deleteModalItem.size)}</span>
-                </div>
-              </div>
-
-              <p className="text-xs text-red-800 leading-relaxed font-medium">
-                ⚠️ **Esta acción es irreversible**. El archivo se eliminará de forma permanente del disco duro en el servidor.
-              </p>
-            </div>
-
-            <div className="flex items-center justify-end gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => setDeleteModalItem(null)}
-                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold transition"
-              >
-                Cancelar
-              </button>
-
-              <button
-                type="button"
-                onClick={handleDeleteSubmit}
-                disabled={isDeleting}
-                className="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-xs font-semibold shadow-md shadow-red-900/20 transition disabled:opacity-50 flex items-center gap-2"
-              >
-                {isDeleting && <RefreshCw size={14} className="animate-spin" />}
-                <span>{isDeleting ? "Eliminando..." : "Eliminar Definitivamente"}</span>
-              </button>
             </div>
           </div>
-        </div>
-      )}
+        )}
+      </main>
+
+
+
+
 
       {/* ---------------------------------------------------- */}
       {/* MODAL 3: UPLOAD NEW IMAGE (SUBIR NUEVA IMAGEN)       */}
@@ -1853,7 +1811,7 @@ const Admin: React.FC = () => {
             <div className="flex items-center justify-between border-b border-slate-200 pb-3">
               <h3 className="text-base font-bold text-slate-900 flex items-center gap-2">
                 <Plus size={18} className="text-accent-700" />
-                Subir Nueva Imagen a public/
+                Subir Nueva Imagen
               </h3>
               <button
                 onClick={() => setUploadModalOpen(false)}
@@ -1867,14 +1825,14 @@ const Admin: React.FC = () => {
               {/* Folder Selector */}
               <div>
                 <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
-                  Carpeta de Destino en public/
+                  Categoría / Carpeta de Destino
                 </label>
                 <select
                   value={newImageFolder}
                   onChange={(e) => setNewImageFolder(e.target.value)}
                   className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-4 py-3 outline-none focus:border-accent-700 focus:ring-2 focus:ring-accent-700/20"
                 >
-                  <option value="/">/ (Directorio Raíz de public)</option>
+                  <option value="/">/ (Directorio Principal)</option>
                   {availableFolders.filter((f) => f !== "/").map((folder) => (
                     <option key={folder} value={folder}>
                       {folder}
@@ -1952,7 +1910,7 @@ const Admin: React.FC = () => {
                   className="px-5 py-2.5 bg-accent-700 hover:bg-accent-800 text-white rounded-xl text-xs font-semibold shadow-md shadow-accent-950/20 transition disabled:opacity-50 flex items-center gap-2"
                 >
                   {isUploadingNew && <RefreshCw size={14} className="animate-spin" />}
-                  <span>{isUploadingNew ? "Subiendo..." : "Subir a public/"}</span>
+                  <span>{isUploadingNew ? "Subiendo..." : "Subir Imagen"}</span>
                 </button>
               </div>
             </form>
