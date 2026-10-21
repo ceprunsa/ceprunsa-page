@@ -41,6 +41,8 @@ interface ImageItem {
   section: string;
   path: string;
   description: string;
+  aspectRatio: string;
+  dimensions: string;
 }
 
 const SITE_IMAGES: ImageItem[] = [
@@ -53,6 +55,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Logos Institucionales",
     path: "/images/global/logo-ceprunsa-white.png",
     description: "Logo del encabezado y pie de página en fondo oscuro",
+    aspectRatio: "~4.5:1 (Horizontal)",
+    dimensions: "450 × 100 px",
   },
   {
     id: "logo-color",
@@ -62,6 +66,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Logos Institucionales",
     path: "/images/global/logo-ceprunsa.png",
     description: "Logo institucional a color para fondos claros",
+    aspectRatio: "~4.5:1 (Horizontal)",
+    dimensions: "450 × 100 px",
   },
   {
     id: "app-conocet",
@@ -71,6 +77,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Aplicación Móvil ConóceT",
     path: "/images/global/conocet-app-logo.png",
     description: "Icono oficial de la aplicación móvil ConóceT UNSA",
+    aspectRatio: "1:1 (Cuadrada)",
+    dimensions: "512 × 512 px",
   },
 
   // 🏠 INICIO (HOME)
@@ -82,6 +90,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Carrusel Principal (Hero)",
     path: "/images/home/ceprunsa-estudiantes-demo.jpg",
     description: "Imagen del carrusel principal (Slide 1) en la página de Inicio",
+    aspectRatio: "16:9 (Panorámica)",
+    dimensions: "1920 × 1080 px",
   },
   {
     id: "home-slide-2",
@@ -91,6 +101,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Carrusel Principal (Hero)",
     path: "/images/home/home_image.jpeg",
     description: "Imagen del carrusel principal (Slide 2) en la página de Inicio",
+    aspectRatio: "16:9 (Panorámica)",
+    dimensions: "1920 × 1080 px",
   },
   {
     id: "home-slide-3",
@@ -100,6 +112,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Carrusel Principal (Hero)",
     path: "/images/home/ceprunsa_local.jpeg",
     description: "Imagen del carrusel principal (Slide 3) en la página de Inicio",
+    aspectRatio: "16:9 (Panorámica)",
+    dimensions: "1920 × 1080 px",
   },
   {
     id: "home-slide-4",
@@ -109,6 +123,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Carrusel Principal (Hero)",
     path: "/images/procesos/ceprunsa_ciclo_quintos.png",
     description: "Imagen del carrusel principal (Slide 4) en la página de Inicio",
+    aspectRatio: "16:9 (Panorámica)",
+    dimensions: "1920 × 1080 px",
   },
   {
     id: "home-ingresa-quintos",
@@ -118,6 +134,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Ingresa a la UNSA por CEPRUNSA",
     path: "/images/procesos/ceprunsa_ciclo_quintos.png",
     description: "Imagen de la tarjeta '¿Estás en quinto de secundaria?' en la página de Inicio",
+    aspectRatio: "4:3 (o 1:1)",
+    dimensions: "900 × 700 px",
   },
   {
     id: "home-ingresa-estudiantes",
@@ -127,6 +145,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Ingresa a la UNSA por CEPRUNSA",
     path: "/images/home/ceprunsa-estudiantes-demo.jpg",
     description: "Imagen de la tarjeta '¿Terminaste el colegio?' en la página de Inicio",
+    aspectRatio: "4:3 (o 1:1)",
+    dimensions: "900 × 700 px",
   },
   {
     id: "home-testimonio-ana",
@@ -136,6 +156,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Conoce los Testimonios",
     path: "/images/home/student_ana.jpg",
     description: "Fotografía del testimonio 1 en la página de Inicio",
+    aspectRatio: "1:1 (Cuadrada)",
+    dimensions: "600 × 600 px",
   },
   {
     id: "home-testimonio-carlos",
@@ -145,6 +167,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Conoce los Testimonios",
     path: "/images/home/student_carlos.jpg",
     description: "Fotografía del testimonio 2 en la página de Inicio",
+    aspectRatio: "1:1 (Cuadrada)",
+    dimensions: "600 × 600 px",
   },
   {
     id: "home-testimonio-maria",
@@ -154,6 +178,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Conoce los Testimonios",
     path: "/images/home/student_maria.jpg",
     description: "Fotografía del testimonio 3 en la página de Inicio",
+    aspectRatio: "1:1 (Cuadrada)",
+    dimensions: "600 × 600 px",
   },
 
   // 👥 NOSOTROS
@@ -165,6 +191,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Portada Principal",
     path: "/images/nosotros/ceprunsa-local.jpg",
     description: "Imagen de la portada principal en la página Nosotros",
+    aspectRatio: "16:9 (o 21:9)",
+    dimensions: "1920 × 800 px",
   },
   {
     id: "nosotros-mision",
@@ -174,6 +202,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Misión y Visión",
     path: "/images/nosotros/mision-vision.jpg",
     description: "Ilustración de la sección Misión y Visión institucional",
+    aspectRatio: "4:3 (o 3:4)",
+    dimensions: "800 × 600 px",
   },
   {
     id: "nosotros-iso",
@@ -183,6 +213,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Calidad ISO 9001",
     path: "/images/nosotros/iso-9001.jpg",
     description: "Sello y distintivo de Sistema de Gestión de Calidad ISO 9001:2015",
+    aspectRatio: "4:3 (o 3:4)",
+    dimensions: "800 × 600 px",
   },
   {
     id: "nosotros-metodologia",
@@ -192,6 +224,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Nuestra Metodología",
     path: "/images/nosotros/metodologia.jpg",
     description: "Imagen ilustrativa de la metodología de enseñanza y aprendizaje",
+    aspectRatio: "4:3 (o 3:4)",
+    dimensions: "800 × 600 px",
   },
   {
     id: "auth-maria",
@@ -201,6 +235,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Directorio y Autoridades",
     path: "/images/nosotros/DRA-MARIA-ELENA-2.jpg",
     description: "Fotografía de la autoridad 1 en la página Nosotros",
+    aspectRatio: "1:1 (Cuadrada)",
+    dimensions: "600 × 600 px",
   },
   {
     id: "auth-arnaldo",
@@ -210,6 +246,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Directorio y Autoridades",
     path: "/images/nosotros/DR-ARNALDO.jpg",
     description: "Fotografía de la autoridad 2 en la página Nosotros",
+    aspectRatio: "1:1 (Cuadrada)",
+    dimensions: "600 × 600 px",
   },
   {
     id: "auth-jose",
@@ -219,6 +257,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Directorio y Autoridades",
     path: "/images/nosotros/DR-JOSE.jpg",
     description: "Fotografía de la autoridad 3 en la página Nosotros",
+    aspectRatio: "1:1 (Cuadrada)",
+    dimensions: "600 × 600 px",
   },
 
   // 🎓 CARRERAS PROFESIONALES
@@ -230,6 +270,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Tarjeta ConóceT (Vocacional)",
     path: "/images/global/conocet-app-logo.png",
     description: "Icono oficial de la app de orientación vocacional en la página de Carreras",
+    aspectRatio: "1:1 (Cuadrada)",
+    dimensions: "512 × 512 px",
   },
 
   // 📚 PROCESOS DE ADMISIÓN
@@ -241,6 +283,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Portadas de Procesos de Admisión",
     path: "/images/procesos/ceprunsa_ciclo_quintos.png",
     description: "Afiche y portada del proceso de admisión Ciclo Quintos",
+    aspectRatio: "16:9 (o 2:1)",
+    dimensions: "1200 × 600 px",
   },
   {
     id: "proceso-fase1",
@@ -250,6 +294,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Portadas de Procesos de Admisión",
     path: "/images/procesos/ceprunsa_i_fase.jpg",
     description: "Afiche y portada del proceso de admisión CEPRUNSA I Fase",
+    aspectRatio: "16:9 (o 2:1)",
+    dimensions: "1200 × 600 px",
   },
   {
     id: "proceso-fase2",
@@ -259,6 +305,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Portadas de Procesos de Admisión",
     path: "/images/procesos/ceprunsa_ii_fase.jpg",
     description: "Afiche y portada del proceso de admisión CEPRUNSA II Fase",
+    aspectRatio: "16:9 (o 2:1)",
+    dimensions: "1200 × 600 px",
   },
   {
     id: "proceso-extraordinario",
@@ -268,6 +316,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Portadas de Procesos de Admisión",
     path: "/images/procesos/proceso_extraordinario.jpg",
     description: "Afiche y portada del proceso de admisión Ciclo Extraordinario",
+    aspectRatio: "16:9 (o 2:1)",
+    dimensions: "1200 × 600 px",
   },
   {
     id: "proceso-estudiantes",
@@ -277,6 +327,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Ilustración Informativa",
     path: "/images/home/ceprunsa-estudiantes-demo.jpg",
     description: "Imagen de la columna lateral informativa en la página de Procesos",
+    aspectRatio: "1:1 (Circular)",
+    dimensions: "300 × 300 px",
   },
 
   // 📖 GUÍAS DEL ESTUDIANTE
@@ -288,6 +340,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Encabezados de Sección",
     path: "/images/guias/acceso-clases-header.png",
     description: "Imagen de cabecera de la guía de acceso a clases virtuales",
+    aspectRatio: "~2.5:1 (Panorámica)",
+    dimensions: "1920 × 750 px",
   },
   {
     id: "header-pago",
@@ -297,6 +351,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Encabezados de Sección",
     path: "/images/guias/pago-cuotas-header.png",
     description: "Imagen de cabecera de la guía de pagos en banco y plataforma virtual",
+    aspectRatio: "~2.5:1 (Panorámica)",
+    dimensions: "1920 × 750 px",
   },
   {
     id: "header-documentos",
@@ -306,6 +362,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Encabezados de Sección",
     path: "/images/guias/documentos-oficiales-header.png",
     description: "Imagen de cabecera de la guía con reglamentos, vacantes y estatutos",
+    aspectRatio: "~2.5:1 (Panorámica)",
+    dimensions: "1920 × 750 px",
   },
   {
     id: "header-psicologia",
@@ -315,6 +373,8 @@ const SITE_IMAGES: ImageItem[] = [
     section: "Encabezados de Sección",
     path: "/images/guias/consultorio-psicologico-header.png",
     description: "Imagen de cabecera de la guía de orientación y soporte psicológico",
+    aspectRatio: "~2.5:1 (Panorámica)",
+    dimensions: "1920 × 750 px",
   },
 ];
 
@@ -631,6 +691,8 @@ const Admin: React.FC = () => {
           section: "Portadas por Escuela Profesional",
           path: img.relativePath,
           description: `Portada: ${carreraName}`,
+          aspectRatio: "~3:1 (Panorámica)",
+          dimensions: "800 × 260 px",
         };
       })
       .sort((a, b) => a.name.localeCompare(b.name));
@@ -659,6 +721,8 @@ const Admin: React.FC = () => {
         presetSearch.trim() === "" ||
         item.name.toLowerCase().includes(presetSearch.toLowerCase()) ||
         item.description.toLowerCase().includes(presetSearch.toLowerCase()) ||
+        (item.aspectRatio && item.aspectRatio.toLowerCase().includes(presetSearch.toLowerCase())) ||
+        (item.dimensions && item.dimensions.toLowerCase().includes(presetSearch.toLowerCase())) ||
         item.section.toLowerCase().includes(presetSearch.toLowerCase()) ||
         item.path.toLowerCase().includes(presetSearch.toLowerCase());
       return matchesPage && matchesSection && matchesSearch;
@@ -1230,6 +1294,21 @@ const Admin: React.FC = () => {
 
                                   <p className="text-[11px] text-slate-500 line-clamp-1">{item.description}</p>
 
+                                  {item.aspectRatio && (
+                                    <div className="flex items-center gap-1.5 text-[10px]">
+                                      <span className="font-bold text-accent-800">Proporción:</span>
+                                      <span className="font-bold text-slate-800 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
+                                        {item.aspectRatio}
+                                      </span>
+                                      {item.dimensions && (
+                                        <>
+                                          <span className="text-slate-300">•</span>
+                                          <span className="text-slate-500 font-medium">{item.dimensions}</span>
+                                        </>
+                                      )}
+                                    </div>
+                                  )}
+
                                   <div className="flex items-center gap-2">
                                     <span className="text-[10px] text-slate-400 font-medium">Archivo:</span>
                                     <code className="text-[10px] text-slate-700 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 truncate max-w-xs font-mono font-medium">
@@ -1307,6 +1386,23 @@ const Admin: React.FC = () => {
                                   <h3 className="text-[11px] font-semibold text-slate-800">{item.name}</h3>
                                   <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">{item.description}</p>
                                 </div>
+
+                                {item.aspectRatio && (
+                                  <div className="flex items-center gap-1.5 px-2.5 py-1.5 bg-slate-50 border border-slate-200/90 rounded-lg text-[10px]">
+                                    <span className="font-bold text-accent-800 shrink-0">Proporción:</span>
+                                    <span className="font-bold text-slate-800 bg-white px-1.5 py-0.5 rounded border border-slate-200 shadow-2xs">
+                                      {item.aspectRatio}
+                                    </span>
+                                    {item.dimensions && (
+                                      <>
+                                        <span className="text-slate-300 shrink-0">•</span>
+                                        <span className="text-slate-500 font-medium truncate" title={`Dimensiones recomendadas: ${item.dimensions}`}>
+                                          {item.dimensions}
+                                        </span>
+                                      </>
+                                    )}
+                                  </div>
+                                )}
 
                                 <div className="flex items-center justify-between gap-2 bg-slate-50 px-2.5 py-1.5 rounded-lg border border-slate-200">
                                   <div className="flex items-center gap-1.5 min-w-0">
@@ -1415,6 +1511,23 @@ const Admin: React.FC = () => {
                   <X size={18} />
                 </button>
               </div>
+
+              {/* Proporción & Dimensiones Recomendadas */}
+              {replaceModalItem.aspectRatio && (
+                <div className="mx-6 mt-4 p-3 rounded-xl bg-accent-50/80 border border-accent-200/80 flex flex-wrap items-center justify-between gap-2.5 text-xs">
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-accent-900">Proporción recomendada:</span>
+                    <span className="px-2 py-0.5 rounded-md bg-white border border-accent-300 font-bold text-accent-950 shadow-2xs">
+                      {replaceModalItem.aspectRatio}
+                    </span>
+                  </div>
+                  {replaceModalItem.dimensions && (
+                    <div className="text-slate-600 font-medium">
+                      Dimensión sugerida: <strong className="text-slate-900 font-semibold">{replaceModalItem.dimensions}</strong>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* Mode Tabs */}
               <div className="flex border-b border-slate-200 bg-slate-50 px-6 pt-3 gap-2">
