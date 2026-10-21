@@ -28,6 +28,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import { useConfig, type PublicImageItem, type ReplacementPreviewData } from "../context/ConfigContext";
+import { unsaCarreras } from "../data/unsa_carreras";
 
 // Target image definitions categorized by Page for Admin Quick Reference
 export type PageCategory = "home" | "nosotros" | "carreras" | "procesos" | "guias" | "global";
@@ -71,117 +72,99 @@ const SITE_IMAGES: ImageItem[] = [
     path: "/images/global/conocet-app-logo.png",
     description: "Icono oficial de la aplicación móvil ConóceT UNSA",
   },
-  {
-    id: "app-qr",
-    name: "Código QR App ConóceT",
-    page: "global",
-    pageName: "Global / Marca",
-    section: "Aplicación Móvil ConóceT",
-    path: "/images/global/conocet-qr.png",
-    description: "Código QR para descarga directa de la app móvil",
-  },
 
   // 🏠 INICIO (HOME)
   {
-    id: "home-flyer-modal",
-    name: "Flyer Emergente (Pop-up Principal)",
-    page: "home",
-    pageName: "Inicio",
-    section: "Ventana Emergente (Pop-up Flyer)",
-    path: "/images/procesos/flyer/ceprunsa-segunda-fase-flyer1.jpg",
-    description: "Afiche publicitario emergente que se abre automáticamente al entrar al sitio",
-  },
-  {
     id: "home-hero",
-    name: "Carrusel Slide 1 - Estudiantes UNSA",
+    name: "Carrusel Slide 1",
     page: "home",
     pageName: "Inicio",
     section: "Carrusel Principal (Hero)",
     path: "/images/home/ceprunsa-estudiantes-demo.jpg",
-    description: "Imagen destacada del banner / hero principal en la página de Inicio",
+    description: "Imagen del carrusel principal (Slide 1) en la página de Inicio",
   },
   {
     id: "home-slide-2",
-    name: "Carrusel Slide 2 - Campus Arequipa",
+    name: "Carrusel Slide 2",
     page: "home",
     pageName: "Inicio",
     section: "Carrusel Principal (Hero)",
     path: "/images/home/home_image.jpeg",
-    description: "Fotografía panorámica del campus universitario en el carrusel principal",
+    description: "Imagen del carrusel principal (Slide 2) en la página de Inicio",
   },
   {
     id: "home-slide-3",
-    name: "Carrusel Slide 3 - Local Central",
+    name: "Carrusel Slide 3",
     page: "home",
     pageName: "Inicio",
     section: "Carrusel Principal (Hero)",
     path: "/images/home/ceprunsa_local.jpeg",
-    description: "Fotografía institucional de las instalaciones en el carrusel principal",
+    description: "Imagen del carrusel principal (Slide 3) en la página de Inicio",
   },
   {
     id: "home-slide-4",
-    name: "Carrusel Slide 4 - Ciclo Quintos",
+    name: "Carrusel Slide 4",
     page: "home",
     pageName: "Inicio",
     section: "Carrusel Principal (Hero)",
     path: "/images/procesos/ceprunsa_ciclo_quintos.png",
-    description: "Afiche promocional del Ciclo Quintos destacado en el carrusel",
+    description: "Imagen del carrusel principal (Slide 4) en la página de Inicio",
   },
   {
     id: "home-ingresa-quintos",
-    name: "Tarjeta Ciclo Quintos",
+    name: "Tarjeta: ¿Estás en quinto de secundaria?",
     page: "home",
     pageName: "Inicio",
     section: "Ingresa a la UNSA por CEPRUNSA",
     path: "/images/procesos/ceprunsa_ciclo_quintos.png",
-    description: "Imagen destacada en la tarjeta del Ciclo Quintos en Inicio",
+    description: "Imagen de la tarjeta '¿Estás en quinto de secundaria?' en la página de Inicio",
   },
   {
     id: "home-ingresa-estudiantes",
-    name: "Tarjeta Estudiantes UNSA",
+    name: "Tarjeta: ¿Terminaste el colegio?",
     page: "home",
     pageName: "Inicio",
     section: "Ingresa a la UNSA por CEPRUNSA",
     path: "/images/home/ceprunsa-estudiantes-demo.jpg",
-    description: "Imagen ilustrativa en la tarjeta informativa de inscripciones",
+    description: "Imagen de la tarjeta '¿Terminaste el colegio?' en la página de Inicio",
   },
   {
     id: "home-testimonio-ana",
-    name: "Testimonio: Ana María Torres",
+    name: "Testimonio 1",
     page: "home",
     pageName: "Inicio",
     section: "Conoce los Testimonios",
     path: "/images/home/student_ana.jpg",
-    description: "Fotografía de la ingresante Ana María Torres (1er Puesto Medicina Humana)",
+    description: "Fotografía del testimonio 1 en la página de Inicio",
   },
   {
     id: "home-testimonio-carlos",
-    name: "Testimonio: Carlos Eduardo",
+    name: "Testimonio 2",
     page: "home",
     pageName: "Inicio",
     section: "Conoce los Testimonios",
     path: "/images/home/student_carlos.jpg",
-    description: "Fotografía del ingresante Carlos Eduardo Mendoza (1er Puesto Ingeniería Civil)",
+    description: "Fotografía del testimonio 2 en la página de Inicio",
   },
   {
     id: "home-testimonio-maria",
-    name: "Testimonio: María Fernanda",
+    name: "Testimonio 3",
     page: "home",
     pageName: "Inicio",
     section: "Conoce los Testimonios",
     path: "/images/home/student_maria.jpg",
-    description: "Fotografía de la ingresante María Fernanda Quispe (1er Puesto Derecho)",
+    description: "Fotografía del testimonio 3 en la página de Inicio",
   },
 
   // 👥 NOSOTROS
   {
     id: "nosotros-local",
-    name: "CEPRUNSA Local Principal",
+    name: "Portada Principal",
     page: "nosotros",
     pageName: "Nosotros",
-    section: "Portada & Sede Principal",
+    section: "Portada Principal",
     path: "/images/nosotros/ceprunsa-local.jpg",
-    description: "Imagen del local y campus principal en la página Nosotros",
+    description: "Imagen de la portada principal en la página Nosotros",
   },
   {
     id: "nosotros-mision",
@@ -211,31 +194,31 @@ const SITE_IMAGES: ImageItem[] = [
     description: "Imagen ilustrativa de la metodología de enseñanza y aprendizaje",
   },
   {
-    id: "auth-arnaldo",
-    name: "Dr. Arnaldo Valdivia (Presidente)",
-    page: "nosotros",
-    pageName: "Nosotros",
-    section: "Directorio y Autoridades",
-    path: "/images/nosotros/DR-ARNALDO.jpg",
-    description: "Fotografía del Presidente del Directorio de CEPRUNSA",
-  },
-  {
     id: "auth-maria",
-    name: "Dra. María Elena (Dir. Académica)",
+    name: "Autoridad 1",
     page: "nosotros",
     pageName: "Nosotros",
     section: "Directorio y Autoridades",
     path: "/images/nosotros/DRA-MARIA-ELENA-2.jpg",
-    description: "Fotografía de la Directora Académica de CEPRUNSA",
+    description: "Fotografía de la autoridad 1 en la página Nosotros",
+  },
+  {
+    id: "auth-arnaldo",
+    name: "Autoridad 2",
+    page: "nosotros",
+    pageName: "Nosotros",
+    section: "Directorio y Autoridades",
+    path: "/images/nosotros/DR-ARNALDO.jpg",
+    description: "Fotografía de la autoridad 2 en la página Nosotros",
   },
   {
     id: "auth-jose",
-    name: "Dr. José (Dir. Administrativo)",
+    name: "Autoridad 3",
     page: "nosotros",
     pageName: "Nosotros",
     section: "Directorio y Autoridades",
     path: "/images/nosotros/DR-JOSE.jpg",
-    description: "Fotografía del Director Administrativo de CEPRUNSA",
+    description: "Fotografía de la autoridad 3 en la página Nosotros",
   },
 
   // 🎓 CARRERAS PROFESIONALES
@@ -248,29 +231,20 @@ const SITE_IMAGES: ImageItem[] = [
     path: "/images/global/conocet-app-logo.png",
     description: "Icono oficial de la app de orientación vocacional en la página de Carreras",
   },
-  {
-    id: "carreras-conocet-qr",
-    name: "Código QR App ConóceT",
-    page: "carreras",
-    pageName: "Carreras",
-    section: "Tarjeta ConóceT (Vocacional)",
-    path: "/images/global/conocet-qr.png",
-    description: "Código QR para descargar la app móvil en la sección de Carreras",
-  },
 
   // 📚 PROCESOS DE ADMISIÓN
   {
     id: "proceso-quintos",
-    name: "Afiche Ciclo Quintos 2026",
+    name: "Afiche: Ciclo Quintos",
     page: "procesos",
     pageName: "Procesos",
     section: "Portadas de Procesos de Admisión",
     path: "/images/procesos/ceprunsa_ciclo_quintos.png",
-    description: "Banner promocional y afiche informativo del Ciclo Quintos",
+    description: "Afiche y portada del proceso de admisión Ciclo Quintos",
   },
   {
     id: "proceso-fase1",
-    name: "Afiche CEPRUNSA I Fase 2026",
+    name: "Afiche: CEPRUNSA I Fase",
     page: "procesos",
     pageName: "Procesos",
     section: "Portadas de Procesos de Admisión",
@@ -279,7 +253,7 @@ const SITE_IMAGES: ImageItem[] = [
   },
   {
     id: "proceso-fase2",
-    name: "Afiche CEPRUNSA II Fase 2026",
+    name: "Afiche: CEPRUNSA II Fase",
     page: "procesos",
     pageName: "Procesos",
     section: "Portadas de Procesos de Admisión",
@@ -288,7 +262,7 @@ const SITE_IMAGES: ImageItem[] = [
   },
   {
     id: "proceso-extraordinario",
-    name: "Afiche Ciclo Extraordinario 2026",
+    name: "Afiche: Ciclo Extraordinario",
     page: "procesos",
     pageName: "Procesos",
     section: "Portadas de Procesos de Admisión",
@@ -297,50 +271,50 @@ const SITE_IMAGES: ImageItem[] = [
   },
   {
     id: "proceso-estudiantes",
-    name: "Ilustración Estudiantes CEPRUNSA",
+    name: "Tarjeta Lateral Informativa",
     page: "procesos",
     pageName: "Procesos",
     section: "Ilustración Informativa",
     path: "/images/home/ceprunsa-estudiantes-demo.jpg",
-    description: "Ilustración informativa para tarjetas de procesos de admisión",
+    description: "Imagen de la columna lateral informativa en la página de Procesos",
   },
 
   // 📖 GUÍAS DEL ESTUDIANTE
   {
     id: "header-clases",
-    name: "Header Acceso a Clases",
+    name: "Banner: Acceso a Clases",
     page: "guias",
     pageName: "Guías",
     section: "Encabezados de Sección",
     path: "/images/guias/acceso-clases-header.png",
-    description: "Cabecera de la guía interactiva de acceso a aulas y clases virtuales",
+    description: "Imagen de cabecera de la guía de acceso a clases virtuales",
   },
   {
     id: "header-pago",
-    name: "Header Pago de Cuotas",
+    name: "Banner: Pago de Cuotas",
     page: "guias",
     pageName: "Guías",
     section: "Encabezados de Sección",
     path: "/images/guias/pago-cuotas-header.png",
-    description: "Cabecera de la guía de pagos en banco y plataforma virtual",
+    description: "Imagen de cabecera de la guía de pagos en banco y plataforma virtual",
   },
   {
     id: "header-documentos",
-    name: "Header Documentos Oficiales",
+    name: "Banner: Documentos Oficiales",
     page: "guias",
     pageName: "Guías",
     section: "Encabezados de Sección",
     path: "/images/guias/documentos-oficiales-header.png",
-    description: "Cabecera de la guía con reglamentos, vacantes y estatutos",
+    description: "Imagen de cabecera de la guía con reglamentos, vacantes y estatutos",
   },
   {
     id: "header-psicologia",
-    name: "Header Consultorio Psicológico",
+    name: "Banner: Consultorio Psicológico",
     page: "guias",
     pageName: "Guías",
     section: "Encabezados de Sección",
     path: "/images/guias/consultorio-psicologico-header.png",
-    description: "Cabecera de la guía de orientación y soporte psicológico",
+    description: "Imagen de cabecera de la guía de orientación y soporte psicológico",
   },
 ];
 
@@ -608,7 +582,7 @@ const Admin: React.FC = () => {
 
   const availableFolders = Array.from(new Set(publicImages.map((img) => img.folder))).sort();
 
-  // Helper to format carrera image names nicely
+  // Helper to format carrera image names nicely as fallback
   const formatCarreraName = (filename: string) => {
     const base = filename.replace(/\.[^/.]+$/, "");
     const cleaned = base
@@ -618,23 +592,49 @@ const Admin: React.FC = () => {
       .replace(/-/g, " ");
     const words = cleaned.split(" ").filter(Boolean);
     const capitalized = words.map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase()).join(" ");
-    return `Portada: ${capitalized || filename}`;
+    return capitalized || filename;
   };
+
+  // Build a map from image path/filename to the official UNSA carrera name
+  const carreraByPathMap = useMemo(() => {
+    const map: Record<string, string> = {};
+    Object.values(unsaCarreras).forEach((facultades) => {
+      Object.values(facultades).forEach((carreras) => {
+        Object.entries(carreras).forEach(([carreraName, detalles]) => {
+          if (detalles && typeof detalles === "object" && "imagen" in detalles && detalles.imagen) {
+            const imgPath = detalles.imagen as string;
+            const cleanPath = imgPath.trim();
+            map[cleanPath] = carreraName;
+            const filename = cleanPath.split("/").pop() || cleanPath;
+            map[filename] = carreraName;
+          }
+        });
+      });
+    });
+    return map;
+  }, []);
 
   // Dynamically include all images from public/images/carreras
   const carrerasPublicImages = useMemo(() => {
     return publicImages
       .filter((img) => img.folder === "images/carreras" || img.relativePath.startsWith("/images/carreras/"))
-      .map((img) => ({
-        id: `carrera-dynamic-${img.relativePath}`,
-        name: formatCarreraName(img.name),
-        page: "carreras" as PageCategory,
-        pageName: "Carreras",
-        section: "Portadas por Escuela Profesional",
-        path: img.relativePath,
-        description: `Imagen de cabecera de la escuela / carrera (${img.name})`,
-      }));
-  }, [publicImages]);
+      .map((img) => {
+        const carreraName =
+          carreraByPathMap[img.relativePath] ||
+          carreraByPathMap[img.name] ||
+          formatCarreraName(img.name);
+        return {
+          id: `carrera-dynamic-${img.relativePath}`,
+          name: `Portada: ${carreraName}`,
+          page: "carreras" as PageCategory,
+          pageName: "Carreras",
+          section: "Portadas por Escuela Profesional",
+          path: img.relativePath,
+          description: `Portada: ${carreraName}`,
+        };
+      })
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, [publicImages, carreraByPathMap]);
 
   // Combine static presets with dynamic public/images/carreras images
   const allPresets = useMemo(() => {
@@ -825,11 +825,6 @@ const Admin: React.FC = () => {
           >
             <ImageIcon size={18} />
             <span>Imágenes Clave del Sitio Web por Página</span>
-            {Object.keys(imageOverrides).length > 0 && (
-              <span className="px-2 py-0.5 rounded-full text-xs bg-amber-100 border border-amber-300 text-amber-800 font-bold">
-                {Object.keys(imageOverrides).length} editadas
-              </span>
-            )}
           </button>
 
           <button

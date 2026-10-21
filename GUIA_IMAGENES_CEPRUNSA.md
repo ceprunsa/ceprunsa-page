@@ -14,7 +14,6 @@ Especificaciones técnicas y catálogo exhaustivo de todas las imágenes del sit
 | **Pie de Página (Footer)** | Libro de Reclamaciones | `/images/global/libro-reclamaciones.png` | ~2.5:1 | 240 × 100 px | PNG / WebP | Enlace legal ubicado en el pie de página. |
 | **Marca ConóceT (Global)** | Insignia Google Play Store | `/images/global/google-play-badge.svg` | ~3.4:1 | 200 × 60 px | SVG | Vector original de Google Play. |
 | **Marca ConóceT (Global)** | Logo Oficial App ConóceT | `/images/global/conocet-app-logo.png` | 1:1 | 512 × 512 px | PNG | Ícono con esquinas transparentes o bordes redondeados. |
-| **Marca ConóceT (Global)** | Código QR Descarga App | `/images/global/conocet-qr.png` | 1:1 | 500 × 500 px | PNG | Alto contraste para escaneo óptico veloz en smartphones. |
 
 ---
 
@@ -34,10 +33,10 @@ Especificaciones técnicas y catálogo exhaustivo de todas las imágenes del sit
 
 | Sección | Elemento / Imagen | Ruta actual | Proporción | Dimensión recomendada | Formato | Notas |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Carrusel Hero (Slide 1)** | Estudiantes UNSA en equipo | `/images/home/ceprunsa-estudiantes-demo.jpg` | 16:9 | 1920 × 1080 px | WebP / JPG | Fotografía de alta energía; sujeto centrado o a la derecha (el texto va a la izquierda). |
-| **Carrusel Hero (Slide 2)** | Panorámica Campus Arequipa | `/images/home/home_image.jpeg` | 16:9 | 1920 × 1080 px | WebP / JPG | Paisaje amplio, arquitectura universitaria o áreas verdes del campus. |
-| **Carrusel Hero (Slide 3)** | Sede / Local Central CEPRUNSA | `/images/home/ceprunsa_local.jpeg` | 16:9 | 1920 × 1080 px | WebP / JPG | Fachada frontal o instalaciones académicas representativas. |
-| **Carrusel Hero (Slide 4)** | Afiche Ciclo Quintos / Convocatoria | `/images/procesos/ceprunsa_ciclo_quintos.png` | 16:9 | 1920 × 1080 px | WebP / JPG | Fondo fotográfico/gráfico para el contador de cuenta regresiva. |
+| **Carrusel Hero (Slide 1)** | Carrusel Slide 1 | `/images/home/ceprunsa-estudiantes-demo.jpg` | 16:9 | 1920 × 1080 px | WebP / JPG | Imagen destacada del banner / hero principal (Slide 1). |
+| **Carrusel Hero (Slide 2)** | Carrusel Slide 2 | `/images/home/home_image.jpeg` | 16:9 | 1920 × 1080 px | WebP / JPG | Imagen destacada del carrusel principal (Slide 2). |
+| **Carrusel Hero (Slide 3)** | Carrusel Slide 3 | `/images/home/ceprunsa_local.jpeg` | 16:9 | 1920 × 1080 px | WebP / JPG | Imagen destacada del carrusel principal (Slide 3). |
+| **Carrusel Hero (Slide 4)** | Carrusel Slide 4 | `/images/procesos/ceprunsa_ciclo_quintos.png` | 16:9 | 1920 × 1080 px | WebP / JPG | Imagen destacada del carrusel principal (Slide 4). |
 
 ---
 
@@ -45,8 +44,8 @@ Especificaciones técnicas y catálogo exhaustivo de todas las imágenes del sit
 
 | Sección | Elemento / Imagen | Ruta actual | Proporción | Dimensión recomendada | Formato | Notas |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Tarjeta 1** | ¿Estás en quinto de secundaria? | `/images/procesos/ceprunsa_ciclo_quintos.png` | 4:3 o 1:1 | 900 × 700 px | WebP / JPG | Altura de tarjeta: 288–384 px. Personajes y texto clave bien centrados. |
-| **Tarjeta 2** | ¿Terminaste el colegio? | `/images/home/ceprunsa-estudiantes-demo.jpg` | 4:3 o 1:1 | 900 × 700 px | WebP / JPG | Jóvenes postulantes o ambiente universitario dinámico. |
+| **Tarjeta 1** | Tarjeta: ¿Estás en quinto de secundaria? | `/images/procesos/ceprunsa_ciclo_quintos.png` | 4:3 o 1:1 | 900 × 700 px | WebP / JPG | Imagen de la tarjeta '¿Estás en quinto de secundaria?' en Inicio. |
+| **Tarjeta 2** | Tarjeta: ¿Terminaste el colegio? | `/images/home/ceprunsa-estudiantes-demo.jpg` | 4:3 o 1:1 | 900 × 700 px | WebP / JPG | Imagen de la tarjeta '¿Terminaste el colegio?' en Inicio. |
 
 ---
 
@@ -54,9 +53,9 @@ Especificaciones técnicas y catálogo exhaustivo de todas las imágenes del sit
 
 | Sección | Elemento / Imagen | Ruta actual | Proporción | Dimensión recomendada | Formato | Notas |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Testimonio 1** | Ingresante Ana Quispe (Medicina Humana) | `/images/home/student_ana.jpg` | 1:1 o 4:5 | 600 × 600 px | JPG / WebP | Tarjeta con arco curvado. El rostro debe estar situado en el tercio superior. |
-| **Testimonio 2** | Ingresante Carlos Mendoza (Ing. Civil) | `/images/home/student_carlos.jpg` | 1:1 o 4:5 | 600 × 600 px | JPG / WebP | Retrato nítido, iluminación balanceada y fondo limpio o de facultad. |
-| **Testimonio 3** | Ingresante María González (Derecho) | `/images/home/student_maria.jpg` | 1:1 o 4:5 | 600 × 600 px | JPG / WebP | Retrato en primer plano centrado. |
+| **Testimonio 1** | Testimonio 1 | `/images/home/student_ana.jpg` | 1:1 o 4:5 | 600 × 600 px | JPG / WebP | Fotografía del testimonio 1 en la página de Inicio. |
+| **Testimonio 2** | Testimonio 2 | `/images/home/student_carlos.jpg` | 1:1 o 4:5 | 600 × 600 px | JPG / WebP | Fotografía del testimonio 2 en la página de Inicio. |
+| **Testimonio 3** | Testimonio 3 | `/images/home/student_maria.jpg` | 1:1 o 4:5 | 600 × 600 px | JPG / WebP | Fotografía del testimonio 3 en la página de Inicio. |
 
 ---
 
@@ -66,15 +65,15 @@ Especificaciones técnicas y catálogo exhaustivo de todas las imágenes del sit
 
 | Sección | Elemento / Imagen | Ruta actual | Proporción | Dimensión recomendada | Formato | Notas |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Portada Hero** | Fachada Campus CEPRUNSA | `/images/nosotros/ceprunsa-local.jpg` | 21:9 o 16:9 | 1920 × 800 px | WebP / JPG | Banner ancho superior (60vh en desktop). Con capa de oscurecimiento gradual. |
+| **Portada Hero** | Portada Principal | `/images/nosotros/ceprunsa-local.jpg` | 21:9 o 16:9 | 1920 × 800 px | WebP / JPG | Imagen de la portada principal en la página Nosotros. |
 | **Nuestra Historia** | Instalaciones y tradición CEPRUNSA | `/images/nosotros/ceprunsa-local.jpg` | 16:9 | 1200 × 675 px | WebP / JPG | Tarjeta fotográfica junto al texto de reseña histórica (400 px alto). |
 | **Tarjeta Conoce Más 1** | Nuestra Misión y Visión | `/images/nosotros/mision-vision.jpg` | 4:3 o 3:4 | 800 × 600 px | WebP / JPG | Tarjeta vertical navegable (`h-72` a `h-96`) con gradiente inferior. |
 | **Tarjeta Conoce Más 2** | Certificación ISO 9001:2015 | `/images/nosotros/iso-9001.jpg` | 4:3 o 3:4 | 800 × 600 px | WebP / JPG | Representación de estándares y gestión de calidad. |
 | **Tarjeta Conoce Más 3** | Nuestra Metodología | `/images/nosotros/metodologia.jpg` | 4:3 o 3:4 | 800 × 600 px | WebP / JPG | Clases, docencia activa y talleres pedagógicos. |
-| **Autoridad 1** | Mg. Arnaldo H. Valdivia Loaiza (Presidente) | `/images/nosotros/DR-ARNALDO.jpg` | 1:1 (cuadrada) | 600 × 600 px | JPG / WebP | Círculo de 240 × 240 px. Encuadre formal centrado de busto/rostro. |
-| **Autoridad 2** | Dra. María Elena Rojas Zegarra (Dir. Académica) | `/images/nosotros/DRA-MARIA-ELENA-2.jpg` | 1:1 (cuadrada) | 600 × 600 px | JPG / WebP | Fotografía institucional formal centrada. |
-| **Autoridad 3** | Mg. José Miguel Rojas Hualpa (Dir. Administrativo) | `/images/nosotros/DR-JOSE.jpg` | 1:1 (cuadrada) | 600 × 600 px | JPG / WebP | Fotografía institucional formal centrada. |
-
+| **Autoridad 1** | Autoridad 1 | `/images/nosotros/DRA-MARIA-ELENA-2.jpg` | 1:1 (cuadrada) | 600 × 600 px | JPG / WebP | Círculo de 240 × 240 px. Fotografía de la autoridad 1 en Nosotros. |
+| **Autoridad 2** | Autoridad 2 | `/images/nosotros/DR-ARNALDO.jpg` | 1:1 (cuadrada) | 600 × 600 px | JPG / WebP | Fotografía institucional formal de la autoridad 2 en Nosotros. |
+| **Autoridad 3** | Autoridad 3 | `/images/nosotros/DR-JOSE.jpg` | 1:1 (cuadrada) | 600 × 600 px | JPG / WebP | Fotografía institucional formal de la autoridad 3 en Nosotros. |
+ 
 ---
 
 ### B. Subpáginas Institucionales
@@ -91,12 +90,12 @@ Especificaciones técnicas y catálogo exhaustivo de todas las imágenes del sit
 
 | Sección | Elemento / Imagen | Ruta actual | Proporción | Dimensión recomendada | Formato | Notas |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Catálogo: Tarjeta 1** | Afiche CEPRUNSA I Fase | `/images/procesos/ceprunsa_i_fase.jpg` | 16:9 o 2:1 | 1200 × 600 px | WebP / JPG | Cabecera de tarjeta (`h-64` a `h-72`). Títulos y logos centrados. |
-| **Catálogo: Tarjeta 2** | Afiche CEPRUNSA Ciclo Quintos | `/images/procesos/ceprunsa_ciclo_quintos.png` | 16:9 o 2:1 | 1200 × 600 px | WebP / JPG | Cabecera de tarjeta con gráfica publicitaria del ciclo quintos. |
-| **Catálogo: Tarjeta 3** | Afiche CEPRUNSA II Fase | `/images/procesos/ceprunsa_ii_fase.jpg` | 16:9 o 2:1 | 1200 × 600 px | WebP / JPG | Cabecera de tarjeta de admisión II Fase. |
-| **Catálogo: Tarjeta 4** | Afiche Proceso Extraordinario | `/images/procesos/proceso_extraordinario.jpg` | 16:9 o 2:1 | 1200 × 600 px | WebP / JPG | Cabecera de tarjeta de modalidades extraordinarias. |
+| **Catálogo: Tarjeta 1** | Afiche: Ciclo Quintos | `/images/procesos/ceprunsa_ciclo_quintos.png` | 16:9 o 2:1 | 1200 × 600 px | WebP / JPG | Cabecera de tarjeta con gráfica publicitaria del Ciclo Quintos. |
+| **Catálogo: Tarjeta 2** | Afiche: CEPRUNSA I Fase | `/images/procesos/ceprunsa_i_fase.jpg` | 16:9 o 2:1 | 1200 × 600 px | WebP / JPG | Cabecera de tarjeta (`h-64` a `h-72`). Títulos y logos centrados. |
+| **Catálogo: Tarjeta 3** | Afiche: CEPRUNSA II Fase | `/images/procesos/ceprunsa_ii_fase.jpg` | 16:9 o 2:1 | 1200 × 600 px | WebP / JPG | Cabecera de tarjeta de admisión II Fase. |
+| **Catálogo: Tarjeta 4** | Afiche: Ciclo Extraordinario | `/images/procesos/proceso_extraordinario.jpg` | 16:9 o 2:1 | 1200 × 600 px | WebP / JPG | Cabecera de tarjeta de modalidades extraordinarias. |
 | **Detalle de Proceso** | Banner del proceso seleccionado | *Misma imagen del proceso activo* | 2.5:1 | 1600 × 650 px | WebP / JPG | Se renderiza en `h-80` a `h-96` al ingresar a `/procesos/:id`. |
-| **Sidebar Lateral** | Miniatura estudiante ("Asegura tu ingreso") | `/images/home/ceprunsa-estudiantes-demo.jpg` | 1:1 (cuadrada) | 300 × 300 px | JPG / WebP | Círculo decorativo de 128 × 128 px en la columna lateral de ayuda. |
+| **Sidebar Lateral** | Tarjeta Lateral Informativa | `/images/home/ceprunsa-estudiantes-demo.jpg` | 1:1 (cuadrada) | 300 × 300 px | JPG / WebP | Círculo decorativo de 128 × 128 px en la columna lateral de ayuda. |
 | **Material Promocional** | Volante Digital II Fase | `/images/procesos/flyer/ceprunsa-segunda-fase-flyer.jpg` | 3:4 | 900 × 1200 px | WebP / JPG | Volante para difusión y modal informativo. |
 
 ---
@@ -108,7 +107,6 @@ Especificaciones técnicas y catálogo exhaustivo de todas las imágenes del sit
 | Sección | Elemento / Imagen | Ruta actual | Proporción | Dimensión recomendada | Formato | Notas |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Tarjeta Vocacional ConóceT** | Ícono de la App Móvil | `/images/global/conocet-app-logo.png` | 1:1 | 512 × 512 px | PNG | Se muestra en un recuadro de 144 × 144 px con bordes redondeados y sombra. |
-| **Tarjeta Vocacional ConóceT** | Código QR de Descarga | `/images/global/conocet-qr.png` | 1:1 | 500 × 500 px | PNG / JPG | QR nítido para escaneo directo a Google Play Store. |
 
 ---
 
@@ -185,10 +183,10 @@ Especificaciones técnicas y catálogo exhaustivo de todas las imágenes del sit
 
 | Guía / Página | Elemento / Imagen | Ruta actual | Proporción | Dimensión recomendada | Formato | Notas técnicas |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Acceso a Clases** (`/zona-postulante/clases`) | Header Banner Acceso a Clases | `/images/guias/acceso-clases-header.png` | ~2.5:1 | 1920 × 750 px | WebP / PNG | Estudiante frente a laptop/plataforma virtual; zona derecha libre para texto. |
-| **Pago de Cuotas** (`/zona-postulante/pago`) | Header Banner Guía de Pagos BCP | `/images/guias/pago-cuotas-header.png` | ~2.5:1 | 1920 × 750 px | WebP / PNG | Banca digital BCP, cajero o comprobante de pago web. |
-| **Documentos Oficiales** (`/zona-postulante/documentos`) | Header Banner Documentos y Vacantes | `/images/guias/documentos-oficiales-header.png` | ~2.5:1 | 1920 × 750 px | WebP / PNG | Carpetas, reglamentos, vacantes y material oficial institucional. |
-| **Consultorio Psicológico** (`/zona-postulante/psicologia`) | Header Banner Soporte Emocional | `/images/guias/consultorio-psicologico-header.png` | ~2.5:1 | 1920 × 750 px | WebP / PNG | Sesión de orientación psicológica, empatía y acompañamiento profesional. |
+| **Acceso a Clases** (`/zona-postulante/clases`) | Banner: Acceso a Clases | `/images/guias/acceso-clases-header.png` | ~2.5:1 | 1920 × 750 px | WebP / PNG | Imagen de cabecera de la guía de acceso a clases virtuales. |
+| **Pago de Cuotas** (`/zona-postulante/pago`) | Banner: Pago de Cuotas | `/images/guias/pago-cuotas-header.png` | ~2.5:1 | 1920 × 750 px | WebP / PNG | Imagen de cabecera de la guía de pagos en banco y plataforma virtual. |
+| **Documentos Oficiales** (`/zona-postulante/documentos`) | Banner: Documentos Oficiales | `/images/guias/documentos-oficiales-header.png` | ~2.5:1 | 1920 × 750 px | WebP / PNG | Imagen de cabecera de la guía con reglamentos, vacantes y estatutos. |
+| **Consultorio Psicológico** (`/zona-postulante/psicologia`) | Banner: Consultorio Psicológico | `/images/guias/consultorio-psicologico-header.png` | ~2.5:1 | 1920 × 750 px | WebP / PNG | Imagen de cabecera de la guía de orientación y soporte psicológico. |
 
 ---
 
