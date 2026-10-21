@@ -83,6 +83,17 @@ const SITE_IMAGES: ImageItem[] = [
 
   // 🏠 INICIO (HOME)
   {
+    id: "home-flyer-modal",
+    name: "Flyer Emergente",
+    page: "home",
+    pageName: "Inicio",
+    section: "Ventana Emergente (Pop-up Flyer)",
+    path: "/images/procesos/flyer/ceprunsa-segunda-fase-flyer2.jpg",
+    description: "Afiche publicitario emergente que se abre automáticamente al entrar al sitio",
+    aspectRatio: "3:4 o 4:5 (Vertical)",
+    dimensions: "900 × 1200 px (o 1080 × 1350 px)",
+  },
+  {
     id: "home-hero",
     name: "Carrusel Slide 1",
     page: "home",
