@@ -6,7 +6,6 @@ import {
   ExternalLink,
   ChevronRight,
   Newspaper,
-  Sparkles,
   Share2,
   X,
   Check,
@@ -16,13 +15,10 @@ import {
 import { fetchNoticias } from "../lib/noticiasService";
 import type { Noticia } from "../types";
 
-const CATEGORIES = ["Todas", "Institucional", "Admisión", "Académico", "Comunicados"];
-
 const Noticias: React.FC = () => {
   const [noticias, setNoticias] = useState<Noticia[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("Todas");
   const [activeArticle, setActiveArticle] = useState<Noticia | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
 
@@ -45,35 +41,31 @@ const Noticias: React.FC = () => {
   // Filtered news items
   const filteredNoticias = useMemo(() => {
     return noticias.filter((item) => {
-      const matchesCategory =
-        selectedCategory === "Todas" ||
-        item.category?.toLowerCase() === selectedCategory.toLowerCase();
-
       const matchesSearch =
         searchQuery.trim() === "" ||
         item.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (item.subtitle && item.subtitle.toLowerCase().includes(searchQuery.toLowerCase())) ||
         item.summary.toLowerCase().includes(searchQuery.toLowerCase());
 
-      return matchesCategory && matchesSearch;
+      return matchesSearch;
     });
-  }, [noticias, selectedCategory, searchQuery]);
+  }, [noticias, searchQuery]);
 
   // Featured article (first featured or first item)
   const featuredArticle = useMemo(() => {
-    if (selectedCategory !== "Todas" || searchQuery.trim() !== "") {
+    if (searchQuery.trim() !== "") {
       return null;
     }
     return noticias.find((n) => n.featured) || noticias[0] || null;
-  }, [noticias, selectedCategory, searchQuery]);
+  }, [noticias, searchQuery]);
 
   // Regular grid articles (excluding featured if displayed)
   const gridArticles = useMemo(() => {
-    if (featuredArticle && selectedCategory === "Todas" && searchQuery.trim() === "") {
+    if (featuredArticle && searchQuery.trim() === "") {
       return filteredNoticias.filter((n) => n.id !== featuredArticle.id);
     }
     return filteredNoticias;
-  }, [filteredNoticias, featuredArticle, selectedCategory, searchQuery]);
+  }, [filteredNoticias, featuredArticle, searchQuery]);
 
   const handleCopyShare = (article: Noticia) => {
     const url = article.sourceUrl || window.location.href;
@@ -87,7 +79,7 @@ const Noticias: React.FC = () => {
       {/* ============================================================ */}
       {/* HERO SECTION                                                 */}
       {/* ============================================================ */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-primary-950 via-primary-900 to-accent-950 text-white py-16 md:py-24">
+      <section className="relative overflow-hidden bg-gradient-to-br from-primary-950 via-primary-900 to-accent-950 text-white py-14 md:py-20">
         {/* Subtle patterned overlay */}
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:24px_24px]" />
         
@@ -106,11 +98,6 @@ const Noticias: React.FC = () => {
           </nav>
 
           <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-accent-300 text-xs font-semibold tracking-wide uppercase mb-4">
-              <Sparkles size={14} className="text-accent-400 animate-pulse" />
-              <span>Prensa y Comunicación Oficial</span>
-            </div>
-
             <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight leading-tight">
               Noticias y Novedades <span className="text-accent-400">CEPRUNSA</span>
             </h1>
@@ -120,53 +107,36 @@ const Noticias: React.FC = () => {
               actividades académicas y la vida universitaria de la UNSA.
             </p>
           </div>
-
-          {/* Search bar and Filters */}
-          <div className="mt-8 flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
-            {/* Search Input */}
-            <div className="relative flex-1 max-w-lg">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
-              <input
-                type="text"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Buscar por palabra clave, título o contenido..."
-                className="w-full pl-11 pr-4 py-3 rounded-2xl bg-white/95 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500 shadow-lg shadow-black/10 transition"
-              />
-              {searchQuery && (
-                <button
-                  onClick={() => setSearchQuery("")}
-                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
-                >
-                  <X size={16} />
-                </button>
-              )}
-            </div>
-
-            {/* Category filter pills */}
-            <div className="flex flex-wrap items-center gap-2">
-              {CATEGORIES.map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all duration-200 cursor-pointer ${
-                    selectedCategory === cat
-                      ? "bg-accent-600 text-white shadow-md shadow-accent-950/30 scale-105"
-                      : "bg-white/10 text-white/80 hover:bg-white/20 hover:text-white border border-white/10"
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-          </div>
         </div>
       </section>
 
       {/* ============================================================ */}
       {/* MAIN CONTENT AREA                                             */}
       {/* ============================================================ */}
-      <main className="container-custom py-12 md:py-16 flex-1 space-y-12">
+      <main className="container-custom py-10 md:py-14 flex-1 space-y-10">
+        {/* Search Bar - Encima de las noticias */}
+        <div className="max-w-2xl mx-auto w-full">
+          <div className="relative">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Buscar noticias por título, tema o palabra clave..."
+              className="w-full pl-11 pr-10 py-3.5 rounded-2xl bg-white border border-slate-200/90 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-accent-500 focus:border-accent-500 shadow-sm transition"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-1"
+                aria-label="Limpiar búsqueda"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </div>
+        </div>
+
         {loading ? (
           <div className="py-24 text-center">
             <div className="inline-block animate-spin rounded-full h-12 w-12 border-4 border-accent-600 border-t-transparent mb-4" />
@@ -180,16 +150,13 @@ const Noticias: React.FC = () => {
             </div>
             <h2 className="text-xl font-bold text-slate-800">No se encontraron noticias</h2>
             <p className="text-slate-500 text-sm">
-              No hay publicaciones que coincidan con &ldquo;{searchQuery}&rdquo; en la categoría seleccionada.
+              No hay publicaciones que coincidan con &ldquo;{searchQuery}&rdquo;.
             </p>
             <button
-              onClick={() => {
-                setSearchQuery("");
-                setSelectedCategory("Todas");
-              }}
+              onClick={() => setSearchQuery("")}
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-accent-700 hover:bg-accent-800 text-white text-sm font-semibold transition cursor-pointer"
             >
-              Restablecer filtros
+              Restablecer búsqueda
             </button>
           </div>
         ) : (
@@ -248,27 +215,14 @@ const Noticias: React.FC = () => {
                       </p>
                     </div>
 
-                    <div className="pt-6 border-t border-slate-100 flex items-center justify-between gap-4">
+                    <div className="pt-6 border-t border-slate-100 flex items-center gap-4">
                       <button
                         onClick={() => setActiveArticle(featuredArticle)}
                         className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent-700 hover:bg-accent-800 text-white font-semibold text-sm transition shadow-md shadow-accent-950/20 cursor-pointer"
                       >
-                        <span>Leer nota completa</span>
+                        <span>Ver detalle</span>
                         <ArrowRight size={16} />
                       </button>
-
-                      {featuredArticle.sourceUrl && (
-                        <a
-                          href={featuredArticle.sourceUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-500 hover:text-accent-700 transition"
-                          title="Ver enlace original"
-                        >
-                          <span>Fuente UNSA</span>
-                          <ExternalLink size={14} />
-                        </a>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -282,7 +236,7 @@ const Noticias: React.FC = () => {
               <div className="flex items-center justify-between mb-8">
                 <div>
                   <h2 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-                    {selectedCategory === "Todas" ? "Todas las Publicaciones" : `Noticias: ${selectedCategory}`}
+                    {featuredArticle ? "Más Noticias" : "Publicaciones"}
                   </h2>
                   <p className="text-xs sm:text-sm text-slate-500 mt-1">
                     Mostrando {gridArticles.length} {gridArticles.length === 1 ? "artículo" : "artículos"}
@@ -351,19 +305,6 @@ const Noticias: React.FC = () => {
                           <span>Ver detalle</span>
                           <ChevronRight size={15} />
                         </button>
-
-                        {article.sourceUrl && (
-                          <a
-                            href={article.sourceUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1 text-slate-400 hover:text-slate-700 transition"
-                            title="Abrir fuente original"
-                          >
-                            <span>Fuente</span>
-                            <ExternalLink size={12} />
-                          </a>
-                        )}
                       </div>
                     </div>
                   </article>
@@ -463,7 +404,7 @@ const Noticias: React.FC = () => {
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-accent-700 hover:bg-accent-800 text-white text-xs sm:text-sm font-semibold shadow-md shadow-accent-950/20 transition cursor-pointer"
                   >
-                    <span>Ver publicación original</span>
+                    <span>Leer nota completa</span>
                     <ExternalLink size={15} />
                   </a>
                 )}
