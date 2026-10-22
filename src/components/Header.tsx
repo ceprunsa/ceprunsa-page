@@ -12,6 +12,7 @@ const navItems: NavItem[] = [
   { name: "Nosotros", path: "/nosotros" },
   { name: "Procesos", path: "/procesos" },
   { name: "Carreras", path: "/carreras" },
+  { name: "Noticias", path: "/noticias" },
   { name: "Contacto", path: "/contacto" },
 ];
 

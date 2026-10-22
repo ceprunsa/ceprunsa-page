@@ -17,6 +17,7 @@ import GuiaClases from "./pages/GuiaClases";
 import GuiaPago from "./pages/GuiaPago";
 import DocumentosOficiales from "./pages/DocumentosOficiales";
 import ConsultorioPsicologico from "./pages/ConsultorioPsicologico";
+import Noticias from "./pages/Noticias";
 import Admin from "./pages/Admin";
 
 const router = createBrowserRouter([
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: "procesos",
         element: <Processes />,
+      },
+      {
+        path: "noticias",
+        element: <Noticias />,
       },
       {
         path: "contacto",

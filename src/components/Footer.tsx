@@ -8,6 +8,7 @@ const quickLinks: NavItem[] = [
   { name: "Inicio", path: "/" },
   { name: "Nosotros", path: "/nosotros" },
   { name: "Procesos", path: "/procesos" },
+  { name: "Noticias", path: "/noticias" },
   { name: "Contacto", path: "/contacto" },
 ];
 

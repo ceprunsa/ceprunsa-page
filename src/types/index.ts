@@ -156,3 +156,19 @@ export interface ContactInfo {
     youtube: string;
   };
 }
+
+export interface Noticia {
+  id: string;
+  title: string;
+  subtitle?: string;
+  date: string;
+  imageUrl?: string;
+  summary: string;
+  sourceUrl?: string;
+  category?: string;
+  featured?: boolean;
+  content?: string;
+  created_at?: string;
+  updated_at?: string;
+}
+

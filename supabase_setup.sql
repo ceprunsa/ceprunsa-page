@@ -102,3 +102,42 @@ drop policy if exists "Allow deletions in ceprunsa-images" on storage.objects;
 create policy "Allow deletions in ceprunsa-images"
   on storage.objects for delete
   using ( bucket_id = 'ceprunsa-images' );
+
+
+-- 4. TABLA: noticias (Noticias, comunicados y publicaciones del CEPRUNSA)
+-- ------------------------------------------------------------------------------
+create table if not exists public.noticias (
+  id uuid primary key default gen_random_uuid(),
+  title text not null,
+  subtitle text,
+  date text,
+  image_url text,
+  summary text,
+  source_url text,
+  category text default 'Institucional',
+  featured boolean default false,
+  content text,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+);
+
+-- Si la tabla ya fue creada anteriormente sin la columna 'content', añadirla:
+alter table public.noticias add column if not exists content text;
+
+
+-- Habilitar RLS
+alter table public.noticias enable row level security;
+
+-- Permitir lectura pública a cualquier visitante
+drop policy if exists "Public noticias are readable by everyone" on public.noticias;
+create policy "Public noticias are readable by everyone"
+  on public.noticias for select
+  using (true);
+
+-- Permitir operaciones completas
+drop policy if exists "Allow all operations on noticias" on public.noticias;
+create policy "Allow all operations on noticias"
+  on public.noticias for all
+  using (true)
+  with check (true);
+

@@ -26,9 +26,26 @@ import {
   Check,
   FileImage,
   ArrowRight,
+  Newspaper,
+  Link as LinkIcon,
+  Sparkles,
+  Trash2,
+  Edit3,
+  ExternalLink,
+  Calendar,
+  Loader2,
+  Upload,
 } from "lucide-react";
 import { useConfig, type PublicImageItem, type ReplacementPreviewData } from "../context/ConfigContext";
 import { unsaCarreras } from "../data/unsa_carreras";
+import {
+  fetchNoticias,
+  saveNoticia,
+  deleteNoticia,
+  uploadNoticiaImage,
+  extractMetadataFromUrl,
+} from "../lib/noticiasService";
+import type { Noticia } from "../types";
 
 // Target image definitions categorized by Page for Admin Quick Reference
 export type PageCategory = "home" | "nosotros" | "carreras" | "procesos" | "guias" | "global";
@@ -400,7 +417,30 @@ const Admin: React.FC = () => {
   const [loginError, setLoginError] = useState("");
 
   // Navigation tabs state
-  const [activeTab, setActiveTab] = useState<"presets" | "config">("presets");
+  const [activeTab, setActiveTab] = useState<"presets" | "config" | "noticias">("presets");
+
+  // Noticias / Novedades State
+  const [noticiasList, setNoticiasList] = useState<Noticia[]>([]);
+  const [loadingNoticias, setLoadingNoticias] = useState(false);
+  const [noticiaSearch, setNoticiaSearch] = useState("");
+  const [noticiaCategoryFilter, setNoticiaCategoryFilter] = useState("Todas");
+  const [noticiaModalOpen, setNoticiaModalOpen] = useState(false);
+  const [isEditingExisting, setIsEditingExisting] = useState(false);
+  const [editingNoticia, setEditingNoticia] = useState<Partial<Noticia>>({
+    title: "",
+    subtitle: "",
+    date: "",
+    imageUrl: "",
+    summary: "",
+    sourceUrl: "",
+    category: "Institucional",
+    featured: false,
+  });
+  const [scrapeUrlInput, setScrapeUrlInput] = useState("");
+  const [isScraping, setIsScraping] = useState(false);
+  const [isSavingNoticia, setIsSavingNoticia] = useState(false);
+  const [isUploadingNoticiaImg, setIsUploadingNoticiaImg] = useState(false);
+  const noticiaFileInputRef = useRef<HTMLInputElement>(null);
 
   // Notifications / Toast
   const [toastMessage, setToastMessage] = useState<{ text: string; type: "success" | "error" } | null>(null);
@@ -493,6 +533,154 @@ const Admin: React.FC = () => {
   const showToast = (text: string, type: "success" | "error" = "success") => {
     setToastMessage({ text, type });
     setTimeout(() => setToastMessage(null), 4000);
+  };
+
+  // Load noticias on mount
+  const loadNoticiasData = async () => {
+    setLoadingNoticias(true);
+    try {
+      const data = await fetchNoticias();
+      setNoticiasList(data);
+    } catch {
+      showToast("Error al cargar las noticias", "error");
+    } finally {
+      setLoadingNoticias(false);
+    }
+  };
+
+  useEffect(() => {
+    loadNoticiasData();
+  }, []);
+
+  const handleOpenCreateNoticia = () => {
+    setIsEditingExisting(false);
+    setEditingNoticia({
+      title: "",
+      subtitle: "",
+      date: new Date().toLocaleDateString("es-PE", { day: "numeric", month: "long", year: "numeric" }),
+      imageUrl: "",
+      summary: "",
+      sourceUrl: "",
+      category: "Institucional",
+      featured: false,
+    });
+    setScrapeUrlInput("");
+    setNoticiaModalOpen(true);
+  };
+
+  const handleOpenEditNoticia = (item: Noticia) => {
+    setIsEditingExisting(true);
+    setEditingNoticia({ ...item });
+    setScrapeUrlInput(item.sourceUrl || "");
+    setNoticiaModalOpen(true);
+  };
+
+  const handleImportFromUrl = async (urlOverride?: string) => {
+    const targetUrl = (urlOverride || scrapeUrlInput).trim();
+    if (!targetUrl) {
+      showToast("Por favor ingresa una URL válida (ej. https://www.unsa.edu.pe/...)", "error");
+      return;
+    }
+
+    setIsScraping(true);
+    try {
+      showToast("Extrayendo metadatos y contenido de la web...");
+      const data = await extractMetadataFromUrl(targetUrl);
+      setEditingNoticia((prev) => ({
+        ...prev,
+        title: data.title || prev.title,
+        subtitle: data.subtitle || prev.subtitle,
+        date: data.date || prev.date,
+        imageUrl: data.imageUrl || prev.imageUrl,
+        summary: data.summary || prev.summary,
+        sourceUrl: data.sourceUrl || targetUrl,
+        category: data.category || prev.category || "Institucional",
+      }));
+      setScrapeUrlInput(targetUrl);
+      if (!noticiaModalOpen) {
+        setIsEditingExisting(false);
+        setNoticiaModalOpen(true);
+      }
+      showToast("¡Datos extraídos y formulario completado!", "success");
+    } catch (err: any) {
+      showToast(err.message || "Error al autocompletar desde la URL", "error");
+    } finally {
+      setIsScraping(false);
+    }
+  };
+
+  const handleSaveNoticiaSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingNoticia.title?.trim()) {
+      showToast("El título de la noticia es obligatorio.", "error");
+      return;
+    }
+
+    setIsSavingNoticia(true);
+    try {
+      const res = await saveNoticia(editingNoticia);
+      if (res.success) {
+        showToast("Noticia guardada exitosamente en Supabase.");
+        setNoticiaModalOpen(false);
+        await loadNoticiasData();
+      } else {
+        showToast(res.error || "Error al guardar la noticia.", "error");
+      }
+    } catch (err: any) {
+      showToast(err.message || "Error al guardar la noticia.", "error");
+    } finally {
+      setIsSavingNoticia(false);
+    }
+  };
+
+  const handleDeleteNoticiaItem = async (id: string, title: string) => {
+    if (!window.confirm(`¿Estás seguro de eliminar la noticia "${title}"?`)) {
+      return;
+    }
+
+    try {
+      await deleteNoticia(id);
+      showToast("Noticia eliminada correctamente.");
+      await loadNoticiasData();
+    } catch (err: any) {
+      showToast(err.message || "Error al eliminar la noticia.", "error");
+    }
+  };
+
+  const handleUploadNoticiaImageFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      showToast("Por favor selecciona un archivo de imagen válido", "error");
+      return;
+    }
+
+    setIsUploadingNoticiaImg(true);
+    showToast(`Subiendo ${file.name} a Supabase...`);
+    try {
+      const res = await uploadNoticiaImage(file);
+      if (res.success && res.url) {
+        setEditingNoticia((prev) => ({ ...prev, imageUrl: res.url }));
+        showToast("Imagen subida correctamente.");
+      } else {
+        showToast(res.error || "Error al subir la imagen", "error");
+      }
+    } catch (err: any) {
+      showToast(err.message || "Error al subir la imagen", "error");
+    } finally {
+      setIsUploadingNoticiaImg(false);
+    }
+  };
+
+  const handleToggleFeaturedNoticia = async (item: Noticia) => {
+    try {
+      await saveNoticia({ ...item, featured: !item.featured });
+      showToast(item.featured ? "Noticia removida de destacados." : "Noticia marcada como destacada.");
+      await loadNoticiasData();
+    } catch (err: any) {
+      showToast(err.message || "Error al actualizar estado destacado.", "error");
+    }
   };
 
   const handleLogin = (e: React.FormEvent) => {
@@ -709,6 +897,21 @@ const Admin: React.FC = () => {
       .sort((a, b) => a.name.localeCompare(b.name));
   }, [publicImages, carreraByPathMap]);
 
+  // Filtered noticias list for tab
+  const filteredNoticiasList = useMemo(() => {
+    return noticiasList.filter((item) => {
+      const matchesCat =
+        noticiaCategoryFilter === "Todas" ||
+        item.category?.toLowerCase() === noticiaCategoryFilter.toLowerCase();
+      const matchesSearch =
+        noticiaSearch.trim() === "" ||
+        item.title.toLowerCase().includes(noticiaSearch.toLowerCase()) ||
+        (item.subtitle && item.subtitle.toLowerCase().includes(noticiaSearch.toLowerCase())) ||
+        item.summary.toLowerCase().includes(noticiaSearch.toLowerCase());
+      return matchesCat && matchesSearch;
+    });
+  }, [noticiasList, noticiaCategoryFilter, noticiaSearch]);
+
   // Combine static presets with dynamic public/images/carreras images
   const allPresets = useMemo(() => {
     const existingPaths = new Set(presetImages.map((p) => p.path));
@@ -911,6 +1114,26 @@ const Admin: React.FC = () => {
           >
             <Settings size={18} />
             <span>Configuración y Variables</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("noticias")}
+            className={`flex items-center gap-2.5 px-5 py-3 rounded-xl font-semibold text-sm transition cursor-pointer ${activeTab === "noticias"
+              ? "bg-accent-700 text-white shadow-md shadow-accent-950/20"
+              : "bg-white text-slate-600 hover:bg-slate-100 hover:text-slate-900 border border-slate-200"
+              }`}
+          >
+            <Newspaper size={18} />
+            <span>Noticias y Publicaciones</span>
+            {noticiasList.length > 0 && (
+              <span
+                className={`px-2 py-0.5 rounded-full text-xs font-bold ${
+                  activeTab === "noticias" ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
+                }`}
+              >
+                {noticiasList.length}
+              </span>
+            )}
           </button>
         </div>
 
@@ -1498,6 +1721,269 @@ const Admin: React.FC = () => {
             )}
           </div>
         )}
+
+        {/* ---------------------------------------------------- */}
+        {/* TAB 4: NOTICIAS & COMUNICADOS                        */}
+        {/* ---------------------------------------------------- */}
+        {activeTab === "noticias" && (
+          <div className="space-y-6">
+            {/* Top Quick Action Banner */}
+            <div className="bg-white border border-slate-200 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6">
+              <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div>
+                  <div className="flex items-center gap-2.5 mb-1.5">
+                    <span className="h-2.5 w-2.5 rounded-full bg-accent-600 animate-pulse" />
+                    <span className="text-xs font-bold text-accent-700 uppercase tracking-wider">
+                      Gestión de Contenidos UNSA / CEPRUNSA
+                    </span>
+                  </div>
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+                    <Newspaper className="text-accent-700" size={24} />
+                    <span>Noticias y Comunicados Oficiales</span>
+                  </h2>
+                  <p className="text-xs sm:text-sm text-slate-500 mt-1 max-w-2xl leading-relaxed">
+                    Crea publicaciones manualmente o <strong>autocompleta con una URL</strong> de la UNSA o cualquier sitio web mediante scraping inteligente de metadatos (Open Graph y Twitter Cards) y guárdalas en Supabase.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={loadNoticiasData}
+                    disabled={loadingNoticias}
+                    className="flex items-center gap-2 px-3.5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-semibold border border-slate-200 transition cursor-pointer"
+                    title="Recargar noticias"
+                  >
+                    <RefreshCw size={14} className={loadingNoticias ? "animate-spin" : ""} />
+                    <span>Actualizar</span>
+                  </button>
+
+                  <button
+                    onClick={handleOpenCreateNoticia}
+                    className="flex items-center gap-2 px-5 py-2.5 bg-accent-700 hover:bg-accent-800 text-white rounded-xl text-xs sm:text-sm font-semibold shadow-md shadow-accent-950/20 transition cursor-pointer"
+                  >
+                    <Plus size={16} />
+                    <span>Nueva Noticia</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* URL AUTOCOMPLETE QUICK-BAR */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-accent-50/60 via-primary-50/40 to-slate-50 border border-accent-200/60">
+                <div className="flex items-center gap-2 mb-2 text-xs font-bold text-accent-900">
+                  <Sparkles size={15} className="text-accent-600 animate-pulse" />
+                  <span>Importador Rápido por URL (Autocompletar con Web Scraper)</span>
+                </div>
+                <p className="text-xs text-slate-600 mb-3">
+                  Pega cualquier enlace de noticia (ej: <code className="bg-white/80 px-1 py-0.5 rounded text-accent-800 font-mono text-[11px]">https://www.unsa.edu.pe/...</code>) y el sistema extraerá título, resumen, fecha, foto y fuente automáticamente.
+                </p>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <div className="relative flex-1">
+                    <LinkIcon size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                    <input
+                      type="url"
+                      value={scrapeUrlInput}
+                      onChange={(e) => setScrapeUrlInput(e.target.value)}
+                      placeholder="https://www.unsa.edu.pe/autoridades-reconocen-a-estudiantes-ganadores..."
+                      className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-300 rounded-xl text-xs sm:text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-accent-600"
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleImportFromUrl();
+                        }
+                      }}
+                    />
+                  </div>
+                  <button
+                    onClick={() => handleImportFromUrl()}
+                    disabled={isScraping || !scrapeUrlInput.trim()}
+                    className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl bg-accent-700 hover:bg-accent-800 disabled:opacity-60 text-white font-semibold text-xs sm:text-sm shadow-md shadow-accent-950/20 transition cursor-pointer shrink-0"
+                  >
+                    {isScraping ? (
+                      <>
+                        <Loader2 size={16} className="animate-spin" />
+                        <span>Extrayendo datos...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Sparkles size={16} />
+                        <span>Autocompletar / Importar</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+
+              {/* Filters and Search Bar */}
+              <div className="flex flex-col md:flex-row gap-3 items-stretch md:items-center justify-between pt-2 border-t border-slate-100">
+                <div className="relative flex-1 max-w-md">
+                  <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
+                  <input
+                    type="text"
+                    value={noticiaSearch}
+                    onChange={(e) => setNoticiaSearch(e.target.value)}
+                    placeholder="Buscar noticias por título, resumen o categoría..."
+                    className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs sm:text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-accent-600"
+                  />
+                  {noticiaSearch && (
+                    <button
+                      onClick={() => setNoticiaSearch("")}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600"
+                    >
+                      <X size={14} />
+                    </button>
+                  )}
+                </div>
+
+                <div className="flex flex-wrap items-center gap-1.5">
+                  {["Todas", "Institucional", "Admisión", "Académico", "Comunicados"].map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setNoticiaCategoryFilter(cat)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
+                        noticiaCategoryFilter === cat
+                          ? "bg-accent-700 text-white shadow-xs"
+                          : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* NOTICIAS LIST */}
+            {loadingNoticias ? (
+              <div className="py-20 text-center bg-white rounded-3xl border border-slate-200">
+                <div className="inline-block animate-spin rounded-full h-10 w-10 border-4 border-accent-600 border-t-transparent mb-3" />
+                <p className="text-slate-500 text-xs font-medium">Cargando publicaciones...</p>
+              </div>
+            ) : filteredNoticiasList.length === 0 ? (
+              <div className="py-16 text-center bg-white rounded-3xl border border-slate-200 max-w-2xl mx-auto space-y-4">
+                <div className="h-14 w-14 mx-auto rounded-2xl bg-slate-100 flex items-center justify-center text-slate-400">
+                  <Newspaper size={28} />
+                </div>
+                <h3 className="text-lg font-bold text-slate-800">No hay noticias registradas</h3>
+                <p className="text-xs sm:text-sm text-slate-500 max-w-sm mx-auto">
+                  {noticiaSearch
+                    ? `No se encontraron noticias con "${noticiaSearch}". Intenta con otros términos.`
+                    : "Aún no hay publicaciones en esta categoría. Puedes crear una nueva o importar desde una URL."}
+                </p>
+                <button
+                  onClick={handleOpenCreateNoticia}
+                  className="inline-flex items-center gap-2 px-4 py-2 bg-accent-700 hover:bg-accent-800 text-white rounded-xl text-xs font-semibold transition shadow cursor-pointer"
+                >
+                  <Plus size={15} />
+                  <span>Crear Noticia Ahora</span>
+                </button>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {filteredNoticiasList.map((item) => (
+                  <div
+                    key={item.id}
+                    className="bg-white border border-slate-200/90 rounded-2xl overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between"
+                  >
+                    <div>
+                      {/* Image Preview */}
+                      <div className="relative h-44 w-full bg-slate-100 overflow-hidden">
+                        <img
+                          src={item.imageUrl || "/images/home/home_image.jpeg"}
+                          alt={item.title}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = "/images/home/home_image.jpeg";
+                          }}
+                        />
+                        <div className="absolute top-3 left-3 flex items-center gap-1.5">
+                          <span className="px-2.5 py-0.5 rounded-full bg-slate-900/80 text-white text-[11px] font-semibold backdrop-blur-md">
+                            {item.category || "Institucional"}
+                          </span>
+                        </div>
+                        {item.featured && (
+                          <div className="absolute top-3 right-3">
+                            <span className="px-2.5 py-0.5 rounded-full bg-amber-500 text-slate-900 text-[11px] font-bold shadow uppercase tracking-wide">
+                              Destacado
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Content details */}
+                      <div className="p-5 space-y-2.5">
+                        <div className="flex items-center gap-1.5 text-[11px] text-slate-400 font-medium">
+                          <Calendar size={12} className="text-accent-600" />
+                          <span>{item.date || "Sin fecha"}</span>
+                        </div>
+
+                        <h3 className="text-base font-bold text-slate-900 leading-snug line-clamp-2" title={item.title}>
+                          {item.title}
+                        </h3>
+
+                        {item.subtitle && (
+                          <p className="text-xs font-medium text-primary-700 line-clamp-2">
+                            {item.subtitle}
+                          </p>
+                        )}
+
+                        <p className="text-xs text-slate-600 line-clamp-3 leading-relaxed">
+                          {item.summary}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Actions footer */}
+                    <div className="px-5 py-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between gap-2">
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => handleToggleFeaturedNoticia(item)}
+                          className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition cursor-pointer ${
+                            item.featured
+                              ? "bg-amber-100 text-amber-800 hover:bg-amber-200"
+                              : "bg-slate-200 text-slate-600 hover:bg-slate-300"
+                          }`}
+                          title="Alternar destacado"
+                        >
+                          {item.featured ? "★ Destacado" : "☆ Destacar"}
+                        </button>
+
+                        {item.sourceUrl && (
+                          <a
+                            href={item.sourceUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="p-1.5 rounded-lg text-slate-400 hover:text-accent-700 hover:bg-white transition"
+                            title="Abrir fuente original"
+                          >
+                            <ExternalLink size={14} />
+                          </a>
+                        )}
+                      </div>
+
+                      <div className="flex items-center gap-1.5">
+                        <button
+                          onClick={() => handleOpenEditNoticia(item)}
+                          className="flex items-center gap-1 px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 rounded-xl text-xs font-semibold shadow-2xs transition cursor-pointer"
+                        >
+                          <Edit3 size={13} />
+                          <span>Editar</span>
+                        </button>
+
+                        <button
+                          onClick={() => handleDeleteNoticiaItem(item.id, item.title)}
+                          className="p-1.5 rounded-xl text-red-500 hover:text-red-700 hover:bg-red-50 transition cursor-pointer"
+                          title="Eliminar noticia"
+                        >
+                          <Trash2 size={15} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
         {/* ---------------------------------------------------- */}
         {/* REPLACE IMAGE MODAL (Select from public/ or Upload)   */}
         {/* ---------------------------------------------------- */}
@@ -2030,6 +2516,261 @@ const Admin: React.FC = () => {
                 >
                   {isUploadingNew && <RefreshCw size={14} className="animate-spin" />}
                   <span>{isUploadingNew ? "Subiendo..." : "Subir Imagen"}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ---------------------------------------------------- */}
+      {/* NOTICIA CREATE / EDIT MODAL                          */}
+      {/* ---------------------------------------------------- */}
+      {noticiaModalOpen && (
+        <div className="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-md flex items-center justify-center p-4">
+          <div className="bg-white border border-slate-200 rounded-3xl max-w-3xl w-full max-h-[92vh] flex flex-col shadow-2xl overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            {/* Header */}
+            <div className="p-6 border-b border-slate-200 flex items-center justify-between bg-white shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="h-10 w-10 rounded-2xl bg-accent-50 border border-accent-200 flex items-center justify-center text-accent-700">
+                  <Newspaper size={20} />
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">
+                    {isEditingExisting ? "Editar Noticia" : "Crear Nueva Noticia"}
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Completa o edita los campos que se publicarán en el portal de CEPRUNSA.
+                  </p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => setNoticiaModalOpen(false)}
+                className="p-2 rounded-xl text-slate-400 hover:text-slate-800 bg-slate-100 hover:bg-slate-200 transition cursor-pointer"
+              >
+                <X size={18} />
+              </button>
+            </div>
+
+            {/* Modal Body / Scrollable Form */}
+            <form onSubmit={handleSaveNoticiaSubmit} className="flex-1 overflow-y-auto p-6 space-y-6">
+              {/* AUTOCOMPLETE BOX AT TOP */}
+              <div className="p-4 rounded-2xl bg-gradient-to-r from-accent-50/70 to-primary-50/50 border border-accent-200/70 space-y-2">
+                <label className="block text-xs font-bold text-accent-900 flex items-center gap-1.5">
+                  <Sparkles size={14} className="text-accent-600" />
+                  <span>Autocompletar formulario desde una URL web</span>
+                </label>
+                <div className="flex flex-col sm:flex-row gap-2">
+                  <input
+                    type="url"
+                    value={scrapeUrlInput}
+                    onChange={(e) => setScrapeUrlInput(e.target.value)}
+                    placeholder="https://www.unsa.edu.pe/..."
+                    className="flex-1 bg-white border border-slate-300 rounded-xl px-3 py-2 text-xs sm:text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-accent-600"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => handleImportFromUrl(scrapeUrlInput)}
+                    disabled={isScraping || !scrapeUrlInput.trim()}
+                    className="inline-flex items-center justify-center gap-2 px-4 py-2 bg-accent-700 hover:bg-accent-800 disabled:opacity-50 text-white text-xs font-semibold rounded-xl shadow-xs transition cursor-pointer shrink-0"
+                  >
+                    {isScraping ? <Loader2 size={14} className="animate-spin" /> : <Sparkles size={14} />}
+                    <span>{isScraping ? "Extrayendo..." : "Autocompletar"}</span>
+                  </button>
+                </div>
+                <p className="text-[11px] text-slate-500">
+                  Al presionar &ldquo;Autocompletar&rdquo; el backend analizará las etiquetas Open Graph y párrafos para llenar los campos a continuación.
+                </p>
+              </div>
+
+              {/* Form fields */}
+              <div className="space-y-4">
+                {/* Title */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    Título de la Noticia <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={editingNoticia.title || ""}
+                    onChange={(e) => setEditingNoticia({ ...editingNoticia, title: e.target.value })}
+                    placeholder="Ej. Reconocen a campeones de concurso nacional de litigación oral"
+                    className="w-full bg-white border border-slate-300 text-slate-900 text-sm font-semibold rounded-xl px-3.5 py-2.5 focus:border-accent-700 focus:ring-1 focus:ring-accent-700 outline-none"
+                  />
+                </div>
+
+                {/* Subtitle */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    Subtítulo o Bajada (Opcional)
+                  </label>
+                  <input
+                    type="text"
+                    value={editingNoticia.subtitle || ""}
+                    onChange={(e) => setEditingNoticia({ ...editingNoticia, subtitle: e.target.value })}
+                    placeholder="Ej. Estudiantes agustinos vencieron a más de 30 delegaciones universitarias"
+                    className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 focus:ring-1 focus:ring-accent-700 outline-none"
+                  />
+                </div>
+
+                {/* Category and Date row */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      Categoría
+                    </label>
+                    <select
+                      value={editingNoticia.category || "Institucional"}
+                      onChange={(e) => setEditingNoticia({ ...editingNoticia, category: e.target.value })}
+                      className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none"
+                    >
+                      <option value="Institucional">Institucional</option>
+                      <option value="Admisión">Admisión</option>
+                      <option value="Académico">Académico</option>
+                      <option value="Comunicados">Comunicados</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                      Fecha de Publicación
+                    </label>
+                    <input
+                      type="text"
+                      value={editingNoticia.date || ""}
+                      onChange={(e) => setEditingNoticia({ ...editingNoticia, date: e.target.value })}
+                      placeholder="Ej. 22 de Octubre de 2026"
+                      className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none"
+                    />
+                  </div>
+                </div>
+
+                {/* Featured toggle */}
+                <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                  <input
+                    type="checkbox"
+                    id="noticia-featured-check"
+                    checked={Boolean(editingNoticia.featured)}
+                    onChange={(e) => setEditingNoticia({ ...editingNoticia, featured: e.target.checked })}
+                    className="h-4 w-4 rounded text-accent-700 focus:ring-accent-600 cursor-pointer"
+                  />
+                  <label htmlFor="noticia-featured-check" className="text-xs font-semibold text-slate-700 cursor-pointer select-none">
+                    Marcar como noticia destacada (Aparecerá en el banner principal superior de Noticias)
+                  </label>
+                </div>
+
+                {/* Image section with preview & upload */}
+                <div className="space-y-3">
+                  <label className="block text-xs font-bold text-slate-700">
+                    Imagen de Portada
+                  </label>
+
+                  {/* Preview box */}
+                  {editingNoticia.imageUrl ? (
+                    <div className="relative h-44 rounded-2xl overflow-hidden border border-slate-200 bg-slate-900 group">
+                      <img
+                        src={editingNoticia.imageUrl}
+                        alt="Previsualización"
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          (e.target as HTMLImageElement).src = "/images/home/home_image.jpeg";
+                        }}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setEditingNoticia({ ...editingNoticia, imageUrl: "" })}
+                        className="absolute top-2 right-2 p-1.5 bg-black/60 hover:bg-black text-white rounded-full transition"
+                        title="Quitar imagen"
+                      >
+                        <X size={14} />
+                      </button>
+                    </div>
+                  ) : (
+                    <div className="h-32 border-2 border-dashed border-slate-200 rounded-2xl flex flex-col items-center justify-center text-slate-400 bg-slate-50">
+                      <FileImage size={28} className="mb-1 text-slate-300" />
+                      <span className="text-xs font-medium">Sin imagen seleccionada</span>
+                    </div>
+                  )}
+
+                  {/* Image URL input & upload button */}
+                  <div className="flex flex-col sm:flex-row gap-2">
+                    <input
+                      type="text"
+                      value={editingNoticia.imageUrl || ""}
+                      onChange={(e) => setEditingNoticia({ ...editingNoticia, imageUrl: e.target.value })}
+                      placeholder="URL de la imagen (ej. https://... o /images/...)"
+                      className="flex-1 bg-white border border-slate-300 text-xs sm:text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none"
+                    />
+
+                    <input
+                      type="file"
+                      ref={noticiaFileInputRef}
+                      onChange={handleUploadNoticiaImageFile}
+                      accept="image/*"
+                      className="hidden"
+                    />
+
+                    <button
+                      type="button"
+                      onClick={() => noticiaFileInputRef.current?.click()}
+                      disabled={isUploadingNoticiaImg}
+                      className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-700 text-xs font-semibold rounded-xl transition cursor-pointer shrink-0"
+                    >
+                      {isUploadingNoticiaImg ? <Loader2 size={14} className="animate-spin" /> : <Upload size={14} />}
+                      <span>{isUploadingNoticiaImg ? "Subiendo..." : "Subir archivo"}</span>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Summary / Content */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    Resumen / Contenido de la Noticia <span className="text-red-500">*</span>
+                  </label>
+                  <textarea
+                    required
+                    rows={5}
+                    value={editingNoticia.summary || ""}
+                    onChange={(e) => setEditingNoticia({ ...editingNoticia, summary: e.target.value })}
+                    placeholder="Escribe el resumen o contenido completo de la noticia..."
+                    className="w-full bg-white border border-slate-300 text-slate-900 text-sm rounded-xl p-3.5 focus:border-accent-700 focus:ring-1 focus:ring-accent-700 outline-none resize-y"
+                  />
+                </div>
+
+                {/* Source URL */}
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1.5">
+                    URL de la Fuente Original (Enlace a UNSA o portal de origen)
+                  </label>
+                  <input
+                    type="url"
+                    value={editingNoticia.sourceUrl || ""}
+                    onChange={(e) => setEditingNoticia({ ...editingNoticia, sourceUrl: e.target.value })}
+                    placeholder="https://www.unsa.edu.pe/noticia-completa..."
+                    className="w-full bg-white border border-slate-300 text-slate-900 text-xs sm:text-sm rounded-xl px-3.5 py-2.5 focus:border-accent-700 outline-none"
+                  />
+                </div>
+              </div>
+
+              {/* Footer Buttons */}
+              <div className="pt-4 border-t border-slate-200 flex items-center justify-end gap-3 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => setNoticiaModalOpen(false)}
+                  className="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs sm:text-sm transition cursor-pointer"
+                >
+                  Cancelar
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={isSavingNoticia}
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-accent-700 hover:bg-accent-800 disabled:opacity-50 text-white font-semibold text-xs sm:text-sm shadow-md shadow-accent-950/20 transition cursor-pointer"
+                >
+                  {isSavingNoticia ? <Loader2 size={16} className="animate-spin" /> : <Save size={16} />}
+                  <span>{isSavingNoticia ? "Guardando..." : "Guardar en Supabase"}</span>
                 </button>
               </div>
             </form>

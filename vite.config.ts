@@ -53,6 +53,40 @@ function adminApiPlugin(): Plugin {
       server.middlewares.use(async (req, res, next) => {
         const publicDir = path.resolve(__dirname, "public");
 
+        if (req.url === "/api/scrape-news" && req.method === "POST") {
+          let body = "";
+          req.on("data", (chunk) => {
+            body += chunk.toString();
+          });
+          req.on("end", async () => {
+            try {
+              const parsedBody = JSON.parse(body || "{}");
+              const fakeReq = { method: "POST", body: parsedBody };
+              const fakeRes = {
+                setHeader: (k: string, v: string) => res.setHeader(k, v),
+                status: (code: number) => {
+                  res.statusCode = code;
+                  return {
+                    json: (data: any) => {
+                      res.setHeader("Content-Type", "application/json");
+                      res.end(JSON.stringify(data));
+                    },
+                    end: () => res.end(),
+                  };
+                },
+              };
+              const { default: scrapeHandler } = await import("./api/scrape-news");
+              await scrapeHandler(fakeReq, fakeRes);
+            } catch (err: any) {
+              console.error("Error in /api/scrape-news middleware:", err);
+              res.statusCode = 500;
+              res.setHeader("Content-Type", "application/json");
+              res.end(JSON.stringify({ error: err?.message || "Internal server error" }));
+            }
+          });
+          return;
+        }
+
         if (req.url === "/api/admin/list-public-images" && req.method === "GET") {
           try {
             const images = getPublicImages(publicDir);
