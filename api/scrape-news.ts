@@ -1,4 +1,76 @@
 import * as cheerio from "cheerio";
+import { createClient } from "@supabase/supabase-js";
+
+const SUPABASE_URL = process.env.VITE_SUPABASE_URL || "https://aafdsjspuqmajlwpvpfq.supabase.co";
+const SUPABASE_ANON_KEY = process.env.VITE_SUPABASE_ANON_KEY || "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFhZmRzanNwdXFtYWpsd3B2cGZxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTI1MDExODMsImV4cCI6MjEwODA3NzE4M30.i-WCPRQGd8v8HxghuoObTAXQvrbEYHY7e-4KQTbRvqg";
+
+/**
+ * Downloads an external image and uploads it into Supabase Storage under images/noticias/
+ */
+export async function uploadExternalImageToSupabase(imgUrl: string): Promise<string> {
+  if (!imgUrl || !imgUrl.startsWith("http")) return imgUrl;
+
+  // If already hosted on our Supabase bucket, return directly
+  if (imgUrl.includes("supabase.co") && imgUrl.includes("ceprunsa-images")) {
+    return imgUrl;
+  }
+
+  try {
+    const res = await fetch(imgUrl, {
+      headers: {
+        "User-Agent":
+          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36",
+        Accept: "image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8",
+      },
+    });
+
+    if (!res.ok) return imgUrl;
+
+    const arrayBuffer = await res.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+    const contentType = res.headers.get("content-type") || "image/jpeg";
+
+    let ext = "jpg";
+    if (contentType.includes("png")) ext = "png";
+    else if (contentType.includes("webp")) ext = "webp";
+    else if (contentType.includes("svg")) ext = "svg";
+    else if (contentType.includes("gif")) ext = "gif";
+    else {
+      const match = imgUrl.split("?")[0].match(/\.(png|jpg|jpeg|webp|svg|gif)$/i);
+      if (match) ext = match[1].toLowerCase();
+    }
+
+    const cleanName =
+      imgUrl
+        .split("?")[0]
+        .split("/")
+        .pop()
+        ?.replace(/\.[^/.]+$/, "")
+        .replace(/[^a-zA-Z0-9_-]/g, "_")
+        .slice(0, 35) || "noticia";
+
+    const filePath = `images/noticias/${Date.now()}_${cleanName}.${ext}`;
+
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    const { error: uploadError } = await supabase.storage
+      .from("ceprunsa-images")
+      .upload(filePath, buffer, {
+        contentType,
+        upsert: true,
+      });
+
+    if (uploadError) {
+      console.warn("Storage upload warning:", uploadError.message);
+      return imgUrl;
+    }
+
+    const { data } = supabase.storage.from("ceprunsa-images").getPublicUrl(filePath);
+    return data.publicUrl;
+  } catch (err: any) {
+    console.warn("Could not upload external image to Supabase Storage:", err?.message);
+    return imgUrl;
+  }
+}
 
 export default async function handler(req: any, res: any) {
   // Configure CORS
@@ -15,7 +87,13 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { url } = req.body || {};
+    const { url, imageUrl: directImageUrl } = req.body || {};
+
+    // Allow directly uploading an external image URL to Supabase Storage
+    if (directImageUrl && !url) {
+      const publicUrl = await uploadExternalImageToSupabase(directImageUrl);
+      return res.status(200).json({ success: true, publicUrl });
+    }
 
     if (!url || typeof url !== "string") {
       return res.status(400).json({ error: "Se requiere un parámetro 'url' válido." });
@@ -160,6 +238,11 @@ export default async function handler(req: any, res: any) {
       } catch {
         // mantener como estaba
       }
+    }
+
+    // Descargar y guardar automáticamente la imagen en Supabase Storage (images/noticias/)
+    if (imageUrl && !imageUrl.includes("supabase.co/storage")) {
+      imageUrl = await uploadExternalImageToSupabase(imageUrl);
     }
 
     // 5. EXTRAER FECHA

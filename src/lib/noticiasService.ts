@@ -42,6 +42,31 @@ function setLocalNoticias(noticias: Noticia[]) {
 }
 
 /**
+ * Upload an external image URL to Supabase Storage under images/noticias/
+ */
+export async function uploadExternalImageViaApi(imageUrl: string): Promise<string> {
+  if (!imageUrl || !imageUrl.startsWith("http")) return imageUrl;
+  if (imageUrl.includes("supabase.co") && imageUrl.includes("ceprunsa-images")) {
+    return imageUrl;
+  }
+
+  try {
+    const res = await fetch("/api/scrape-news", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ imageUrl }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      if (data.publicUrl) return data.publicUrl;
+    }
+  } catch (err) {
+    console.warn("Could not upload external image to Supabase Storage:", err);
+  }
+  return imageUrl;
+}
+
+/**
  * Fetch all news articles from Supabase or fallback to local cache
  */
 export async function fetchNoticias(): Promise<Noticia[]> {
@@ -92,12 +117,18 @@ export async function saveNoticia(item: Partial<Noticia>): Promise<{ success: bo
   const isEditingInDb = Boolean(item.id && isValidUUID(item.id));
   const now = new Date().toISOString();
 
+  // If imageUrl is external, automatically save it into Supabase Storage images/noticias/
+  let finalImageUrl = item.imageUrl?.trim() || "";
+  if (finalImageUrl.startsWith("http") && !finalImageUrl.includes("supabase.co")) {
+    finalImageUrl = await uploadExternalImageViaApi(finalImageUrl);
+  }
+
   // Payload strictly matching the columns in public.noticias table
   const dbPayload = {
     title: item.title?.trim() || "Sin título",
     subtitle: item.subtitle?.trim() || "",
     date: item.date?.trim() || new Date().toLocaleDateString("es-PE", { day: "numeric", month: "long", year: "numeric" }),
-    image_url: item.imageUrl?.trim() || "",
+    image_url: finalImageUrl,
     summary: item.summary?.trim() || "",
     source_url: item.sourceUrl?.trim() || "",
     category: item.category || "Institucional",
@@ -190,7 +221,7 @@ export async function saveNoticia(item: Partial<Noticia>): Promise<{ success: bo
       sourceUrl: dbPayload.source_url,
       category: dbPayload.category,
       featured: dbPayload.featured,
-      content: dbPayload.summary,
+      content: "",
       created_at: now,
       updated_at: now,
     };
@@ -210,12 +241,46 @@ export async function saveNoticia(item: Partial<Noticia>): Promise<{ success: bo
 }
 
 /**
- * Delete a news item by ID
+ * Delete a news item by ID and remove its image from Supabase Storage (images/noticias/)
  */
 export async function deleteNoticia(id: string): Promise<{ success: boolean; error?: string }> {
+  let imageUrlToDelete: string | null = null;
+
+  // Check image URL in local cache
+  const localItem = getLocalNoticias().find((n) => n.id === id);
+  if (localItem?.imageUrl) {
+    imageUrlToDelete = localItem.imageUrl;
+  }
+
   // Only attempt delete in Supabase if ID is a valid database UUID
   if (isSupabaseConfigured && isValidUUID(id)) {
     try {
+      // If we don't have the image URL yet, fetch it from Supabase before deleting the row
+      if (!imageUrlToDelete) {
+        const { data } = await supabase.from("noticias").select("image_url").eq("id", id).maybeSingle();
+        if (data?.image_url) {
+          imageUrlToDelete = data.image_url;
+        }
+      }
+
+      // If image is stored in Supabase Storage bucket, delete it
+      if (imageUrlToDelete && imageUrlToDelete.includes("ceprunsa-images")) {
+        const marker = "/ceprunsa-images/";
+        const idx = imageUrlToDelete.indexOf(marker);
+        if (idx !== -1) {
+          const rawPath = imageUrlToDelete.substring(idx + marker.length).split("?")[0];
+          const storagePath = decodeURIComponent(rawPath);
+          if (storagePath) {
+            const { error: removeErr } = await supabase.storage.from(BUCKET_NAME).remove([storagePath]);
+            if (removeErr) {
+              console.warn("Could not delete image from Supabase Storage:", removeErr.message);
+            } else {
+              console.log("Successfully deleted image from storage bucket:", storagePath);
+            }
+          }
+        }
+      }
+
       const { error } = await supabase.from("noticias").delete().eq("id", id);
       if (error) {
         console.error("Supabase delete error:", error.message);
@@ -235,7 +300,7 @@ export async function deleteNoticia(id: string): Promise<{ success: boolean; err
 }
 
 /**
- * Upload an image file to Supabase Storage in the ceprunsa-images bucket
+ * Upload an image file to Supabase Storage in the ceprunsa-images bucket under images/noticias/
  */
 export async function uploadNoticiaImage(file: File): Promise<{ success: boolean; url?: string; error?: string }> {
   if (!isSupabaseConfigured) {
@@ -249,7 +314,7 @@ export async function uploadNoticiaImage(file: File): Promise<{ success: boolean
       .replace(/\.[^/.]+$/, "")
       .replace(/[^a-zA-Z0-9_-]/g, "_")
       .toLowerCase();
-    const filePath = `noticias/${Date.now()}_${cleanFileName}.${fileExt}`;
+    const filePath = `images/noticias/${Date.now()}_${cleanFileName}.${fileExt}`;
 
     const { error: uploadError } = await supabase.storage
       .from(BUCKET_NAME)
