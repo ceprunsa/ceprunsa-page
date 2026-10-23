@@ -45,6 +45,8 @@ import {
   uploadNoticiaImage,
   extractMetadataFromUrl,
 } from "../lib/noticiasService";
+import { supabase } from "../lib/supabase";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
 import type { Noticia } from "../types";
 
 // Target image definitions categorized by Page for Admin Quick Reference
@@ -407,14 +409,50 @@ const SITE_IMAGES: ImageItem[] = [
 ];
 
 const Admin: React.FC = () => {
-  // Auth state
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    return sessionStorage.getItem("ceprunsa_admin_auth") === "true";
-  });
-  const [usernameInput, setUsernameInput] = useState("");
+  // Auth state with Supabase
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [currentUser, setCurrentUser] = useState<SupabaseUser | null>(null);
+  const [checkingSession, setCheckingSession] = useState<boolean>(true);
+  const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
   const [loginError, setLoginError] = useState("");
+
+  // Check active Supabase session on mount (Strict Supabase Auth)
+  useEffect(() => {
+    let isMounted = true;
+
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (!isMounted) return;
+      if (session?.user) {
+        setIsAuthenticated(true);
+        setCurrentUser(session.user);
+      } else {
+        setIsAuthenticated(false);
+        setCurrentUser(null);
+      }
+      setCheckingSession(false);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!isMounted) return;
+      if (session?.user) {
+        setIsAuthenticated(true);
+        setCurrentUser(session.user);
+      } else {
+        setIsAuthenticated(false);
+        setCurrentUser(null);
+      }
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
+  }, []);
 
   // Navigation tabs state
   const [activeTab, setActiveTab] = useState<"presets" | "config" | "noticias">("presets");
@@ -683,21 +721,55 @@ const Admin: React.FC = () => {
     }
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (usernameInput.trim() === "admin" && passwordInput.trim() === "ceprunsa2026$$") {
-      setIsAuthenticated(true);
-      sessionStorage.setItem("ceprunsa_admin_auth", "true");
-      setLoginError("");
-      showToast("¡Sesión iniciada como Administrador!");
-    } else {
-      setLoginError("Usuario o contraseña incorrectos");
+    setLoginError("");
+    setIsLoggingIn(true);
+
+    const email = emailInput.trim();
+    const password = passwordInput.trim();
+
+    try {
+      // Autenticación exclusiva mediante Supabase Auth
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (!error && data?.session) {
+        setIsAuthenticated(true);
+        setCurrentUser(data.user);
+        setLoginError("");
+        showToast(`¡Sesión iniciada como ${data.user.email}!`);
+        return;
+      }
+
+      if (error) {
+        if (error.message.includes("Invalid login credentials")) {
+          setLoginError("Correo o contraseña incorrectos.");
+        } else if (error.message.includes("Email not confirmed")) {
+          setLoginError("El correo no ha sido confirmado en Supabase. Verifica tu bandeja o confirma el usuario en el panel de Supabase.");
+        } else {
+          setLoginError(error.message);
+        }
+      } else {
+        setLoginError("Credenciales no válidas en Supabase.");
+      }
+    } catch (err: any) {
+      setLoginError(err.message || "Error al conectar con Supabase Auth");
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    try {
+      await supabase.auth.signOut();
+    } catch (err) {
+      console.warn("Error signing out from Supabase:", err);
+    }
     setIsAuthenticated(false);
-    sessionStorage.removeItem("ceprunsa_admin_auth");
+    setCurrentUser(null);
     showToast("Sesión cerrada correctamente.");
   };
 
@@ -957,6 +1029,17 @@ const Admin: React.FC = () => {
   // ----------------------------------------------------
   // LOGIN SCREEN (If not authenticated)
   // ----------------------------------------------------
+  if (checkingSession) {
+    return (
+      <div className="min-h-screen bg-slate-100 flex items-center justify-center p-4">
+        <div className="flex flex-col items-center gap-3">
+          <Loader2 size={36} className="text-accent-700 animate-spin" />
+          <p className="text-sm text-slate-500 font-medium">Verificando sesión ...</p>
+        </div>
+      </div>
+    );
+  }
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-slate-100 text-slate-800 flex items-center justify-center p-4">
@@ -966,7 +1049,7 @@ const Admin: React.FC = () => {
               <Lock size={32} />
             </div>
             <h1 className="text-2xl font-bold text-slate-900 tracking-tight">Acceso Administrativo</h1>
-            <p className="text-sm text-slate-500">Ingresa tus credenciales para administrar CEPRUNSA</p>
+            <p className="text-sm text-slate-500">Inicia sesión para administrar CEPRUNSA</p>
           </div>
 
           {loginError && (
@@ -979,18 +1062,18 @@ const Admin: React.FC = () => {
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
               <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
-                Usuario
+                Correo Electrónico
               </label>
               <div className="relative">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400">
-                  <User size={18} />
+                  <Mail size={18} />
                 </span>
                 <input
-                  type="text"
+                  type="email"
                   required
-                  value={usernameInput}
-                  onChange={(e) => setUsernameInput(e.target.value)}
-                  placeholder="Usuario"
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
+                  placeholder="admin@ceprunsa.pe"
                   className="w-full bg-slate-50 border border-slate-300 focus:border-accent-700 focus:ring-2 focus:ring-accent-700/20 text-slate-900 text-sm rounded-xl pl-10 pr-4 py-3 outline-none transition"
                 />
               </div>
@@ -1024,14 +1107,23 @@ const Admin: React.FC = () => {
 
             <button
               type="submit"
-              className="w-full py-3.5 px-4 bg-accent-700 hover:bg-accent-800 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer text-sm"
+              disabled={isLoggingIn}
+              className="w-full py-3.5 px-4 bg-accent-700 hover:bg-accent-800 disabled:opacity-60 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer text-sm flex items-center justify-center gap-2"
             >
-              Iniciar Sesión
+              {isLoggingIn ? (
+                <>
+                  <Loader2 size={18} className="animate-spin" />
+                  <span>Verificando con Supabase...</span>
+                </>
+              ) : (
+                <span>Iniciar Sesión</span>
+              )}
             </button>
           </form>
 
-          <div className="text-center text-xs text-slate-400 pt-2 border-t border-slate-200">
-            CEPRUNSA &copy; Panel de Administración Privado
+          <div className="text-center text-xs text-slate-400 pt-2 border-t border-slate-200 flex items-center justify-center gap-1.5">
+            <Lock size={12} className="text-accent-600" />
+            <span>Autenticación segura con Supabase Auth</span>
           </div>
         </div>
       </div>
@@ -1076,7 +1168,8 @@ const Admin: React.FC = () => {
             </span>
 
             <span className="hidden md:inline-flex items-center gap-1.5 px-3 py-1 bg-slate-100 border border-slate-200 rounded-full text-xs text-slate-700 font-medium">
-              Administrador Activo
+              <User size={13} className="text-slate-500" />
+              <span>{currentUser?.email || "Administrador Activo"}</span>
             </span>
 
             <button
@@ -1127,9 +1220,8 @@ const Admin: React.FC = () => {
             <span>Noticias y Publicaciones</span>
             {noticiasList.length > 0 && (
               <span
-                className={`px-2 py-0.5 rounded-full text-xs font-bold ${
-                  activeTab === "noticias" ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
-                }`}
+                className={`px-2 py-0.5 rounded-full text-xs font-bold ${activeTab === "noticias" ? "bg-white/20 text-white" : "bg-slate-100 text-slate-600"
+                  }`}
               >
                 {noticiasList.length}
               </span>
@@ -1839,11 +1931,10 @@ const Admin: React.FC = () => {
                     <button
                       key={cat}
                       onClick={() => setNoticiaCategoryFilter(cat)}
-                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${
-                        noticiaCategoryFilter === cat
+                      className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition cursor-pointer ${noticiaCategoryFilter === cat
                           ? "bg-accent-700 text-white shadow-xs"
                           : "bg-slate-100 text-slate-600 hover:bg-slate-200 border border-slate-200"
-                      }`}
+                        }`}
                     >
                       {cat}
                     </button>
@@ -1937,11 +2028,10 @@ const Admin: React.FC = () => {
                       <div className="flex items-center gap-1.5">
                         <button
                           onClick={() => handleToggleFeaturedNoticia(item)}
-                          className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition cursor-pointer ${
-                            item.featured
+                          className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold transition cursor-pointer ${item.featured
                               ? "bg-amber-100 text-amber-800 hover:bg-amber-200"
                               : "bg-slate-200 text-slate-600 hover:bg-slate-300"
-                          }`}
+                            }`}
                           title="Alternar destacado"
                         >
                           {item.featured ? "★ Destacado" : "☆ Destacar"}
