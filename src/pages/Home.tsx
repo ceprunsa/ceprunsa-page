@@ -17,6 +17,7 @@ import {
 import { stats, testimonials } from "../data";
 import { useConfig } from "../context/ConfigContext";
 import FlyerModal from "../components/FlyerModal";
+import HomeNoticias from "../components/HomeNoticias";
 gsap.registerPlugin(ScrollTrigger);
 
 interface CarouselItem {
@@ -552,6 +553,9 @@ const Home: React.FC = () => {
           <HeroCarousel />
         </div>
       </section>
+
+      {/* Sección de Noticias Recientes (3 noticias breves y concisas) */}
+      <HomeNoticias />
 
       {/* Te preparamos para la UNSA Section */}
       <section className="section-padding bg-white relative overflow-hidden">
