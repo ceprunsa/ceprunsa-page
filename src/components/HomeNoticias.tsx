@@ -3,13 +3,11 @@ import { Link } from "react-router-dom";
 import {
   Calendar,
   ArrowRight,
-  Newspaper,
   ChevronRight,
   ExternalLink,
   X,
   Share2,
   Check,
-  Clock,
 } from "lucide-react";
 import { fetchNoticias } from "../lib/noticiasService";
 import type { Noticia } from "../types";
@@ -56,7 +54,6 @@ const fallbackNoticias: Noticia[] = [
 
 export const HomeNoticias: React.FC = () => {
   const [noticias, setNoticias] = useState<Noticia[]>([]);
-  const [loading, setLoading] = useState(true);
   const [selectedNoticia, setSelectedNoticia] = useState<Noticia | null>(null);
   const [copiedLink, setCopiedLink] = useState(false);
 
@@ -75,8 +72,6 @@ export const HomeNoticias: React.FC = () => {
       } catch (err) {
         console.error("Error loading home news:", err);
         if (isMounted) setNoticias(fallbackNoticias);
-      } finally {
-        if (isMounted) setLoading(false);
       }
     };
     loadNews();
